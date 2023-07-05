@@ -1,3 +1,3 @@
 # food_app
 
-My first project test 101
+My first project test.
