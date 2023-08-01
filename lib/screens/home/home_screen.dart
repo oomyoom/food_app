@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:food_app/constants.dart';
 import 'package:food_app/demoData.dart';
 import 'package:food_app/screens/home/components/cardInfo.dart';
 import 'package:food_app/screens/home/components/imageCarousel.dart';
 import 'package:food_app/screens/home/components/sectionTitle.dart';
+import 'package:food_app/screens/home/homepage.dart';
+import 'package:food_app/screens/login/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -87,7 +90,7 @@ class HomeScreen extends StatelessWidget {
               child: Image.asset('assets/images/Banner.png'),
             ),
           ),
-                    SliverPadding(
+          SliverPadding(
             padding: EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding / 4),
             sliver: SliverToBoxAdapter(
@@ -118,6 +121,25 @@ class HomeScreen extends StatelessWidget {
                           ))),
             ),
           ),
+        ],
+      ),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        backgroundColor: Colors.black,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.4,
+        spacing: 10,
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.login_rounded),
+            backgroundColor: Colors.blueAccent,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
+              );
+            },
+          )
         ],
       ),
     );
