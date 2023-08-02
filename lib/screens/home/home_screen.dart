@@ -8,7 +8,8 @@ import 'package:food_app/screens/home/components/cardInfo.dart';
 import 'package:food_app/screens/home/components/imageCarousel.dart';
 import 'package:food_app/screens/home/components/sectionTitle.dart';
 import 'package:food_app/screens/home/homepage.dart';
-import 'package:food_app/screens/login/login_screen.dart';
+import 'package:food_app/screens/sign/login_screen.dart';
+import 'package:food_app/screens/sign/register_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -139,7 +140,17 @@ class HomeScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const LoginScreen()),
               );
             },
-          )
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.app_registration),
+            backgroundColor: Colors.orange,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RegisterScreen()),
+              );
+            },
+          ),
         ],
       ),
     );
