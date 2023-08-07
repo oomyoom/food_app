@@ -17,9 +17,67 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavigationDrawer(
+        elevation: 0,
+        children: [
+          Container(
+            color: Colors.blue,
+            padding: EdgeInsets.all(16),
+            child: CircleAvatar(
+              radius: 72,
+              backgroundImage: AssetImage('assets/images/profile_test.jpg'),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(20),
+            child: Wrap(
+              runSpacing: 12,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.home_outlined),
+                  title: Text('Home'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.favorite_border),
+                  title: Text('Favorite'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.workspaces_outline),
+                  title: Text('Workflow'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.update),
+                  title: Text('Updates'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.account_tree_outlined),
+                  title: Text('Plugins'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.notifications_outlined),
+                  title: Text('Notifications'),
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            centerTitle: true,
             backgroundColor: Color.fromARGB(255, 66, 118, 93),
             elevation: 0,
             floating: true,
@@ -35,17 +93,9 @@ class HomeScreen extends StatelessWidget {
                 Text(
                   'Bangkok',
                   style: TextStyle(color: Colors.black),
-                )
+                ),
               ],
             ),
-            actions: [
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Filter',
-                    style: TextStyle(color: Colors.black),
-                  ))
-            ],
           ),
           SliverPadding(
             padding: EdgeInsets.symmetric(

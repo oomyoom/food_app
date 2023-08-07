@@ -47,22 +47,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 25,vertical: 10),
                 child: InputField(title: 'Email'),
-              ),
-              SizedBox(
-                height: 10,
               ),
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: InputField(
                     title: 'Password',
                   )),
-              SizedBox(
-                height: 10,
-              ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.only(top: 20),
                 child: TextButton(
                   style: TextButton.styleFrom(backgroundColor: Colors.green),
                   onPressed: () {},
