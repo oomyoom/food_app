@@ -7,7 +7,6 @@ import 'package:food_app/demoData.dart';
 import 'package:food_app/screens/home/components/cardInfo.dart';
 import 'package:food_app/screens/home/components/imageCarousel.dart';
 import 'package:food_app/screens/home/components/sectionTitle.dart';
-import 'package:food_app/screens/home/homepage.dart';
 import 'package:food_app/screens/sign/login_screen.dart';
 import 'package:food_app/screens/sign/register_screen.dart';
 
@@ -25,7 +24,7 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.all(16),
             child: CircleAvatar(
               radius: 72,
-              backgroundImage: AssetImage('assets/images/profile_test.jpg'),
+              foregroundImage: AssetImage('assets/images/profile_test.jpg'),
             ),
           ),
           Container(
