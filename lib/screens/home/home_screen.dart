@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:food_app/constants.dart';
 import 'package:food_app/demoData.dart';
+import 'package:food_app/screens/menu/menu_screen.dart';
 import 'package:food_app/screens/home/components/cardInfo.dart';
 import 'package:food_app/screens/home/components/imageCarousel.dart';
 import 'package:food_app/screens/home/components/sectionTitle.dart';
@@ -200,8 +201,19 @@ class HomeScreen extends StatelessWidget {
               );
             },
           ),
+          SpeedDialChild(
+            child: Icon(Icons.add_shopping_cart),
+            backgroundColor: Colors.green,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MenuScreen()),
+              );
+            },
+          ),
         ],
       ),
+      
     );
   }
 }
