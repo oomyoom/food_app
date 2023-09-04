@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/constants.dart';
 import 'package:food_app/demoData.dart';
+import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:food_app/screens/home/components/cardInfo.dart';
-
-class CartItem {
-  final String foodItem;
-  int quantity;
-
-  CartItem({required this.foodItem, this.quantity = 1});
-}
-
-final List<CartItem> cartItems = [];
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({
@@ -75,17 +67,16 @@ class _MenuScreenState extends State<MenuScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: defaultPadding / 2),
                                   child: cardInfo(
-                                    title: demoMediumCardData[index]['name'],
-                                    location: demoMediumCardData[index]
-                                        ['location'],
-                                    image: demoMediumCardData[index]['image'],
-                                    delivertTime: demoMediumCardData[index]
-                                        ['delivertTime'],
-                                    rating: demoMediumCardData[index]['rating'],
+                                    title: demoMediumCardData[index].title,
+                                    location:
+                                        demoMediumCardData[index].location,
+                                    image: demoMediumCardData[index].image,
+                                    delivertTime:
+                                        demoMediumCardData[index].delivertTime,
+                                    rating: demoMediumCardData[index].rating,
                                     press: () {
                                       cartItems.add(CartItem(
-                                          foodItem: demoMediumCardData[index]
-                                              ['name']));
+                                          foodItem: demoMediumCardData[index]));
                                     },
                                   ),
                                 ))),
@@ -94,49 +85,7 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                final cartItem = cartItems[index];
-                return ListTile(
-                  title: Text(cartItem.foodItem),
-                  trailing: Text('จำนวน: ${cartItem.quantity}'),
-                );
-              },
-              childCount: cartItems.length,
-            ),
-          ),
         ],
-      ),
-    );
-  }
-}
-
-class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key, required List<CartItem> cartItems})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Text('รายการสินค้าในตะกร้า'),
-            Expanded(
-              child: ListView.builder(
-                itemCount: cartItems.length,
-                itemBuilder: (ctx, index) {
-                  final cartItem = cartItems[index];
-                  return ListTile(
-                    title: Text(cartItem.foodItem),
-                    trailing: Text('จำนวน: ${cartItem.quantity}'),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

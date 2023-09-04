@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:food_app/constants.dart';
 import 'package:food_app/demoData.dart';
+import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:food_app/screens/menu/menu_screen.dart';
 import 'package:food_app/screens/home/components/cardInfo.dart';
 import 'package:food_app/screens/home/components/imageCarousel.dart';
@@ -124,13 +125,16 @@ class HomeScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: defaultPadding / 2),
                             child: cardInfo(
-                              title: demoMediumCardData[index]['name'],
-                              location: demoMediumCardData[index]['location'],
-                              image: demoMediumCardData[index]['image'],
-                              delivertTime: demoMediumCardData[index]
-                                  ['delivertTime'],
-                              rating: demoMediumCardData[index]['rating'],
-                              press: () {},
+                              title: demoMediumCardData[index].title,
+                              location: demoMediumCardData[index].location,
+                              image: demoMediumCardData[index].image,
+                              delivertTime:
+                                  demoMediumCardData[index].delivertTime,
+                              rating: demoMediumCardData[index].rating,
+                              press: () {
+                                cartItems.add(CartItem(
+                                    foodItem: demoMediumCardData[index]));
+                              },
                             ),
                           ))),
             ),
@@ -161,13 +165,16 @@ class HomeScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: defaultPadding / 2),
                             child: cardInfo(
-                              title: demoMediumCardData[index]['name'],
-                              location: demoMediumCardData[index]['location'],
-                              image: demoMediumCardData[index]['image'],
-                              delivertTime: demoMediumCardData[index]
-                                  ['delivertTime'],
-                              rating: demoMediumCardData[index]['rating'],
-                              press: () {},
+                              title: demoMediumCardData[index].title,
+                              location: demoMediumCardData[index].location,
+                              image: demoMediumCardData[index].image,
+                              delivertTime:
+                                  demoMediumCardData[index].delivertTime,
+                              rating: demoMediumCardData[index].rating,
+                              press: () {
+                                cartItems.add(CartItem(
+                                    foodItem: demoMediumCardData[index]));
+                              },
                             ),
                           ))),
             ),
@@ -213,7 +220,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      
     );
   }
 }
