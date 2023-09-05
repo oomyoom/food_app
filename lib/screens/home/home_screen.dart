@@ -3,8 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:food_app/constants.dart';
-import 'package:food_app/demoData.dart';
-import 'package:food_app/screens/cart/cart_screen.dart';
+import 'package:food_app/foodData.dart';
 import 'package:food_app/screens/menu/menu_screen.dart';
 import 'package:food_app/screens/home/components/cardInfo.dart';
 import 'package:food_app/screens/home/components/imageCarousel.dart';
@@ -21,6 +20,7 @@ class HomeScreen extends StatelessWidget {
       drawer: NavigationDrawer(
         elevation: 0,
         children: [
+          // รูปโปรไฟล์
           Container(
             color: Colors.blue,
             padding: EdgeInsets.all(16),
@@ -29,6 +29,7 @@ class HomeScreen extends StatelessWidget {
               foregroundImage: AssetImage('assets/images/profile_test.jpg'),
             ),
           ),
+          // ทางลัด
           Container(
             padding: EdgeInsets.all(20),
             child: Wrap(
@@ -77,11 +78,13 @@ class HomeScreen extends StatelessWidget {
       ),
       body: CustomScrollView(
         slivers: [
+          // แถบบนจอ
           SliverAppBar(
             centerTitle: true,
             backgroundColor: Color.fromARGB(255, 66, 118, 93),
             elevation: 0,
             floating: true,
+            pinned: true,
             title: Column(
               children: [
                 Text(
@@ -98,6 +101,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
+          // ภาพใหญ่
           SliverPadding(
             padding: EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding),
@@ -105,16 +109,23 @@ class HomeScreen extends StatelessWidget {
               child: imageCarousel(),
             ),
           ),
+          // หัวข้อ
           SliverPadding(
             padding: EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding / 4),
             sliver: SliverToBoxAdapter(
               child: sectionTitle(
                 title: 'Featured Partners',
-                press: () {},
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MenuScreen()),
+                  );
+                },
               ),
             ),
           ),
+          // รายการอาหาร
           SliverToBoxAdapter(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -131,56 +142,21 @@ class HomeScreen extends StatelessWidget {
                               delivertTime:
                                   demoMediumCardData[index].delivertTime,
                               rating: demoMediumCardData[index].rating,
-                              press: () {
-                                cartItems.add(CartItem(
-                                    foodItem: demoMediumCardData[index]));
-                              },
+                              press: () {},
                             ),
                           ))),
             ),
           ),
+          // ตั๋ว
           SliverPadding(
             padding: const EdgeInsets.all(defaultPadding),
             sliver: SliverToBoxAdapter(
               child: Image.asset('assets/images/Banner.png'),
             ),
           ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding / 4),
-            sliver: SliverToBoxAdapter(
-              child: sectionTitle(
-                title: 'Best Picks',
-                press: () {},
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                  children: List.generate(
-                      demoMediumCardData.length,
-                      (index) => Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: defaultPadding / 2),
-                            child: cardInfo(
-                              title: demoMediumCardData[index].title,
-                              location: demoMediumCardData[index].location,
-                              image: demoMediumCardData[index].image,
-                              delivertTime:
-                                  demoMediumCardData[index].delivertTime,
-                              rating: demoMediumCardData[index].rating,
-                              press: () {
-                                cartItems.add(CartItem(
-                                    foodItem: demoMediumCardData[index]));
-                              },
-                            ),
-                          ))),
-            ),
-          ),
         ],
       ),
+      // Shortcut
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
         backgroundColor: Colors.black,

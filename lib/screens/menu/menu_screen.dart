@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/constants.dart';
-import 'package:food_app/demoData.dart';
+import 'package:food_app/screens/menu/components/menuInfo.dart';
+import 'package:food_app/screens/menu/food_details_screen.dart';
+import 'package:food_app/foodData.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
-import 'package:food_app/screens/home/components/cardInfo.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({
@@ -19,19 +20,22 @@ class _MenuScreenState extends State<MenuScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
+          // แถบบนจอ
           SliverAppBar(
             actions: [
-              IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () {
-                  // ไปยังหน้าตะกร้าสินค้า
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CartScreen(cartItems: cartItems),
-                    ),
-                  );
-                },
+              Padding(
+                padding: const EdgeInsets.only(right: defaultPadding / 2),
+                child: IconButton(
+                  icon: Icon(Icons.shopping_cart),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartScreen(cartItems: cartItems),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
             automaticallyImplyLeading: false,
@@ -51,13 +55,14 @@ class _MenuScreenState extends State<MenuScreen> {
               ],
             ),
           ),
+          // รายการอาหาร
           SliverPadding(
             padding: EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding),
             sliver: SliverToBoxAdapter(
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
@@ -66,17 +71,20 @@ class _MenuScreenState extends State<MenuScreen> {
                             (index) => Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: defaultPadding / 2),
-                                  child: cardInfo(
+                                  child: MenuInfo(
                                     title: demoMediumCardData[index].title,
-                                    location:
-                                        demoMediumCardData[index].location,
                                     image: demoMediumCardData[index].image,
-                                    delivertTime:
-                                        demoMediumCardData[index].delivertTime,
-                                    rating: demoMediumCardData[index].rating,
+                                    price: demoMediumCardData[index].price,
                                     press: () {
-                                      cartItems.add(CartItem(
-                                          foodItem: demoMediumCardData[index]));
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                FoodDetailsScreen(
+                                                  food:
+                                                      demoMediumCardData[index],
+                                                )),
+                                      );
                                     },
                                   ),
                                 ))),

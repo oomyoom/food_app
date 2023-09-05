@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/demoData.dart';
+import 'package:food_app/foodData.dart';
 
 class CartItem {
   final Menu foodItem;
-  int quantity;
+  final int quantity;
 
-  CartItem({required this.foodItem, this.quantity = 1});
+  CartItem({required this.foodItem, required this.quantity});
 }
 
 final List<CartItem> cartItems = [];
@@ -24,7 +24,7 @@ class CartScreen extends StatelessWidget {
         title: Column(
           children: [
             Text(
-              'Cart'.toUpperCase(),
+              'My Cart'.toUpperCase(),
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!

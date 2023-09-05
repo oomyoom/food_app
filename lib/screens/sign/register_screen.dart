@@ -97,10 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Text(
                     'Next',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -176,10 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Text(
                     'Register',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

@@ -20,7 +20,7 @@ List<String> demoBigImages = [
   "assets/images/big_4.png",
 ];
 
-List<Menu> demoMediumCardData = [
+List demoMediumCardData = [
   Menu(
       title: "Daylight Coffee",
       image: "assets/images/medium_1.png",
