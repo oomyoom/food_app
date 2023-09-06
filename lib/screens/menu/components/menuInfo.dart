@@ -20,10 +20,25 @@ class MenuInfo extends StatelessWidget {
         onTap: press,
         child: Row(
           children: [
-            SizedBox(
-              width: 150,
-              height: 150,
-              child: Image.asset(image),
+            Container(
+              padding: const EdgeInsets.all(defaultPadding / 2),
+              width: MediaQuery.of(context).size.width * 0.4,
+              height: MediaQuery.of(context).size.height * 0.15,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black26,
+                      width: 1,
+                    ),
+                  ),
+                  child: Image.asset(
+                    image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
             ),
             const SizedBox(width: 16),
             Column(

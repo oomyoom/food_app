@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:food_app/constants.dart';
 import 'package:food_app/foodData.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
+import 'package:food_app/screens/menu/components/foodContainer.dart';
+import 'package:food_app/screens/menu/components/foodSpecify.dart';
+import 'package:food_app/screens/sign/components/inputField.dart';
+import 'package:food_app/tapButton.dart';
 
 class FoodDetailsScreen extends StatefulWidget {
   const FoodDetailsScreen({
@@ -16,18 +20,6 @@ class FoodDetailsScreen extends StatefulWidget {
 
 class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
   int quantity = 1;
-
-  void decrementQuantity() {
-    setState(() {
-      if (quantity > 1) quantity--;
-    });
-  }
-
-  void incrementQuantity() {
-    setState(() {
-      quantity++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,158 +40,94 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(defaultPadding),
-            child: Container(
-              padding: const EdgeInsets.all(defaultPadding),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.2,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black26,
-                  width: 1,
-                ),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: 125,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black26,
-                            width: 1,
-                          ),
-                        ),
-                        child: Image.asset(
-                          widget.food.image,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 32,
-                  ),
-                  Expanded(
-                    child: FractionallySizedBox(
-                      widthFactor: 1.0,
-                      heightFactor: 1.0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.food.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Text(
-                            "USD ${widget.food.price}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: kActiveColor,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black26,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.remove,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: decrementQuantity,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 32,
-                                child: Center(
-                                  child: Text(
-                                    quantity.toString(),
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black26,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.add,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: incrementQuantity,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          reverse: true,
+          child: Column(
+            children: [
+              Padding(
                 padding: const EdgeInsets.all(defaultPadding),
-                child: ElevatedButton(
-                  onPressed: () {
-                    cartItems.add(
-                        CartItem(foodItem: widget.food, quantity: quantity));
-                    Navigator.pop(context);
+                child: FoodContainer(
+                  food: widget.food,
+                  onQuantityChanged: (newQuantity) {
+                    setState(() {
+                      quantity = newQuantity;
+                    });
                   },
-                  style: ButtonStyle(
-                    side: MaterialStateProperty.all<BorderSide>(
-                      BorderSide(
-                        width: 1.0,
-                        color: Colors.black,
-                      ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: defaultPadding, right: defaultPadding),
+                child: Container(
+                  padding: const EdgeInsets.all(defaultPadding),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black26,
+                      width: 1,
                     ),
-                    fixedSize: MaterialStateProperty.all<Size>(
-                      Size(200, 48),
-                    ),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
                   ),
-                  child: Text(
-                    'Confirm',
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      FoodSpecify(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      FoodSpecify(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      FoodSpecify(),
+                    ],
                   ),
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(defaultPadding),
+                child: Container(
+                  padding: const EdgeInsets.all(defaultPadding),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.14,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black26,
+                      width: 1,
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Note',
+                        style: Theme.of(context).textTheme.titleLarge!,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: defaultPadding / 2,
+                        ),
+                        child: InputField(title: 'Note to restaurant'),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(defaultPadding / 2),
+                child: TapButton(
+                    press: () {
+                      cartItems.add(
+                          CartItem(foodItem: widget.food, quantity: quantity));
+                      Navigator.pop(context);
+                    },
+                    title: 'Confirm'),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

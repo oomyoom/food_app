@@ -10,10 +10,15 @@ class CartItem {
 
 final List<CartItem> cartItems = [];
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({Key? key, required List<CartItem> cartItems})
       : super(key: key);
 
+  @override
+  _CartScreenState createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +45,9 @@ class CartScreen extends StatelessWidget {
             final cartItem = cartItems[index];
             return ListTile(
               title: Text(cartItem.foodItem.title),
-              subtitle: Text('ราคา: ${cartItem.foodItem.price} บาท'),
-              trailing: Text('จำนวน: ${cartItem.quantity}'),
+              subtitle: Text(
+                  'price: ${cartItem.foodItem.price * cartItem.quantity} USD'),
+              trailing: Text('quantity: ${cartItem.quantity}'),
             );
           },
         ),

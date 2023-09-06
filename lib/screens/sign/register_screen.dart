@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:food_app/screens/sign/components/inputField.dart';
+import 'package:food_app/tapButton.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -86,21 +87,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     title: 'Gender',
                   )),
               Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: TextButton(
-                  style: TextButton.styleFrom(backgroundColor: Colors.green),
-                  onPressed: () {
-                    setState(() {
-                      _setState++;
-                    });
-                  },
-                  child: Text(
-                    'Next',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                  child: TapButton(
+                      press: () {
+                        setState(() {
+                          _setState++;
+                        });
+                      },
+                      title: 'Next')),
             ],
           ),
         ),
@@ -166,17 +160,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     title: 'Confirm-Password',
                   )),
               Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: TextButton(
-                  style: TextButton.styleFrom(backgroundColor: Colors.green),
-                  onPressed: () {},
-                  child: Text(
-                    'Register',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                  child: TapButton(press: () {}, title: 'Register')),
             ],
           ),
         ),
