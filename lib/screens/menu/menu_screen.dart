@@ -38,7 +38,6 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ),
             ],
-            automaticallyImplyLeading: false,
             centerTitle: true,
             backgroundColor: Color.fromARGB(255, 66, 118, 93),
             elevation: 0,
