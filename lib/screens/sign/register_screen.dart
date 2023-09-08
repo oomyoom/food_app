@@ -89,12 +89,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: TapButton(
-                      press: () {
-                        setState(() {
-                          _setState++;
-                        });
-                      },
-                      title: 'Next')),
+                    press: () {
+                      setState(() {
+                        _setState++;
+                      });
+                    },
+                    title: 'Next',
+                    color: Color.fromARGB(255, 66, 118, 93),
+                  )),
             ],
           ),
         ),
@@ -161,7 +163,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   )),
               Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: TapButton(press: () {}, title: 'Register')),
+                  child: TapButton(
+                    press: () {},
+                    title: 'Register',
+                    color: Color.fromARGB(255, 66, 118, 93),
+                  )),
             ],
           ),
         ),

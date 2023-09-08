@@ -70,85 +70,92 @@ class _FoodContainerState extends State<FoodContainer> {
           SizedBox(
             width: MediaQuery.of(context).size.width * .1,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.food.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleLarge!,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .04,
-              ),
-              Row(
-                children: [
-                  Text(
-                    'USD ${widget.food.price}',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w500, color: kActiveColor),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .06,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * .08,
-                    height: MediaQuery.of(context).size.height * .04,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(
-                        color: Colors.black12,
-                        width: 1,
-                      ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.food.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleLarge!,
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .04,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'USD ${widget.food.price}',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500, color: kActiveColor),
                     ),
-                    child: IconButton(
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      iconSize: MediaQuery.of(context).size.width * .04,
-                      icon: const Icon(
-                        Icons.remove,
-                        color: Colors.black,
-                      ),
-                      onPressed: decrementQuantity,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * .06,
                     ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .07,
-                    child: Center(
-                      child: Text(
-                        quantity.toString(),
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                      ),
+                    Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * .08,
+                          height: MediaQuery.of(context).size.height * .04,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(
+                              color: Colors.black12,
+                              width: 1,
+                            ),
+                          ),
+                          child: IconButton(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            iconSize: MediaQuery.of(context).size.width * .03,
+                            icon: const Icon(
+                              Icons.remove,
+                              color: Colors.black,
+                            ),
+                            onPressed: decrementQuantity,
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .07,
+                          child: Center(
+                            child: Text(
+                              quantity.toString(),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .08,
+                          height: MediaQuery.of(context).size.height * .04,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(
+                              color: Colors.black12,
+                              width: 1,
+                            ),
+                          ),
+                          child: IconButton(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            iconSize: MediaQuery.of(context).size.width * .03,
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.black,
+                            ),
+                            onPressed: incrementQuantity,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * .08,
-                    height: MediaQuery.of(context).size.height * .04,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(
-                        color: Colors.black12,
-                        width: 1,
-                      ),
-                    ),
-                    child: IconButton(
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      iconSize: MediaQuery.of(context).size.width * .04,
-                      icon: const Icon(
-                        Icons.add,
-                        color: Colors.black,
-                      ),
-                      onPressed: incrementQuantity,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

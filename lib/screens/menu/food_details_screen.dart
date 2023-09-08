@@ -41,92 +41,92 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          reverse: true,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(defaultPadding),
-                child: FoodContainer(
-                  food: widget.food,
-                  onQuantityChanged: (newQuantity) {
-                    setState(() {
-                      quantity = newQuantity;
-                    });
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: defaultPadding, right: defaultPadding),
-                child: Container(
-                  padding: const EdgeInsets.all(defaultPadding),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black26,
-                      width: 1,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(defaultPadding),
+                      child: FoodContainer(
+                        food: widget.food,
+                        onQuantityChanged: (newQuantity) {
+                          setState(() {
+                            quantity = newQuantity;
+                          });
+                        },
+                      ),
                     ),
-                  ),
-                  child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      FoodSpecify(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      FoodSpecify(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      FoodSpecify(),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(defaultPadding),
-                child: Container(
-                  padding: const EdgeInsets.all(defaultPadding),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.14,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black26,
-                      width: 1,
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Note',
-                        style: Theme.of(context).textTheme.titleLarge!,
-                      ),
-                      Padding(
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: defaultPadding, right: defaultPadding),
+                      child: Container(
                         padding: const EdgeInsets.only(
-                          top: defaultPadding / 2,
+                            left: defaultPadding, right: defaultPadding),
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          children: [
+                            FoodSpecify(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            FoodSpecify(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
                         ),
-                        child: InputField(title: 'Note to restaurant'),
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: defaultPadding),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: defaultPadding),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.12,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Note',
+                              style: Theme.of(context).textTheme.titleLarge!,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: defaultPadding / 2,
+                              ),
+                              child: InputField(title: 'Note to restaurant'),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(defaultPadding / 2),
-                child: TapButton(
-                    press: () {
-                      cartItems.add(
-                          CartItem(foodItem: widget.food, quantity: quantity));
-                      Navigator.pop(context);
-                    },
-                    title: 'Confirm'),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              color: Color.fromARGB(255, 66, 118, 93),
+              child: TapButton(
+                press: () {
+                  totalPrice = (widget.food.price * quantity) + totalPrice;
+                  cartItems
+                      .add(CartItem(foodItem: widget.food, quantity: quantity));
+                  priceItems.add(widget.food.price * quantity);
+                  Navigator.pop(context);
+                },
+                title: 'Confirm',
+                color: Color.fromARGB(255, 66, 118, 93),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

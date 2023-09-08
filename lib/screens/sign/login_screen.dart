@@ -61,7 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     )),
                 Padding(
                     padding: const EdgeInsets.only(top: 20),
-                    child: TapButton(press: () {}, title: 'Sign In')),
+                    child: TapButton(
+                      press: () {},
+                      title: 'Sign In',
+                      color: Color.fromARGB(255, 66, 118, 93),
+                    )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
