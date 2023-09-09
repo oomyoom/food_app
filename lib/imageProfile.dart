@@ -31,8 +31,12 @@ class ImageProfileHelper {
     CropStyle cropStyle = CropStyle.rectangle,
   }) async =>
       await _imageCropper.cropImage(
-          sourcePath: file.path, cropStyle: cropStyle,);
+        sourcePath: file.path,
+        cropStyle: cropStyle,
+      );
 }
+
+File? image;
 
 class ImageProfile extends StatefulWidget {
   const ImageProfile({Key? key}) : super(key: key);
@@ -42,8 +46,6 @@ class ImageProfile extends StatefulWidget {
 }
 
 class _ImageProfileState extends State<ImageProfile> {
-  File? _image;
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -54,14 +56,15 @@ class _ImageProfileState extends State<ImageProfile> {
           final croppedFile = await ImageProfileHelper()
               .crop(file: imagefile, cropStyle: CropStyle.circle);
           if (croppedFile != null) {
-            setState(() => _image = File(croppedFile.path));
+            setState(() => image = File(croppedFile.path));
           }
         }
       },
       child: CircleAvatar(
         radius: 72,
+        backgroundImage: AssetImage('assets/images/take_a_photo.png'),
         backgroundColor: Colors.grey[300],
-        foregroundImage: _image != null ? FileImage(_image!) : null,
+        foregroundImage: image != null ? FileImage(image!) : null,
       ),
     );
   }

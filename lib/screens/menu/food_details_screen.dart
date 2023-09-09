@@ -19,6 +19,7 @@ class FoodDetailsScreen extends StatefulWidget {
 }
 
 class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
+  final TextEditingController _textController = TextEditingController();
   int quantity = 1;
 
   @override
@@ -101,7 +102,16 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                               padding: const EdgeInsets.only(
                                 top: defaultPadding / 2,
                               ),
-                              child: InputField(title: 'Note to restaurant'),
+                              child: InputField(
+                                title: 'Note to restaurant',
+                                controller: _textController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your email';
+                                  }
+                                  return null;
+                                },
+                              ),
                             )
                           ],
                         ),

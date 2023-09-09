@@ -9,6 +9,7 @@ import 'package:food_app/screens/home/components/cardInfo.dart';
 import 'package:food_app/screens/home/components/imageCarousel.dart';
 import 'package:food_app/screens/home/components/sectionTitle.dart';
 import 'package:food_app/screens/sign/login_screen.dart';
+import 'package:food_app/screens/sign/profilecreation_screen.dart';
 import 'package:food_app/screens/sign/register_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -77,6 +78,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: CustomScrollView(
+        physics: NeverScrollableScrollPhysics(),
         slivers: [
           // แถบบนจอ
           SliverAppBar(
@@ -194,6 +196,17 @@ class HomeScreen extends StatelessWidget {
               );
             },
           ),
+          SpeedDialChild(
+            child: Icon(Icons.usb_rounded),
+            backgroundColor: Colors.redAccent,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ProfilecreationScreen()),
+              );
+            },
+          )
         ],
       ),
     );
