@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
-import 'package:food_app/foodData.dart';
+import 'package:food_app/utils/constants.dart';
+import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:food_app/screens/menu/components/foodContainer.dart';
 import 'package:food_app/screens/menu/components/foodSpecify.dart';
-import 'package:food_app/screens/sign/components/inputField.dart';
-import 'package:food_app/tapButton.dart';
+import 'package:food_app/utils/inputField.dart';
+import 'package:food_app/utils/tapButton.dart';
 
 class FoodDetailsScreen extends StatefulWidget {
   const FoodDetailsScreen({
@@ -17,6 +17,8 @@ class FoodDetailsScreen extends StatefulWidget {
   @override
   _FoodDetailsScreenState createState() => _FoodDetailsScreenState();
 }
+
+String specifyText = '';
 
 class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
   final TextEditingController _textController = TextEditingController();
@@ -71,13 +73,8 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                           physics: NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           children: [
-                            FoodSpecify(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            FoodSpecify(),
-                            SizedBox(
-                              height: 10,
+                            FoodSpecify(
+                              food: widget.food,
                             ),
                           ],
                         ),
@@ -130,6 +127,8 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                   cartItems
                       .add(CartItem(foodItem: widget.food, quantity: quantity));
                   priceItems.add(widget.food.price * quantity);
+                  specifyItems.add(specifyText);
+                  specifyText = '';
                   Navigator.pop(context);
                 },
                 title: 'Confirm',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
-import 'package:food_app/foodData.dart';
+import 'package:food_app/utils/constants.dart';
+import 'package:food_app/models/foodData.dart';
 
 class dotSlide extends StatelessWidget {
   const dotSlide({Key? key, required this.isActive}) : super(key: key);

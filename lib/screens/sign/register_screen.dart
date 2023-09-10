@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:food_app/screens/sign/components/inputField.dart';
+import 'package:food_app/screens/sign/components/signtitleText.dart';
+import 'package:food_app/utils/inputField.dart';
 import 'package:food_app/screens/sign/profilecreation_screen.dart';
-import 'package:food_app/tapButton.dart';
+import 'package:food_app/utils/tapButton.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -37,27 +38,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       size: 100,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: MediaQuery.of(context).size.height * 0.05),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Create Your Account',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 36),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.01,
-                          ),
-                          Text(
-                            'Please enter your information',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        padding: EdgeInsets.symmetric(
+                            vertical:
+                                MediaQuery.of(context).size.height * 0.05),
+                        child: SigntitleText(
+                            title: 'Create Your Account',
+                            subtitle: 'Please enter your information')),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * 0.1,

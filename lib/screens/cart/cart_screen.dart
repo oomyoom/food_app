@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
-import 'package:food_app/foodData.dart';
+import 'package:food_app/utils/constants.dart';
+import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/components/foodcartContainer.dart';
-import 'package:food_app/tapButton.dart';
+import 'package:food_app/utils/tapButton.dart';
 
 class CartItem {
   final Menu foodItem;
@@ -13,6 +13,7 @@ class CartItem {
 
 final List<CartItem> cartItems = [];
 final List<double> priceItems = [];
+final List<String> specifyItems = [];
 double totalPrice = 0;
 
 class CartScreen extends StatefulWidget {
@@ -26,6 +27,31 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
+    if (cartItems.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 66, 118, 93),
+          elevation: 0,
+          title: Text(
+            'My Cart'.toUpperCase(),
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: Colors.white),
+          ),
+        ),
+        body: Center(
+          child: Text(
+            'Your cart is empty',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: Colors.black45),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

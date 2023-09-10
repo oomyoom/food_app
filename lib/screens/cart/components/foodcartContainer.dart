@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
+import 'package:food_app/utils/constants.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
+import 'package:food_app/utils/foodImage.dart';
 
 class FoodcartContainer extends StatefulWidget {
   const FoodcartContainer({Key? key, required this.cartItem}) : super(key: key);
@@ -54,21 +55,7 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                           Container(
                             width: MediaQuery.of(context).size.width * 0.25,
                             height: MediaQuery.of(context).size.height * 0.1,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black26,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Image.asset(
-                                  value.foodItem.image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
+                            child: FoodImage(image: value.foodItem.image),
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.1,
@@ -77,12 +64,39 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  value.foodItem.title,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:
-                                      Theme.of(context).textTheme.titleLarge!,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      value.foodItem.title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!,
+                                    ),
+                                    IconButton(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      color: Colors.red,
+                                      icon: Icon(Icons.remove_circle),
+                                      iconSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.06,
+                                      onPressed: () {
+                                        setState(() {
+                                          cartItems.removeAt(index);
+                                          totalPrice =
+                                              totalPrice - priceItems[index];
+                                          priceItems.removeAt(index);
+                                          if (cartItems.isEmpty) {
+                                            Navigator.pop(context);
+                                          }
+                                        });
+                                      },
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(
                                   height:
@@ -224,6 +238,7 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                     double price = priceItems[index];
 
                     return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -231,7 +246,7 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                             Text(
                               '  - ${value.foodItem.title}',
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.bodyMedium!,
+                              style: Theme.of(context).textTheme.bodyLarge!,
                             ),
                             Text(
                               'USD ${price}',
@@ -242,6 +257,7 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                             ),
                           ],
                         ),
+                        Text(specifyItems[index]),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * .01,
                         )

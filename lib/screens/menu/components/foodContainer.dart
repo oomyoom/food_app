@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
-import 'package:food_app/foodData.dart';
+import 'package:food_app/utils/constants.dart';
+import 'package:food_app/models/foodData.dart';
+import 'package:food_app/utils/foodImage.dart';
 
 class FoodContainer extends StatefulWidget {
   const FoodContainer({
@@ -49,24 +50,9 @@ class _FoodContainerState extends State<FoodContainer> {
       child: Row(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.3,
-            height: MediaQuery.of(context).size.height * 0.15,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black26,
-                    width: 1,
-                  ),
-                ),
-                child: Image.asset(
-                  widget.food.image,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
+              width: MediaQuery.of(context).size.width * 0.3,
+              height: MediaQuery.of(context).size.height * 0.15,
+              child: FoodImage(image: widget.food.image)),
           SizedBox(
             width: MediaQuery.of(context).size.width * .1,
           ),

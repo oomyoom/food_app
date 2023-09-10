@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
+import 'package:food_app/utils/constants.dart';
 
 class sectionTitle extends StatelessWidget {
   const sectionTitle({Key? key, required this.press, required this.title})

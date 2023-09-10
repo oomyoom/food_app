@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:food_app/constants.dart';
-import 'package:food_app/foodData.dart';
+import 'package:food_app/utils/constants.dart';
+import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/menu/menu_screen.dart';
 import 'package:food_app/screens/home/components/cardInfo.dart';
 import 'package:food_app/screens/home/components/imageCarousel.dart';
@@ -90,15 +90,11 @@ class HomeScreen extends StatelessWidget {
             title: Column(
               children: [
                 Text(
-                  'Delivery to'.toUpperCase(),
+                  'PWO Restaurant'.toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
-                      .bodySmall!
+                      .bodyLarge!
                       .copyWith(color: Colors.white),
-                ),
-                Text(
-                  'Bangkok',
-                  style: TextStyle(color: Colors.black),
                 ),
               ],
             ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/imageProfile.dart';
-import 'package:food_app/screens/sign/components/inputField.dart';
+import 'package:food_app/screens/home/components/imageProfile.dart';
+import 'package:food_app/screens/sign/components/signtitleText.dart';
+import 'package:food_app/utils/inputField.dart';
 import 'package:food_app/screens/sign/login_screen.dart';
-import 'package:food_app/tapButton.dart';
+import 'package:food_app/utils/tapButton.dart';
 
 class ProfilecreationScreen extends StatefulWidget {
   const ProfilecreationScreen({Key? key}) : super(key: key);
@@ -34,27 +35,11 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
                 children: [
                   ImageProfile(),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: MediaQuery.of(context).size.height * 0.05),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Create Your Profile',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 36),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01,
-                        ),
-                        Text(
-                          'Please enter your information',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      padding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.height * 0.05),
+                      child: SigntitleText(
+                          title: 'Create Your Profile',
+                          subtitle: 'Please enter your information')),
                   Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1),

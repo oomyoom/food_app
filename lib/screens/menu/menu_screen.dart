@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
+import 'package:food_app/utils/constants.dart';
 import 'package:food_app/screens/menu/components/menuInfo.dart';
 import 'package:food_app/screens/menu/food_details_screen.dart';
-import 'package:food_app/foodData.dart';
+import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
 
 class MenuScreen extends StatefulWidget {

@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
-import 'package:food_app/screens/sign/components/inputField.dart';
+import 'package:food_app/screens/home/home_screen.dart';
+import 'package:food_app/screens/sign/components/signtitleText.dart';
+import 'package:food_app/utils/inputField.dart';
 import 'package:food_app/screens/sign/register_screen.dart';
-import 'package:food_app/tapButton.dart';
+import 'package:food_app/utils/tapButton.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -36,27 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     size: 100,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: MediaQuery.of(context).size.height * 0.05),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Hello friends!',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 36),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01,
-                        ),
-                        Text(
-                          'Welcome back',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      padding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.height * 0.05),
+                      child: SigntitleText(
+                          title: "Hello friends!", subtitle: 'Welcome Back')),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.1,
@@ -94,6 +78,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Input is valid')),
                             );
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomeScreen()));
                           }
                         },
                         title: 'Sign In',

@@ -1,54 +1,116 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
+import 'package:food_app/models/foodData.dart';
+import 'package:food_app/screens/cart/cart_screen.dart';
+import 'package:food_app/screens/menu/food_details_screen.dart';
+import 'package:food_app/utils/constants.dart';
 
 class FoodSpecify extends StatefulWidget {
-  const FoodSpecify({Key? key}) : super(key: key);
+  const FoodSpecify({Key? key, required this.food}) : super(key: key);
+  final Menu food;
 
   @override
   _FoodSpecifyState createState() => _FoodSpecifyState();
 }
 
 class _FoodSpecifyState extends State<FoodSpecify> {
-  List<bool> isChecked = [false, false];
+  List<List<bool>> isCheckedList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize isCheckedList with default values for each category
+    for (final category in widget.food.specifytitle) {
+      isCheckedList.add(List.filled(category.specifytitle.length, false));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Please specify, maximum 1',
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyMedium!,
-          ),
           Column(
-            children: isChecked.asMap().entries.map((entry) {
-              final index = entry.key;
+            children: widget.food.specifytitle.asMap().entries.map((entry) {
+              final categoryIndex = entry.key;
               final value = entry.value;
 
-              return CheckboxListTile(
-                activeColor: Colors.green,
-                checkColor: Colors.white,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Option ${index + 1}'),
-                    Text(
-                      'USD 0.0',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: kActiveColor,
-                      ),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: MediaQuery.of(context).size.height * 0.01),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              value.title,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: kActiveColor,
+                              ),
+                            ),
+                            Text(
+                              ' specify',
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodyMedium!,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: value.specifytitle
+                              .asMap()
+                              .entries
+                              .map((specifyEntry) {
+                            final specifyIndex = specifyEntry.key;
+                            final specifyTitle = specifyEntry.value;
+                            final specifyPrice = value.price[specifyIndex];
+
+                            return CheckboxListTile(
+                              activeColor: Colors.green,
+                              checkColor: Colors.white,
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('$specifyTitle'),
+                                  Text(
+                                    'USD $specifyPrice',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: kActiveColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              controlAffinity: ListTileControlAffinity.leading,
+                              value: isCheckedList[categoryIndex][specifyIndex],
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  isCheckedList[categoryIndex][specifyIndex] =
+                                      newValue ?? false;
+                                  if (newValue == true) {
+                                    if (specifyText.isNotEmpty) {
+                                      specifyText += '+';
+                                    }
+                                    specifyText += specifyTitle;
+                                    totalPrice += specifyPrice;
+                                  } else {
+                                    specifyText = specifyText.replaceAll(
+                                        specifyTitle, '');
+                                    totalPrice -= specifyPrice;
+                                  }
+                                });
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                controlAffinity: ListTileControlAffinity.leading,
-                value: value,
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    isChecked[index] = newValue ?? false;
-                  });
-                },
+                  ),
+                ],
               );
             }).toList(),
           ),
