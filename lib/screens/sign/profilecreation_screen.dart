@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/screens/home/components/imageProfile.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
+import 'package:food_app/utils/constants.dart';
 import 'package:food_app/utils/inputField.dart';
 import 'package:food_app/screens/sign/login_screen.dart';
 import 'package:food_app/utils/tapButton.dart';
@@ -110,7 +111,7 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
                           }
                         },
                         title: 'Complete',
-                        color: Color.fromARGB(255, 66, 118, 93),
+                        color: kMainColor,
                       )),
                 ],
               ),

@@ -19,6 +19,7 @@ class FoodDetailsScreen extends StatefulWidget {
 }
 
 String specifyText = '';
+double specifyperPrice = 0;
 
 class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
   final TextEditingController _textController = TextEditingController();
@@ -29,7 +30,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 66, 118, 93),
+        backgroundColor: kMainColor,
         elevation: 0,
         title: Column(
           children: [
@@ -48,6 +49,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
           children: [
             Expanded(
               child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
                     Padding(
@@ -120,19 +122,23 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              color: Color.fromARGB(255, 66, 118, 93),
+              color: kMainColor,
               child: TapButton(
                 press: () {
                   totalPrice = (widget.food.price * quantity) + totalPrice;
                   cartItems
                       .add(CartItem(foodItem: widget.food, quantity: quantity));
-                  priceItems.add(widget.food.price * quantity);
+                  priceItems
+                      .add((widget.food.price * quantity) + specifyperPrice);
                   specifyItems.add(specifyText);
                   specifyText = '';
-                  Navigator.pop(context);
+                  specifyperPrice = 0;
+                  while (Navigator.canPop(context)) {
+                    Navigator.pop(context);
+                  }
                 },
                 title: 'Confirm',
-                color: Color.fromARGB(255, 66, 118, 93),
+                color: kMainColor,
               ),
             ),
           ],

@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:food_app/screens/cart/cart_screen.dart';
+import 'package:food_app/screens/menu/food_details_screen.dart';
+import 'package:food_app/screens/queue/queue_screen.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/menu/menu_screen.dart';
@@ -23,7 +26,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           // รูปโปรไฟล์
           Container(
-            color: Colors.blue,
+            color: kMainColor,
             padding: EdgeInsets.all(16),
             child: CircleAvatar(
               radius: 72,
@@ -40,36 +43,24 @@ class HomeScreen extends StatelessWidget {
                   leading: const Icon(Icons.home_outlined),
                   title: Text('Home'),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()),
-                    );
+                    Navigator.pushReplacementNamed(context, '/home');
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.favorite_border),
-                  title: Text('Favorite'),
-                  onTap: () {},
+                  leading: const Icon(Icons.query_builder),
+                  title: Text('Queue'),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => QueueScreen(
+                                  order: order,
+                                )));
+                  },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.workspaces_outline),
-                  title: Text('Workflow'),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.update),
-                  title: Text('Updates'),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.account_tree_outlined),
-                  title: Text('Plugins'),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.notifications_outlined),
-                  title: Text('Notifications'),
+                  leading: const Icon(Icons.history),
+                  title: Text('History'),
                   onTap: () {},
                 ),
               ],
@@ -78,12 +69,27 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: CustomScrollView(
-        physics: NeverScrollableScrollPhysics(),
         slivers: [
           // แถบบนจอ
           SliverAppBar(
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: defaultPadding / 2),
+                child: IconButton(
+                  icon: Icon(Icons.shopping_cart),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartScreen(cartItems: cartItems),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
             centerTitle: true,
-            backgroundColor: Color.fromARGB(255, 66, 118, 93),
+            backgroundColor: kMainColor,
             elevation: 0,
             floating: true,
             pinned: true,
@@ -140,7 +146,13 @@ class HomeScreen extends StatelessWidget {
                               delivertTime:
                                   demoMediumCardData[index].delivertTime,
                               rating: demoMediumCardData[index].rating,
-                              press: () {},
+                              press: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FoodDetailsScreen(
+                                            food: demoMediumCardData[index])));
+                              },
                             ),
                           ))),
             ),

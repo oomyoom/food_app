@@ -3,7 +3,6 @@ import 'package:food_app/utils/constants.dart';
 import 'package:food_app/screens/menu/components/menuInfo.dart';
 import 'package:food_app/screens/menu/food_details_screen.dart';
 import 'package:food_app/models/foodData.dart';
-import 'package:food_app/screens/cart/cart_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({
@@ -22,24 +21,8 @@ class _MenuScreenState extends State<MenuScreen> {
         slivers: [
           // แถบบนจอ
           SliverAppBar(
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: defaultPadding / 2),
-                child: IconButton(
-                  icon: Icon(Icons.shopping_cart),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CartScreen(cartItems: cartItems),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
             centerTitle: true,
-            backgroundColor: Color.fromARGB(255, 66, 118, 93),
+            backgroundColor: kMainColor,
             elevation: 0,
             floating: true,
             title: Column(

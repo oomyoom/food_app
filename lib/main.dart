@@ -14,6 +14,9 @@ class MyApp extends StatelessWidget {
       title: 'PhanWillOrder',
       theme: buildThemeData(),
       home: HomeScreen(),
+      routes: {
+        '/home': (context) => HomeScreen(),
+      },
     );
   }
 }

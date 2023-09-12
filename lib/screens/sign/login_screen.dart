@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/screens/home/home_screen.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
+import 'package:food_app/utils/constants.dart';
 import 'package:food_app/utils/inputField.dart';
 import 'package:food_app/screens/sign/register_screen.dart';
 import 'package:food_app/utils/tapButton.dart';
@@ -85,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         },
                         title: 'Sign In',
-                        color: Color.fromARGB(255, 66, 118, 93),
+                        color: kMainColor,
                       )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

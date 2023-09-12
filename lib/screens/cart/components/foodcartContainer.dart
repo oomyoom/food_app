@@ -244,7 +244,7 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '  - ${value.foodItem.title}',
+                              '  - ${value.foodItem.title} x ${value.quantity}',
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.bodyLarge!,
                             ),
@@ -257,7 +257,12 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                             ),
                           ],
                         ),
-                        Text(specifyItems[index]),
+                        Text(
+                          specifyItems[index],
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium!,
+                        ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * .01,
                         )
