@@ -97,7 +97,7 @@ class QueueScreen extends StatelessWidget {
                                       return Column(
                                         children: [
                                           Text(
-                                            'ORD ${value.OrderId}',
+                                            'ORD5555 ${value.OrderId}',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleMedium!
