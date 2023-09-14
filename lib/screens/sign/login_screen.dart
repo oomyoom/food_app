@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:food_app/screens/home/home_screen.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
 import 'package:food_app/utils/constants.dart';
-import 'package:food_app/utils/inputField.dart';
 import 'package:food_app/screens/sign/register_screen.dart';
 import 'package:food_app/utils/tapButton.dart';
 
@@ -46,8 +45,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.1,
                     ),
-                    child: InputField(
-                      title: 'Email',
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(fontSize: 16)),
                       controller: _emailtextController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -60,9 +61,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1),
-                      child: InputField(
-                        title: 'Password',
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            labelText: 'Password',
+                            labelStyle: TextStyle(fontSize: 16)),
                         controller: _passwordtextController,
+                        obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your password';
@@ -79,7 +83,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Input is valid')),
                             );
-                            Navigator.push(
+                            while (Navigator.canPop(context)) {
+                              Navigator.pop(context);
+                            }
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const HomeScreen()));

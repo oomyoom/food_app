@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/components/foodcartContainer.dart';
-import 'package:food_app/utils/orderQueue.dart';
+import 'package:food_app/models/orderQueue.dart';
 import 'package:food_app/utils/tapButton.dart';
 
 class CartItem {
   final Menu foodItem;
+  double priceItem;
+  String specifyItem;
   int quantity;
 
-  CartItem({required this.foodItem, required this.quantity});
+  CartItem(
+      {required this.foodItem,
+      required this.quantity,
+      required this.priceItem,
+      required this.specifyItem});
 }
 
 final List<CartItem> cartItems = [];
-final List<double> priceItems = [];
-final List<String> specifyItems = [];
 double totalPrice = 0;
 final List<OrderQueue> order = [];
 int orderId = 0;
@@ -81,9 +85,7 @@ class _CartScreenState extends State<CartScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(defaultPadding),
-                    child: FoodcartContainer(
-                      cartItem: cartItems,
-                    ),
+                    child: FoodcartContainer(),
                   ),
                 ],
               )),
@@ -96,8 +98,6 @@ class _CartScreenState extends State<CartScreen> {
                   orderId++;
                   final newOrder = OrderQueue(
                     cartItems: cartItems,
-                    priceItems: priceItems,
-                    specifyItems: specifyItems,
                     totalPrice: totalPrice,
                   );
 

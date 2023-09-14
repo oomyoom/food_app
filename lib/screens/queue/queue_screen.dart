@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/utils/constants.dart';
-import 'package:food_app/utils/orderQueue.dart';
+import 'package:food_app/models/orderQueue.dart';
 
 class QueueScreen extends StatelessWidget {
   const QueueScreen({Key? key, required this.order}) : super(key: key);
@@ -10,7 +10,6 @@ class QueueScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     int totalQueue = 0;
     for (var item in order) {
-      print('Order ID: ${item.OrderId}');
       if (item.isCompleted == false) totalQueue++;
     }
 

@@ -4,7 +4,6 @@ import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:food_app/screens/menu/components/foodContainer.dart';
 import 'package:food_app/screens/menu/components/foodSpecify.dart';
-import 'package:food_app/utils/inputField.dart';
 import 'package:food_app/utils/tapButton.dart';
 
 class FoodDetailsScreen extends StatefulWidget {
@@ -101,8 +100,9 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                               padding: const EdgeInsets.only(
                                 top: defaultPadding / 2,
                               ),
-                              child: InputField(
-                                title: 'Note to restaurant',
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: 'Note to restaurant'),
                                 controller: _textController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -126,11 +126,12 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
               child: TapButton(
                 press: () {
                   totalPrice = (widget.food.price * quantity) + totalPrice;
-                  cartItems
-                      .add(CartItem(foodItem: widget.food, quantity: quantity));
-                  priceItems
-                      .add((widget.food.price * quantity) + specifyperPrice);
-                  specifyItems.add(specifyText);
+                  cartItems.add(CartItem(
+                      foodItem: widget.food,
+                      quantity: quantity,
+                      priceItem:
+                          (widget.food.price * quantity) + specifyperPrice,
+                      specifyItem: specifyText));
                   specifyText = '';
                   specifyperPrice = 0;
                   while (Navigator.canPop(context)) {

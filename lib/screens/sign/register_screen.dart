@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
 import 'package:food_app/utils/constants.dart';
-import 'package:food_app/utils/inputField.dart';
 import 'package:food_app/screens/sign/profilecreation_screen.dart';
 import 'package:food_app/utils/tapButton.dart';
 
@@ -49,10 +48,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * 0.1,
                       ),
-                      child: InputField(
-                        title: 'Email',
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            labelText: 'Email',
+                            labelStyle: TextStyle(fontSize: 16)),
                         controller: _emailtextController,
                         validator: (value) {
+                          final emailRegex = RegExp(
+                              r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+                          if (!emailRegex.hasMatch(value ?? '')) {
+                            return 'Please enter a valid email address';
+                          }
                           if (value == null || value.isEmpty) {
                             return 'Please enter your email';
                           }
@@ -64,13 +70,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1,
                         ),
-                        child: InputField(
-                          title: 'Password',
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              labelText: 'Password',
+                              labelStyle: TextStyle(fontSize: 16)),
                           controller: _passwordtextController,
+                          obscureText: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password';
                             }
+                            // if (value.length < 8) {
+                            //   return 'Password must be at least 8 characters long';
+                            // }
                             return null;
                           },
                         )),
@@ -78,12 +90,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1,
                         ),
-                        child: InputField(
-                          title: 'Confirm-Password',
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              labelText: 'Confirm-Password',
+                              labelStyle: TextStyle(fontSize: 16)),
                           controller: _confirmpasswordtextController,
+                          obscureText: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your confirm-password';
+                            }
+                            if (_passwordtextController.text.compareTo(
+                                    _confirmpasswordtextController.text) !=
+                                0) {
+                              return 'Password and Confirm-Password do not match';
                             }
                             return null;
                           },
@@ -94,10 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         child: TapButton(
                           press: () {
-                            if (_formKey.currentState!.validate() &&
-                                _passwordtextController.text.compareTo(
-                                        _confirmpasswordtextController.text) ==
-                                    0) {
+                            if (_formKey.currentState!.validate()) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text('Input is valid')));
                               Navigator.push(
