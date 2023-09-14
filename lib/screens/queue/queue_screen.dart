@@ -90,13 +90,12 @@ class QueueScreen extends StatelessWidget {
                               SingleChildScrollView(
                                 child: Column(
                                   children: order.asMap().entries.map((entry) {
-                                    final index = entry.key;
                                     final value = entry.value;
                                     if (value.isCompleted == false) {
                                       return Column(
                                         children: [
                                           Text(
-                                            'ORD5555 ${value.OrderId}',
+                                            'ORD ${value.OrderId}',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleMedium!
