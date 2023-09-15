@@ -4,6 +4,7 @@ import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/components/foodcartContainer.dart';
 import 'package:food_app/models/orderQueue.dart';
 import 'package:food_app/utils/tapButton.dart';
+import 'package:food_app/utils/stripeService.dart';
 
 class CartItem {
   final Menu foodItem;
@@ -94,7 +95,18 @@ class _CartScreenState extends State<CartScreen> {
               width: MediaQuery.of(context).size.width,
               color: kMainColor,
               child: TapButton(
-                press: () {
+                press: () async {
+                  var items = [
+                    {'productName': 'Apple', 'productPrice': 5, 'qty': 10},
+                  ];
+                  await StripeService.stripePaymentCheckout(
+                      items, totalPrice, context, mounted, onSuccess: () {
+                    print('Success');
+                  }, onCancel: () {
+                    print('Cancel');
+                  }, onError: (e) {
+                    print('Error: ' + e.toString());
+                  });
                   orderId++;
                   final newOrder = OrderQueue(
                     cartItems: cartItems,
@@ -113,8 +125,8 @@ class _CartScreenState extends State<CartScreen> {
                   //     print('   Quantity: ${cartItem.quantity}');
                   //   }
                   // }
-                  cartItems.clear();
-                  Navigator.pop(context);
+                  //cartItems.clear();
+                  //Navigator.pop(context);
                 },
                 title: 'Checkout',
                 color: kMainColor,
