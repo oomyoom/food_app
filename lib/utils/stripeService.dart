@@ -19,13 +19,12 @@ class StripeService {
     int index = 0;
 
     productItems.forEach((value) {
-      var productPrice = (value['productPrice'] * 100).round().toString();
+      var productPrice = (value.foodItem.price * 100).round().toString();
       lineItems +=
-          '&line_items[$index][price_data][product_data][name]=${value['productName']}';
+          '&line_items[$index][price_data][product_data][name]=${value.foodItem.title}';
       lineItems += '&line_items[$index][price_data][unit_amount]=$productPrice';
-      lineItems +=
-          '&line_items[$index][price_data][currency]=THB';
-      lineItems += '&line_items[$index][quantity]=${value['qty'].toString()}';
+      lineItems += '&line_items[$index][price_data][currency]=THB';
+      lineItems += '&line_items[$index][quantity]=${value.quantity.toString()}';
       index++;
     });
 

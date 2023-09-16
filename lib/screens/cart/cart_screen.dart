@@ -96,11 +96,8 @@ class _CartScreenState extends State<CartScreen> {
               color: kMainColor,
               child: TapButton(
                 press: () async {
-                  var items = [
-                    {'productName': 'Apple', 'productPrice': 5, 'qty': 10},
-                  ];
                   await StripeService.stripePaymentCheckout(
-                      items, totalPrice, context, mounted, onSuccess: () {
+                      cartItems, totalPrice, context, mounted, onSuccess: () {
                     print('Success');
                   }, onCancel: () {
                     print('Cancel');
