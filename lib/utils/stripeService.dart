@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:stripe_checkout/stripe_checkout.dart';
 
@@ -19,10 +20,15 @@ class StripeService {
     int index = 0;
 
     productItems.forEach((value) {
-      var productPrice = (value.foodItem.price * 100).round().toString();
+      var productPrice =
+          ((value.foodItem.price + value.specfiyPrice) * 100).round();
+      var tax = (productPrice * 0.1).toInt();
+      var totalPrice = productPrice + tax;
       lineItems +=
           '&line_items[$index][price_data][product_data][name]=${value.foodItem.title}';
-      lineItems += '&line_items[$index][price_data][unit_amount]=$productPrice';
+      lineItems +=
+          '&line_items[$index][price_data][product_data][description]=${value.specifyItem}';
+      lineItems += '&line_items[$index][price_data][unit_amount]=$totalPrice';
       lineItems += '&line_items[$index][price_data][currency]=THB';
       lineItems += '&line_items[$index][quantity]=${value.quantity.toString()}';
       index++;
@@ -51,6 +57,7 @@ class StripeService {
   }) async {
     final String sessionId =
         await createCheckoutSession(productItems, subTotal);
+    print('Session : $sessionId');
 
     final result = await redirectToCheckout(
         context: context,
@@ -62,10 +69,32 @@ class StripeService {
     if (mounted) {
       final text = result.when(
           redirected: () => 'Redirected Successfully',
-          success: () => onSuccess(),
+          success: () => retrieveCheckoutSession(sessionId),
           canceled: () => onCancel(),
           error: (e) => onError(e));
       return text;
+    }
+  }
+
+  static Future<dynamic> retrieveCheckoutSession(
+      String checkoutSessionId) async {
+    final url = Uri.parse(
+        'https://api.stripe.com/v1/checkout/sessions/$checkoutSessionId');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $secretKey',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final checkoutSession = json.decode(response.body);
+      final amount = checkoutSession['amount_subtotal'] / 100;
+      serviceCharge = amount - totalPrice;
+    } else {
+      print('Failed to retrieve checkout session: ${response.body}');
     }
   }
 }

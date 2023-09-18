@@ -8,7 +8,7 @@ import 'package:food_app/utils/stripeService.dart';
 
 class CartItem {
   final Menu foodItem;
-  double priceItem;
+  double priceItem, specfiyPrice;
   String specifyItem;
   int quantity;
 
@@ -16,11 +16,12 @@ class CartItem {
       {required this.foodItem,
       required this.quantity,
       required this.priceItem,
-      required this.specifyItem});
+      required this.specifyItem,
+      required this.specfiyPrice});
 }
 
 final List<CartItem> cartItems = [];
-double totalPrice = 0;
+double totalPrice = 0, serviceCharge = 0;
 final List<OrderQueue> order = [];
 int orderId = 0;
 
@@ -111,17 +112,6 @@ class _CartScreenState extends State<CartScreen> {
                   );
 
                   order.add(newOrder);
-
-                  // for (var item in order) {
-                  //   print('Order ID: ${item.lastOrderId}');
-                  //   print('Total Price: ${item.totalPrice}');
-
-                  //   print('Cart Items:');
-                  //   for (var cartItem in item.cartItems) {
-                  //     print(' - Food Item: ${cartItem.foodItem.title}');
-                  //     print('   Quantity: ${cartItem.quantity}');
-                  //   }
-                  // }
                   //cartItems.clear();
                   //Navigator.pop(context);
                 },

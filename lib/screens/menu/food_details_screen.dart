@@ -125,13 +125,15 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
               color: kMainColor,
               child: TapButton(
                 press: () {
-                  totalPrice = (widget.food.price * quantity) + totalPrice;
+                  totalPrice +=
+                      ((widget.food.price + specifyperPrice) * quantity);
                   cartItems.add(CartItem(
                       foodItem: widget.food,
                       quantity: quantity,
                       priceItem:
-                          (widget.food.price * quantity) + specifyperPrice,
-                      specifyItem: specifyText));
+                          (widget.food.price + specifyperPrice) * quantity,
+                      specifyItem: specifyText,
+                      specfiyPrice: specifyperPrice));
                   specifyText = '';
                   specifyperPrice = 0;
                   while (Navigator.canPop(context)) {

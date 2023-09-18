@@ -35,8 +35,9 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                   setState(() {
                     if (value.quantity > 1) {
                       value.quantity--;
-                      value.priceItem = value.priceItem - value.foodItem.price;
-                      totalPrice = totalPrice - value.foodItem.price;
+                      value.priceItem -=
+                          (value.specfiyPrice + value.foodItem.price);
+                      totalPrice -= (value.specfiyPrice + value.foodItem.price);
                     }
                   });
                 }
@@ -44,8 +45,9 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                 void incrementQuantity() {
                   setState(() {
                     value.quantity++;
-                    value.priceItem = value.priceItem + value.foodItem.price;
-                    totalPrice = totalPrice + value.foodItem.price;
+                    value.priceItem +=
+                        (value.specfiyPrice + value.foodItem.price);
+                    totalPrice += (value.specfiyPrice + value.foodItem.price);
                   });
                 }
 

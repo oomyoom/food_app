@@ -97,7 +97,6 @@ class _FoodSpecifyState extends State<FoodSpecify> {
                                     }
                                     specifyText += specifyTitle;
                                     specifyperPrice += specifyPrice;
-                                    totalPrice += specifyPrice;
                                   } else {
                                     if (specifyText.isNotEmpty)
                                       specifyText = specifyText.replaceAll(
@@ -105,7 +104,6 @@ class _FoodSpecifyState extends State<FoodSpecify> {
                                     specifyText = specifyText.replaceAll(
                                         specifyTitle, '');
                                     specifyperPrice -= specifyPrice;
-                                    totalPrice -= specifyPrice;
                                   }
                                 });
                               },
