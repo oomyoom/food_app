@@ -69,7 +69,10 @@ class StripeService {
     if (mounted) {
       final text = result.when(
           redirected: () => 'Redirected Successfully',
-          success: () => retrieveCheckoutSession(sessionId),
+          success: () {
+            onSuccess();
+            retrieveCheckoutSession(sessionId);
+          },
           canceled: () => onCancel(),
           error: (e) => onError(e));
       return text;

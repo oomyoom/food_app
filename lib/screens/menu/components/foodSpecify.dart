@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/models/foodData.dart';
-import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:food_app/screens/menu/food_details_screen.dart';
 import 'package:food_app/utils/constants.dart';
 
@@ -18,7 +17,6 @@ class _FoodSpecifyState extends State<FoodSpecify> {
   @override
   void initState() {
     super.initState();
-    // Initialize isCheckedList with default values for each category
     for (final category in widget.food.specifytitle) {
       isCheckedList.add(List.filled(category.specifytitle.length, false));
     }
@@ -77,7 +75,7 @@ class _FoodSpecifyState extends State<FoodSpecify> {
                                 children: [
                                   Text('$specifyTitle'),
                                   Text(
-                                    'USD $specifyPrice',
+                                    '฿ $specifyPrice',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       color: kActiveColor,

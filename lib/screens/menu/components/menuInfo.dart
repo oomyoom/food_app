@@ -40,7 +40,7 @@ class MenuInfo extends StatelessWidget {
                   height: 32,
                 ),
                 Text(
-                  "USD $price",
+                  "฿ $price",
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: kActiveColor,

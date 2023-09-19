@@ -74,7 +74,7 @@ class _FoodContainerState extends State<FoodContainer> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'USD ${widget.food.price}',
+                      '฿ ${widget.food.price}',
                       style: const TextStyle(
                           fontWeight: FontWeight.w500, color: kActiveColor),
                     ),

@@ -104,12 +104,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                                 decoration: InputDecoration(
                                     labelText: 'Note to restaurant'),
                                 controller: _textController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your email';
-                                  }
-                                  return null;
-                                },
+                                keyboardType: TextInputType.text,
                               ),
                             )
                           ],
@@ -125,6 +120,12 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
               color: kMainColor,
               child: TapButton(
                 press: () {
+                  if (specifyText.isEmpty) {
+                    specifyText = 'Normal';
+                  }
+                  if (_textController.text.isNotEmpty) {
+                    specifyText = '$specifyText+${_textController.text}';
+                  }
                   totalPrice +=
                       ((widget.food.price + specifyperPrice) * quantity);
                   cartItems.add(CartItem(

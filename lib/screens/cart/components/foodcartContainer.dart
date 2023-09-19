@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/screens/cart/components/billContainer.dart';
+import 'package:food_app/screens/cart/components/deliveryOption.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:food_app/utils/foodImage.dart';
@@ -108,7 +109,7 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'USD ${value.foodItem.price}',
+                                    '฿ ${value.foodItem.price + value.specfiyPrice}',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       color: kActiveColor,
@@ -164,10 +165,21 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.02,
         ),
-        Padding(
-          padding: const EdgeInsets.only(
-              left: defaultPadding, right: defaultPadding),
-          child: Container(child: BillContainer()),
+        const Padding(
+          padding: EdgeInsets.only(left: defaultPadding, right: defaultPadding),
+          child: BillContainer(),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.02,
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Colors.black26, width: 1))),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(defaultPadding),
+          child: DeliveryOption(),
         )
       ],
     );

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/utils/constants.dart';
-import 'package:food_app/models/orderQueue.dart';
+import 'package:food_app/models/order.dart';
 
 class QueueScreen extends StatelessWidget {
   const QueueScreen({Key? key, required this.order}) : super(key: key);
-  final List<OrderQueue> order;
+  final List<Order> order;
 
   @override
   Widget build(BuildContext context) {
     int totalQueue = 0;
     for (var item in order) {
+      //print(item.creatDateTime.toString().substring(0, 16));
       if (item.isCompleted == false) totalQueue++;
     }
 
@@ -95,7 +96,7 @@ class QueueScreen extends StatelessWidget {
                                       return Column(
                                         children: [
                                           Text(
-                                            'ORD ${value.OrderId}',
+                                            'ORD ${value.orderId}',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleMedium!

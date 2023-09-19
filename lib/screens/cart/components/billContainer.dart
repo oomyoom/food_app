@@ -37,7 +37,7 @@ class BillContainer extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyLarge!,
                     ),
                     Text(
-                      'USD ${value.priceItem}',
+                      '฿ ${value.priceItem}',
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         color: kActiveColor,
@@ -73,7 +73,7 @@ class BillContainer extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Text(
-                    'USD $totalPrice',
+                    '฿ $totalPrice',
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,

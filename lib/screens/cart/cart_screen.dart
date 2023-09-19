@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/screens/cart/components/deliveryOption.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/components/foodcartContainer.dart';
-import 'package:food_app/models/orderQueue.dart';
+import 'package:food_app/models/order.dart';
 import 'package:food_app/utils/tapButton.dart';
 import 'package:food_app/utils/stripeService.dart';
 
@@ -22,8 +23,6 @@ class CartItem {
 
 final List<CartItem> cartItems = [];
 double totalPrice = 0, serviceCharge = 0;
-final List<OrderQueue> order = [];
-int orderId = 0;
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key, required List<CartItem> cartItems})
@@ -81,15 +80,11 @@ class _CartScreenState extends State<CartScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(
+            const Expanded(
               child: SingleChildScrollView(
-                  child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(defaultPadding),
-                    child: FoodcartContainer(),
-                  ),
-                ],
+                  child: Padding(
+                padding: EdgeInsets.all(defaultPadding),
+                child: FoodcartContainer(),
               )),
             ),
             Container(
@@ -99,21 +94,23 @@ class _CartScreenState extends State<CartScreen> {
                 press: () async {
                   await StripeService.stripePaymentCheckout(
                       cartItems, totalPrice, context, mounted, onSuccess: () {
-                    print('Success');
+                    orderId++;
+                    final newOrder = Order(
+                      orderId: orderId,
+                      cartItems: cartItems,
+                      totalPrice: totalPrice,
+                      creatDateTime: DateTime.now(),
+                      deliveryOption: deliveryTextOption,
+                    );
+
+                    order.add(newOrder);
+                    cartItems.clear();
+                    Navigator.pop(context);
                   }, onCancel: () {
                     print('Cancel');
                   }, onError: (e) {
                     print('Error: ' + e.toString());
                   });
-                  orderId++;
-                  final newOrder = OrderQueue(
-                    cartItems: cartItems,
-                    totalPrice: totalPrice,
-                  );
-
-                  order.add(newOrder);
-                  //cartItems.clear();
-                  //Navigator.pop(context);
                 },
                 title: 'Checkout',
                 color: kMainColor,
