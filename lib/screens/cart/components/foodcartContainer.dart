@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/screens/cart/components/billContainer.dart';
-import 'package:food_app/screens/cart/components/deliveryOption.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:food_app/utils/foodImage.dart';
@@ -23,7 +21,6 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
         Container(
           padding: const EdgeInsets.all(defaultPadding),
           width: MediaQuery.of(context).size.width,
-          //height: MediaQuery.of(context).size.height * 0.25,
           decoration: BoxDecoration(
               border: Border.all(color: Colors.black26, width: 1)),
           child: Column(
@@ -162,25 +159,6 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                 );
               }).toList()),
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.02,
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: defaultPadding, right: defaultPadding),
-          child: BillContainer(),
-        ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.02,
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Colors.black26, width: 1))),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(defaultPadding),
-          child: DeliveryOption(),
-        )
       ],
     );
   }

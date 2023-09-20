@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/screens/cart/components/billContainer.dart';
 import 'package:food_app/screens/cart/components/deliveryOption.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
@@ -80,11 +81,36 @@ class _CartScreenState extends State<CartScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            const Expanded(
+            Expanded(
               child: SingleChildScrollView(
                   child: Padding(
-                padding: EdgeInsets.all(defaultPadding),
-                child: FoodcartContainer(),
+                padding: const EdgeInsets.all(defaultPadding),
+                child: Column(
+                  children: [
+                    const FoodcartContainer(),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(
+                          left: defaultPadding, right: defaultPadding),
+                      child: BillContainer(),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: Colors.black26, width: 1))),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: DeliveryOption(),
+                    )
+                  ],
+                ),
               )),
             ),
             Container(

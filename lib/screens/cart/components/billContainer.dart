@@ -74,11 +74,10 @@ class BillContainer extends StatelessWidget {
                   ),
                   Text(
                     '฿ $totalPrice',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      color: kActiveColor,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: kActiveColor),
                   ),
                 ],
               ),

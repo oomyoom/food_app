@@ -3,8 +3,7 @@ import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/order.dart';
 
 class QueueScreen extends StatelessWidget {
-  const QueueScreen({Key? key, required this.order}) : super(key: key);
-  final List<Order> order;
+  const QueueScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
