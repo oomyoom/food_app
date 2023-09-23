@@ -89,12 +89,11 @@ class OrderDetailsScreen extends StatelessWidget {
                             style: Theme.of(context).textTheme.bodyLarge!,
                           ),
                           Text(
-                            '฿ ${order.cartItems.map((e) => e.priceItem).join(', ')}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: kActiveColor,
-                            ),
-                          ),
+                              '฿ ${order.cartItems.map((e) => e.priceItem).join(', ')}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(color: kActiveColor)),
                         ],
                       ),
                       Text(
@@ -102,7 +101,7 @@ class OrderDetailsScreen extends StatelessWidget {
                             .map((e) => e.specifyItem)
                             .join(', ')
                             .toString(),
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyMedium!,
                       ),
