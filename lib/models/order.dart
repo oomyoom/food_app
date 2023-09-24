@@ -7,14 +7,14 @@ class Order {
   bool isCompleted = false;
 
   final int orderId;
-  final List<CartItem> cartItems;
+  final List<CartItem> orderItems;
   final double totalPrice;
   final DateTime creatDateTime;
   final String deliveryOption;
 
   Order(
       {required this.orderId,
-      required this.cartItems,
+      required this.orderItems,
       required this.totalPrice,
       required this.creatDateTime,
       required this.deliveryOption});

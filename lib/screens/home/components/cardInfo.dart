@@ -6,14 +6,11 @@ class cardInfo extends StatelessWidget {
       {Key? key,
       required this.title,
       required this.image,
-      required this.delivertTime,
-      required this.rating,
       required this.press,
-      required this.location})
+      required this.price})
       : super(key: key);
-  final String title, image, location;
-  final int delivertTime;
-  final double rating;
+  final String title, image;
+  final double price;
   final VoidCallback press;
 
   @override
@@ -38,43 +35,14 @@ class cardInfo extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            Text(
-              location,
-              maxLines: 1,
-              style: TextStyle(color: kBodyTextColor),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.01,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: defaultPadding / 2),
-              child: DefaultTextStyle(
-                style: TextStyle(color: Colors.black, fontSize: 12),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: defaultPadding / 2,
-                        vertical: defaultPadding / 8,
-                      ),
-                      decoration: BoxDecoration(
-                          color: kActiveColor,
-                          borderRadius: BorderRadius.all(Radius.circular(6))),
-                      child: Text(
-                        rating.toString(),
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    Spacer(),
-                    Text('$delivertTime min'),
-                    Spacer(),
-                    CircleAvatar(
-                      radius: 2,
-                      backgroundColor: Color(0xFF868686),
-                    ),
-                    Spacer(),
-                    Text('Free delivery'),
-                  ],
-                ),
-              ),
-            )
+            Text(
+              '฿ $price',
+              maxLines: 1,
+              style: TextStyle(color: kActiveColor),
+            ),
           ],
         ),
       ),

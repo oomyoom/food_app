@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/models/order.dart';
-import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:food_app/screens/history/orderDetails_screen.dart';
 import 'package:food_app/utils/constants.dart';
 
@@ -9,13 +8,6 @@ class OrderHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    order.add(Order(
-        orderId: orderId,
-        cartItems: cartItems,
-        totalPrice: totalPrice,
-        creatDateTime: DateTime.now(),
-        deliveryOption: 'Take-Away'));
-    print(order.length);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -45,12 +37,7 @@ class OrderHistoryScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => OrderDetailsScreen(
-                                    order: Order(
-                                        orderId: value.orderId,
-                                        cartItems: value.cartItems,
-                                        totalPrice: value.totalPrice,
-                                        creatDateTime: value.creatDateTime,
-                                        deliveryOption: value.deliveryOption),
+                                    order: value,
                                   )));
                     },
                     child: Column(
@@ -88,7 +75,7 @@ class OrderHistoryScreen extends StatelessWidget {
                                   MediaQuery.of(context).size.width * 0.03),
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.05,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
                                       color: Colors.black12, width: 1),

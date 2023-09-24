@@ -41,82 +41,85 @@ class _FoodContainerState extends State<FoodContainer> {
     return Container(
       padding: const EdgeInsets.all(defaultPadding),
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.155,
+      height: MediaQuery.of(context).size.height * 0.17,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.black26,
           width: 1,
         ),
       ),
-      child: Row(
-        children: [
-          Container(
-              width: MediaQuery.of(context).size.width * 0.3,
-              height: MediaQuery.of(context).size.height * 0.15,
-              child: FoodImage(image: widget.food.image)),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * .1,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.food.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleLarge!,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .04,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '฿ ${widget.food.price}',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w500, color: kActiveColor),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * .06,
-                    ),
-                    Row(
-                      children: [
-                        PressBox(
-                          press: decrementQuantity,
-                          icon: const Icon(
-                            Icons.remove,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * .07,
-                          child: Center(
-                            child: Text(
-                              quantity.toString(),
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
+      child: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        child: Row(
+          children: [
+            SizedBox(
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: MediaQuery.of(context).size.height * 0.12,
+                child: FoodImage(image: widget.food.image)),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .1,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.food.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleLarge!,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .04,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '฿ ${widget.food.price}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w500, color: kActiveColor),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * .06,
+                      ),
+                      Row(
+                        children: [
+                          PressBox(
+                            press: decrementQuantity,
+                            icon: const Icon(
+                              Icons.remove,
+                              color: Colors.black,
                             ),
                           ),
-                        ),
-                        PressBox(
-                          press: incrementQuantity,
-                          icon: const Icon(
-                            Icons.add,
-                            color: Colors.black,
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .07,
+                            child: Center(
+                              child: Text(
+                                quantity.toString(),
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              ),
+                            ),
                           ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                          PressBox(
+                            press: incrementQuantity,
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.black,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

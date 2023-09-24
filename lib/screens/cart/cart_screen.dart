@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/screens/cart/components/billContainer.dart';
 import 'package:food_app/screens/cart/components/deliveryOption.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
@@ -90,14 +89,6 @@ class _CartScreenState extends State<CartScreen> {
                     const FoodcartContainer(),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.02,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          left: defaultPadding, right: defaultPadding),
-                      child: BillContainer(),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.02,
                       child: Container(
                         decoration: const BoxDecoration(
                             border: Border(
@@ -121,16 +112,19 @@ class _CartScreenState extends State<CartScreen> {
                   await StripeService.stripePaymentCheckout(
                       cartItems, totalPrice, context, mounted, onSuccess: () {
                     orderId++;
+
                     final newOrder = Order(
                       orderId: orderId,
-                      cartItems: cartItems,
+                      orderItems: List.from(cartItems),
                       totalPrice: totalPrice,
                       creatDateTime: DateTime.now(),
                       deliveryOption: deliveryTextOption,
                     );
 
                     order.add(newOrder);
+
                     cartItems.clear();
+                    totalPrice = 0;
                     Navigator.pop(context);
                   }, onCancel: () {
                     print('Cancel');

@@ -10,7 +10,7 @@ class DeliveryOption extends StatefulWidget {
 
 enum deliveryOption { dineIn, takeOut }
 
-String deliveryTextOption = '';
+String deliveryTextOption = 'Dine-In';
 
 class _DeliveryOptionState extends State<DeliveryOption> {
   deliveryOption _selectedOption = deliveryOption.dineIn;

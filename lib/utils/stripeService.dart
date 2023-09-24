@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:stripe_checkout/stripe_checkout.dart';
 
@@ -57,7 +56,6 @@ class StripeService {
   }) async {
     final String sessionId =
         await createCheckoutSession(productItems, subTotal);
-    print('Session : $sessionId');
 
     final result = await redirectToCheckout(
         context: context,
@@ -69,35 +67,10 @@ class StripeService {
     if (mounted) {
       final text = result.when(
           redirected: () => 'Redirected Successfully',
-          success: () {
-            onSuccess();
-            retrieveCheckoutSession(sessionId);
-          },
+          success: () => onSuccess(),
           canceled: () => onCancel(),
           error: (e) => onError(e));
       return text;
-    }
-  }
-
-  static Future<dynamic> retrieveCheckoutSession(
-      String checkoutSessionId) async {
-    final url = Uri.parse(
-        'https://api.stripe.com/v1/checkout/sessions/$checkoutSessionId');
-
-    final response = await http.get(
-      url,
-      headers: {
-        'Authorization': 'Bearer $secretKey',
-        'Content-Type': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final checkoutSession = json.decode(response.body);
-      final amount = checkoutSession['amount_subtotal'] / 100;
-      serviceCharge = amount - totalPrice;
-    } else {
-      print('Failed to retrieve checkout session: ${response.body}');
     }
   }
 }

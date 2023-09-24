@@ -12,7 +12,7 @@ class PressBox extends StatelessWidget {
       width: MediaQuery.of(context).size.width * .08,
       height: MediaQuery.of(context).size.height * .04,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
+        shape: BoxShape.circle,
         border: Border.all(
           color: Colors.black12,
           width: 1,

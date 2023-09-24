@@ -38,7 +38,7 @@ class StatusContainer extends StatelessWidget {
       height: MediaQuery.of(context).size.height * .04,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(100),
+        shape: BoxShape.circle,
         border: Border.all(
           color: Colors.black,
           width: 1,

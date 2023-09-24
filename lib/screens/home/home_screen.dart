@@ -143,11 +143,10 @@ class HomeScreen extends StatelessWidget {
                                 horizontal: defaultPadding / 2),
                             child: cardInfo(
                               title: demoMediumCardData[index].title,
-                              location: demoMediumCardData[index].location,
+                              price: demoMediumCardData[index].price,
+                              
                               image: demoMediumCardData[index].image,
-                              delivertTime:
-                                  demoMediumCardData[index].delivertTime,
-                              rating: demoMediumCardData[index].rating,
+                              
                               press: () {
                                 Navigator.push(
                                     context,

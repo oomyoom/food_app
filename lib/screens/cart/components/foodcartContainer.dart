@@ -53,9 +53,9 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                   children: [
                     Row(
                       children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          height: MediaQuery.of(context).size.height * 0.1,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.28,
+                          height: MediaQuery.of(context).size.height * 0.12,
                           child: FoodImage(image: value.foodItem.image),
                         ),
                         SizedBox(
@@ -80,7 +80,7 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                                     highlightColor: Colors.transparent,
                                     splashColor: Colors.transparent,
                                     color: Colors.red,
-                                    icon: Icon(Icons.remove_circle),
+                                    icon: const Icon(Icons.remove_circle),
                                     iconSize:
                                         MediaQuery.of(context).size.width *
                                             0.06,
@@ -158,6 +158,92 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                   ],
                 );
               }).toList()),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.02,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              left: defaultPadding, right: defaultPadding),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Bill Details',
+                    style: Theme.of(context).textTheme.titleLarge!,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.015,
+              ),
+              Column(
+                children: cartItems.asMap().entries.map((entry) {
+                  final value = entry.value;
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '  - ${value.foodItem.title} x ${value.quantity}',
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodyLarge!,
+                          ),
+                          Text(
+                            '฿ ${value.priceItem}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: kActiveColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        value.specifyItem,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyMedium!,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * .01,
+                      )
+                    ],
+                  );
+                }).toList(),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.01,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Order Total',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        Text(
+                          '฿ $totalPrice',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(color: kActiveColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );

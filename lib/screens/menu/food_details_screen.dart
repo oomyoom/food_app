@@ -89,25 +89,28 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                             horizontal: defaultPadding),
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.12,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Note',
-                              style: Theme.of(context).textTheme.titleLarge!,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: defaultPadding / 2,
+                        child: SingleChildScrollView(
+                          physics: NeverScrollableScrollPhysics(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Note',
+                                style: Theme.of(context).textTheme.titleLarge!,
                               ),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    labelText: 'Note to restaurant'),
-                                controller: _textController,
-                                keyboardType: TextInputType.text,
-                              ),
-                            )
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: defaultPadding / 2,
+                                ),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: 'Note to restaurant'),
+                                  controller: _textController,
+                                  keyboardType: TextInputType.text,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
