@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.symmetric(
                           vertical: MediaQuery.of(context).size.height * 0.05),
                       child: SigntitleText(
-                          title: "Hello friends!", subtitle: 'Welcome Back')),
+                          title: "Hello Friends!", subtitle: 'Welcome Back')),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.1,
