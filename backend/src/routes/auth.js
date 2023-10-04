@@ -46,6 +46,7 @@ router.post("/login", async (req, res) => {
     // ค้นหาผู้ใช้จากฐานข้อมูล
     const query = "SELECT * FROM users WHERE email = ?";
     const [results] = await db.promise().query(query, [email]);
+    console.log(results);
 
     if (results.length > 0) {
       const user = results[0];
