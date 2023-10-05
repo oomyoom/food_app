@@ -16,7 +16,7 @@ app.get("/protected", verifyToken, (req, res) => {
   res.json({ message: "คุณเข้าถึงเส้นทางที่คุ้มครองแล้ว" });
 });
 
-const menu = require("./src/routes/foodMenu");
+const menu = require("./src/routes/menuController");
 app.use("/", menu);
 
 app.listen(port, () => {

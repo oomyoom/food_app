@@ -11,7 +11,7 @@ function getLastId(tableName, columnName, callback) {
     }
 
     const lastId = results[0].maxId;
-    callback(null, lastId || 1);
+    callback(null, lastId + 1 || 1);
   });
 }
 
@@ -76,7 +76,7 @@ function insertOption(categoryData, lastMenuId, lastCateId, callback) {
 }
 
 module.exports = {
-  getLastMenuId,
+  getLastId,
   insertMenu,
   insertCategory,
   insertOption,
