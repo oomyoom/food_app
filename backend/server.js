@@ -19,6 +19,9 @@ app.get("/protected", verifyToken, (req, res) => {
 const menu = require("./src/routes/menuController");
 app.use("/", menu);
 
+const order = require("./src/routes/orderController");
+app.use("/", order);
+
 app.listen(port, () => {
   console.log(`เซิร์ฟเวอร์ทำงานที่พอร์ต ${port}`);
 });
