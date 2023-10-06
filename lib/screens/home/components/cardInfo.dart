@@ -16,7 +16,7 @@ class cardInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.all(Radius.circular(6)),
+      borderRadius: const BorderRadius.all(Radius.circular(6)),
       onTap: press,
       child: SizedBox(
         width: 200,
@@ -41,7 +41,7 @@ class cardInfo extends StatelessWidget {
             Text(
               '฿ $price',
               maxLines: 1,
-              style: TextStyle(color: kActiveColor),
+              style: const TextStyle(color: kActiveColor),
             ),
           ],
         ),

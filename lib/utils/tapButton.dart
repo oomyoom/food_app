@@ -14,7 +14,7 @@ class TapButton extends StatelessWidget {
       onPressed: press,
       style: ButtonStyle(
         fixedSize: MaterialStateProperty.all<Size>(
-          Size(200, 48),
+          const Size(200, 48),
         ),
         backgroundColor: MaterialStateProperty.all<Color>(color),
       ),

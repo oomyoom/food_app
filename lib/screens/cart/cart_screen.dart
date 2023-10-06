@@ -129,7 +129,7 @@ class _CartScreenState extends State<CartScreen> {
                   }, onCancel: () {
                     print('Cancel');
                   }, onError: (e) {
-                    print('Error: ' + e.toString());
+                    print('Error: $e');
                   });
                 },
                 title: 'Checkout',

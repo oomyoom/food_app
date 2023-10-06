@@ -13,7 +13,7 @@ class dotSlide extends StatelessWidget {
       width: 8,
       decoration: BoxDecoration(
           color: isActive ? Colors.white : Colors.white38,
-          borderRadius: BorderRadius.all(Radius.circular(12))),
+          borderRadius: const BorderRadius.all(Radius.circular(12))),
     );
   }
 }
@@ -42,7 +42,7 @@ class _imageCarouselState extends State<imageCarousel> {
                 });
               },
               itemBuilder: (context, index) => ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
                     child: Image.asset(
                       demoBigImages[index],
                     ),

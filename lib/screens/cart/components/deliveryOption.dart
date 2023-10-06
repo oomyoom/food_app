@@ -36,7 +36,7 @@ class _DeliveryOptionState extends State<DeliveryOption> {
             Expanded(
               child: RadioListTile(
                   activeColor: kActiveColor,
-                  title: Text('Dine-In'),
+                  title: const Text('Dine-In'),
                   value: deliveryOption.dineIn,
                   groupValue: _selectedOption,
                   controlAffinity: ListTileControlAffinity.leading,
@@ -50,7 +50,7 @@ class _DeliveryOptionState extends State<DeliveryOption> {
             Expanded(
               child: RadioListTile(
                   activeColor: kActiveColor,
-                  title: Text('Take-Away'),
+                  title: const Text('Take-Away'),
                   value: deliveryOption.takeOut,
                   groupValue: _selectedOption,
                   controlAffinity: ListTileControlAffinity.leading,

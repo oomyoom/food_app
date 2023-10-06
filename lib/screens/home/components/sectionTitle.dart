@@ -18,8 +18,8 @@ class sectionTitle extends StatelessWidget {
         ),
         TextButton(
           onPressed: press,
-          child: Text('Sell all'),
-          style: TextButton.styleFrom(primary: kActiveColor),
+          style: TextButton.styleFrom(foregroundColor: kActiveColor),
+          child: const Text('Sell all'),
         )
       ],
     );

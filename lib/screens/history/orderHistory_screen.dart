@@ -31,7 +31,7 @@ class OrderHistoryScreen extends StatelessWidget {
               return Column(
                 children: [
                   InkWell(
-                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                    borderRadius: const BorderRadius.all(Radius.circular(6)),
                     onTap: () {
                       Navigator.push(
                           context,

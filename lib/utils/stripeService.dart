@@ -18,7 +18,7 @@ class StripeService {
     String lineItems = '';
     int index = 0;
 
-    productItems.forEach((value) {
+    for (var value in productItems) {
       var productPrice =
           ((value.foodItem.price + value.specfiyPrice) * 100).round();
       var tax = (productPrice * 0.1).toInt();
@@ -31,7 +31,7 @@ class StripeService {
       lineItems += '&line_items[$index][price_data][currency]=THB';
       lineItems += '&line_items[$index][quantity]=${value.quantity.toString()}';
       index++;
-    });
+    }
 
     final response = await http.post(
       url,

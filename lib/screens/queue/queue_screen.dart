@@ -44,7 +44,7 @@ class QueueScreen extends StatelessWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: Column(
                 children: [
                   Padding(

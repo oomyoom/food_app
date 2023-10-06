@@ -49,7 +49,7 @@ class _FoodContainerState extends State<FoodContainer> {
         ),
       ),
       child: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         child: Row(
           children: [
             SizedBox(

@@ -17,7 +17,7 @@ class MenuInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        borderRadius: BorderRadius.all(Radius.circular(6)),
+        borderRadius: const BorderRadius.all(Radius.circular(6)),
         onTap: press,
         child: Row(
           children: [
@@ -36,7 +36,7 @@ class MenuInfo extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 32,
                 ),
                 Text(

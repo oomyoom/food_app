@@ -71,7 +71,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                         width: MediaQuery.of(context).size.width,
                         child: ListView(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           children: [
                             FoodSpecify(
@@ -90,7 +90,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.12,
                         child: SingleChildScrollView(
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -103,7 +103,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                                   top: defaultPadding / 2,
                                 ),
                                 child: TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       labelText: 'Note to restaurant'),
                                   controller: _textController,
                                   keyboardType: TextInputType.text,

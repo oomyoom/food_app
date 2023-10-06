@@ -39,7 +39,7 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
           // รายการอาหาร
           SliverPadding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding),
             sliver: SliverToBoxAdapter(
               child: SingleChildScrollView(

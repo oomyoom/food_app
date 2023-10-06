@@ -49,7 +49,7 @@ class _ImageProfileState extends State<ImageProfile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.all(Radius.circular(6)),
+      borderRadius: const BorderRadius.all(Radius.circular(6)),
       onTap: () async {
         final imagefile = await ImageProfileHelper().pickImage();
         if (imagefile != null) {
@@ -62,7 +62,7 @@ class _ImageProfileState extends State<ImageProfile> {
       },
       child: CircleAvatar(
         radius: 72,
-        backgroundImage: AssetImage('assets/images/take_a_photo.png'),
+        backgroundImage: const AssetImage('assets/images/take_a_photo.png'),
         backgroundColor: Colors.grey[300],
         foregroundImage: image != null ? FileImage(image!) : null,
       ),

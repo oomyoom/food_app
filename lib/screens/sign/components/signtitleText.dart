@@ -10,14 +10,14 @@ class SigntitleText extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.01,
         ),
         Text(
           subtitle,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
           ),
         ),

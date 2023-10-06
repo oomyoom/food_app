@@ -73,7 +73,7 @@ class _FoodSpecifyState extends State<FoodSpecify> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('$specifyTitle'),
+                                  Text(specifyTitle),
                                   Text(
                                     '฿ $specifyPrice',
                                     style: const TextStyle(
@@ -96,9 +96,10 @@ class _FoodSpecifyState extends State<FoodSpecify> {
                                     specifyText += specifyTitle;
                                     specifyperPrice += specifyPrice;
                                   } else {
-                                    if (specifyText.isNotEmpty)
+                                    if (specifyText.isNotEmpty) {
                                       specifyText = specifyText.replaceAll(
                                           '+$specifyTitle', '');
+                                    }
                                     specifyText = specifyText.replaceAll(
                                         specifyTitle, '');
                                     specifyperPrice -= specifyPrice;

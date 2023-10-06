@@ -34,18 +34,18 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ImageProfile(),
+                  const ImageProfile(),
                   Padding(
                       padding: EdgeInsets.symmetric(
                           vertical: MediaQuery.of(context).size.height * 0.05),
-                      child: SigntitleText(
+                      child: const SigntitleText(
                           title: 'Create Your Profile',
                           subtitle: 'Please enter your information')),
                   Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1),
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: 'Username',
                             labelStyle: TextStyle(fontSize: 16)),
                         controller: _usernametextController,
@@ -60,7 +60,7 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
                     padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * 0.1),
                     child: TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           labelText: 'First Name',
                           labelStyle: TextStyle(fontSize: 16)),
                       controller: _firstnametextController,
@@ -76,7 +76,7 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1),
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: 'Last Name',
                             labelStyle: TextStyle(fontSize: 16)),
                         controller: _lastnametextController,
@@ -110,7 +110,7 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
                         press: () {
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Input is valid')));
+                                const SnackBar(content: Text('Input is valid')));
                             while (Navigator.canPop(context)) {
                               Navigator.pop(context);
                             }
