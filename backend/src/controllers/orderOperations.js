@@ -1,20 +1,5 @@
 const { db } = require("../config/database");
 
-function getLastId(tableName, columnName, callback) {
-  const query = `SELECT MAX(${columnName}) AS maxId FROM \`${tableName}\``;
-
-  db.query(query, (error, results) => {
-    if (error) {
-      console.error(`เกิดข้อผิดพลาดในการดึงค่า ${columnName} ล่าสุด: `, error);
-      callback(error, null);
-      return;
-    }
-
-    const lastId = results[0].maxId;
-    callback(null, lastId + 1 || 1);
-  });
-}
-
 function insertOrder(orderData, lastOrderId, callback) {
   const query =
     "INSERT INTO `order` (order_total, createDateTime, deliveryOption, isCompleted) VALUES (?, ?, ?, ?)";
@@ -38,7 +23,7 @@ function insertOrder(orderData, lastOrderId, callback) {
 }
 
 function getMenuIdByTitle(menuTitle, callback) {
-  const query = "SELECT menu_id FROM menuv1 WHERE menu_title = ?";
+  const query = "SELECT menu_id FROM menu WHERE menu_title = ?";
 
   db.query(query, [menuTitle], (error, results) => {
     if (error) {
@@ -99,7 +84,6 @@ function insertCart(cartData, lastOrderId, callback) {
 }
 
 module.exports = {
-  getLastId,
   insertOrder,
   insertCart,
 };

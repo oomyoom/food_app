@@ -3,15 +3,16 @@ const express = require("express");
 const router = express.Router();
 const { menuData } = require("../models/menu");
 const menuOperations = require("../controllers/menuOperations");
+const databaseUtils = require("../utils/databaseUtils");
 
-router.post("/menuv2", (req, res) => {
-  menuOperations.getLastId("menuv1", "menu_id", (error, lastMenuId) => {
+router.post("/menu", (req, res) => {
+  databaseUtils.getLastId("menu", "menu_id", (error, lastMenuId) => {
     if (error) {
       return res.status(500).send("เกิดข้อผิดพลาดในการดึงค่า MenuId ล่าสุด");
     }
 
-    menuOperations.getLastId(
-      "food_categoryv1",
+    databaseUtils.getLastId(
+      "mcategory",
       "category_id",
       (error, lastCateId) => {
         if (error) {

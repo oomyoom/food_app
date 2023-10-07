@@ -1,23 +1,8 @@
 const { db } = require("../config/database");
 
-function getLastId(tableName, columnName, callback) {
-  const query = `SELECT MAX(${columnName}) AS maxId FROM ${tableName}`;
-
-  db.query(query, (error, results) => {
-    if (error) {
-      console.error(`เกิดข้อผิดพลาดในการดึงค่า ${columnName} ล่าสุด: `, error);
-      callback(error, null);
-      return;
-    }
-
-    const lastId = results[0].maxId;
-    callback(null, lastId + 1 || 1);
-  });
-}
-
 function insertMenu(menuData, lastMenuId, callback) {
   const query =
-    "INSERT INTO menuv1 (menu_title, menu_image, menu_price) VALUES (?, ?, ?)";
+    "INSERT INTO menu (menu_title, menu_image, menu_price) VALUES (?, ?, ?)";
   const values = [
     menuData.menu_title,
     menuData.menu_image,
@@ -36,15 +21,15 @@ function insertMenu(menuData, lastMenuId, callback) {
 }
 
 function insertCategory(categoryData, lastCateId, callback) {
-  const query = "INSERT INTO food_categoryv1 (category_title) VALUES ?";
+  const query = "INSERT INTO mcategory (category_title) VALUES ?";
   const values = categoryData.map((category) => [category.category_title]);
 
   db.query(query, [values], (error, results) => {
     if (error) {
-      console.error("Error inserting data into food_category:", error);
+      console.error("Error inserting data into mcategory:", error);
       callback(error);
     } else {
-      console.log("Data inserted into food_category:", results);
+      console.log("Data inserted into mcategory:", results);
       callback(null, lastCateId);
     }
   });
@@ -52,7 +37,7 @@ function insertCategory(categoryData, lastCateId, callback) {
 
 function insertOption(categoryData, lastMenuId, lastCateId, callback) {
   const query =
-    "INSERT INTO food_optionv1 (option_title, option_price, menu_id, category_id) VALUES ?";
+    "INSERT INTO moption (option_title, option_price, menu_id, category_id) VALUES ?";
   const values = categoryData.reduce((optionValues, category) => {
     const categoryOptions = category.options.map((option) => [
       option.option_title,
@@ -66,17 +51,16 @@ function insertOption(categoryData, lastMenuId, lastCateId, callback) {
 
   db.query(query, [values], (error, results) => {
     if (error) {
-      console.error("Error inserting data into food_option:", error);
+      console.error("Error inserting data into moption:", error);
       callback(error);
     } else {
-      console.log("Data inserted into food_option:", results);
+      console.log("Data inserted into moption:", results);
       callback(null);
     }
   });
 }
 
 module.exports = {
-  getLastId,
   insertMenu,
   insertCategory,
   insertOption,
