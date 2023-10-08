@@ -1,28 +1,45 @@
 const { db } = require("../config/database");
 
 function insertMenu(menuData, lastMenuId, callback) {
-  const query =
-    "INSERT INTO menu (menu_title, menu_image, menu_price) VALUES (?, ?, ?)";
-  const values = [
-    menuData.menu_title,
-    menuData.menu_image,
-    menuData.menu_price,
-  ];
+  const checkMenuQuery = "SELECT * FROM menu WHERE menu_title = ?";
 
-  db.query(query, values, (error, results) => {
+  db.query(checkMenuQuery, [menuData.menu_title], (error, existingMenu) => {
     if (error) {
-      console.error("Error inserting data into menu:", error);
+      console.error("Error checking existing menu:", error);
       callback(error);
-    } else {
-      console.log("Data inserted into menu:", results);
-      callback(null, lastMenuId);
+      return;
     }
+
+    if (existingMenu.length > 0) {
+      return callback({ error: "Menu นี้มีอยู่ในระบบแล้ว" });
+    }
+
+    const insertQuery =
+      "INSERT INTO menu (menu_title, menu_image, menu_price) VALUES (?, ?, ?)";
+    const values = [
+      menuData.menu_title,
+      menuData.menu_image,
+      menuData.menu_price,
+    ];
+
+    db.query(insertQuery, values, (error, results) => {
+      if (error) {
+        console.error("Error inserting data into menu:", error);
+        callback(error);
+      } else {
+        console.log("Data inserted into menu:", results);
+        callback(null, lastMenuId);
+      }
+    });
   });
 }
 
-function insertCategory(categoryData, lastCateId, callback) {
-  const query = "INSERT INTO mcategory (category_title) VALUES ?";
-  const values = categoryData.map((category) => [category.category_title]);
+function insertCategory(categoryData, lastMenuId, lastCateId, callback) {
+  const query = "INSERT INTO mcategory (category_title, menu_id) VALUES ?";
+  const values = categoryData.map((category) => [
+    category.category_title,
+    lastMenuId,
+  ]);
 
   db.query(query, [values], (error, results) => {
     if (error) {
@@ -35,14 +52,13 @@ function insertCategory(categoryData, lastCateId, callback) {
   });
 }
 
-function insertOption(categoryData, lastMenuId, lastCateId, callback) {
+function insertOption(categoryData, lastCateId, callback) {
   const query =
-    "INSERT INTO moption (option_title, option_price, menu_id, category_id) VALUES ?";
+    "INSERT INTO moption (option_title, option_price, category_id) VALUES ?";
   const values = categoryData.reduce((optionValues, category) => {
     const categoryOptions = category.options.map((option) => [
       option.option_title,
       option.option_price,
-      lastMenuId,
       lastCateId,
     ]);
     lastCateId++;
