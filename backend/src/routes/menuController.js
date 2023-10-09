@@ -62,7 +62,7 @@ router.get("/menu", (req, res) => {
       res.status(500).json({ error: "เกิดข้อผิดพลาดในการดึงข้อมูล" });
     } else {
       // ส่งข้อมูล allMenu กลับไปให้ client เป็น JSON
-      res.json(allMenu);
+      res.status(200).send("เมนูถูกรับค่าเรียบร้อยแล้ว");
     }
   });
 });
