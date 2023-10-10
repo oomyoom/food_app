@@ -55,16 +55,14 @@ router.post("/menu", (req, res) => {
   });
 });
 
-router.get("/menu", (req, res) => {
-  menuRetrieval.retrieveMenu((error, allMenu) => {
-    if (error) {
-      console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
-      res.status(500).json({ error: "เกิดข้อผิดพลาดในการดึงข้อมูล" });
-    } else {
-      // ส่งข้อมูล allMenu กลับไปให้ client เป็น JSON
-      res.status(200).send("เมนูถูกรับค่าเรียบร้อยแล้ว");
-    }
-  });
+router.get("/menu", async (req, res) => {
+  try {
+    const allMenu = await menuRetrieval.retrieveMenu();
+    res.status(200).json(allMenu);
+  } catch (error) {
+    console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
+    res.status(500).json({ error: "เกิดข้อผิดพลาดในการดึงข้อมูล" });
+  }
 });
 
 module.exports = router;

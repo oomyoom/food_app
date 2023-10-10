@@ -1,5 +1,17 @@
 const { db } = require("../config/database");
 
+async function getDataFromDB(query) {
+  return new Promise((resolve, reject) => {
+    db.query(query, (error, results) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve(results);
+    });
+  });
+}
+
 function getLastId(tableName, columnName, callback) {
   const query = `SELECT MAX(${columnName}) AS maxId FROM \`${tableName}\``;
 
@@ -37,6 +49,7 @@ function updateColumn(
 }
 
 module.exports = {
+  getDataFromDB,
   getLastId,
   updateColumn,
 };

@@ -1,8 +1,8 @@
-const { cartData } = require("./cart");
+const { DateTime } = require("luxon");
 
 const orderData = {
   order_total: 16,
-  createDateTime: new Date().toISOString().slice(0, 19).replace("T", " "),
+  createDateTime: DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss"),
   deliveryOption: "Take-Away",
   isCompleted: false,
 };

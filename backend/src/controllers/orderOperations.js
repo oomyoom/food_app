@@ -42,7 +42,7 @@ function getMenuIdByTitle(menuTitle, callback) {
 
 function insertCart(cartData, lastOrderId, callback) {
   const query =
-    "INSERT INTO cart (menu_id, order_id, option_item, option_total, cart_total, cart_qty) VALUES ?";
+    "INSERT INTO cart (option_item, option_total, cart_total, cart_qty,menu_id, order_id) VALUES ?";
   const promises = cartData.map((item) => {
     const menuTitle = item.cart_item.menu_title;
 
@@ -53,12 +53,12 @@ function insertCart(cartData, lastOrderId, callback) {
           reject(error);
         } else {
           const values = [
-            menuId,
-            lastOrderId,
             item.option_item,
             item.option_total,
             item.cart_total,
             item.cart_qty,
+            menuId,
+            lastOrderId,
           ];
           resolve(values);
         }
