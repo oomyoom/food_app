@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/screens/home/home_screen.dart';
+import 'package:food_app/utils/buttomTab.dart';
 import 'package:food_app/utils/theme.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'PhanWillOrder',
       theme: buildThemeData(),
-      home: const HomeScreen(),
+      home: const ButtomTab(),
       routes: {
         '/home': (context) => const HomeScreen(),
       },

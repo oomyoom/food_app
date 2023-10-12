@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:food_app/screens/history/orderHistory_screen.dart';
+import 'package:food_app/screens/home/components/imageCarousel.dart';
 import 'package:food_app/screens/menu/food_details_screen.dart';
 import 'package:food_app/screens/queue/queue_screen.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/menu/menu_screen.dart';
 import 'package:food_app/screens/home/components/cardInfo.dart';
-import 'package:food_app/screens/home/components/imageCarousel.dart';
 import 'package:food_app/screens/home/components/sectionTitle.dart';
 import 'package:food_app/screens/sign/login_screen.dart';
 import 'package:food_app/screens/sign/profilecreation_screen.dart';
@@ -22,54 +22,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationDrawer(
-        elevation: 0,
-        children: [
-          // รูปโปรไฟล์
-          Container(
-            color: kMainColor,
-            padding: EdgeInsets.all(16),
-            child: CircleAvatar(
-              radius: 72,
-              foregroundImage: AssetImage('assets/images/profile_test.jpg'),
-            ),
-          ),
-          // ทางลัด
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Wrap(
-              runSpacing: 12,
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.home_outlined),
-                  title: Text('Home'),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, '/home');
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.query_builder),
-                  title: Text('Queue'),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => QueueScreen()));
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.history),
-                  title: Text('History'),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OrderHistoryScreen()));
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
       body: CustomScrollView(
         slivers: [
           // แถบบนจอ
@@ -112,7 +64,7 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding),
             sliver: SliverToBoxAdapter(
-              child: imageCarousel(),
+              child: ImageCarouselWithDots(),
             ),
           ),
           // หัวข้อ
@@ -144,9 +96,7 @@ class HomeScreen extends StatelessWidget {
                             child: cardInfo(
                               title: demoMediumCardData[index].title,
                               price: demoMediumCardData[index].price,
-                              
                               image: demoMediumCardData[index].image,
-                              
                               press: () {
                                 Navigator.push(
                                     context,
