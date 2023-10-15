@@ -2,13 +2,14 @@ const { db } = require("../config/database");
 
 function insertOrder(orderData, lastOrderId, callback) {
   const query =
-    "INSERT INTO `order` (order_total, createDateTime, deliveryOption, isCompleted) VALUES (?, ?, ?, ?)";
+    "INSERT INTO `order` (order_total, createDateTime, deliveryOption, isCompleted, isRecieved) VALUES (?, ?, ?, ?, ?)";
 
   const values = [
     orderData.order_total,
     orderData.createDateTime,
     orderData.deliveryOption,
     orderData.isCompleted,
+    orderData.isRecieved,
   ];
 
   db.query(query, values, (error, results) => {

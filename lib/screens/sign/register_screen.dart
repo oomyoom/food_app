@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
+import 'package:food_app/screens/sign/emailVerify_screen.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/screens/sign/profilecreation_screen.dart';
 import 'package:food_app/utils/tapButton.dart';
@@ -121,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const ProfilecreationScreen()));
+                                          EmailVerifyScreen()));
                             }
                           },
                           title: 'Sign Up',

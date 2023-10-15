@@ -16,11 +16,11 @@ app.get("/protected", verifyToken, (req, res) => {
   res.json({ message: "คุณเข้าถึงเส้นทางที่คุ้มครองแล้ว" });
 });
 
-const menu = require("./src/routes/menuController");
-app.use("/", menu);
+const menu = require("./src/routes/menu");
+app.use("/menu", menu);
 
-const order = require("./src/routes/orderController");
-app.use("/", order);
+const order = require("./src/routes/order");
+app.use("/order", order);
 
 app.listen(port, () => {
   console.log(`เซิร์ฟเวอร์ทำงานที่พอร์ต ${port}`);

@@ -4,6 +4,8 @@ import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
 
 class ImageCarouselWithDots extends StatefulWidget {
+  const ImageCarouselWithDots({super.key});
+
   @override
   _ImageCarouselWithDotsState createState() => _ImageCarouselWithDotsState();
 }
@@ -27,7 +29,7 @@ class _ImageCarouselWithDotsState extends State<ImageCarouselWithDots> {
             }).toList(),
             options: CarouselOptions(
               autoPlayAnimationDuration:
-                  Duration(milliseconds: 500), // ปรับความเร็วในการเลื่อน
+                  const Duration(milliseconds: 500), // ปรับความเร็วในการเลื่อน
               autoPlayCurve: Curves.fastOutSlowIn, // ปรับลักษณะการเลื่อน
               autoPlay: true, // ให้มันเล่นอัตโนมัติหรือไม่
               viewportFraction: 1.0,
@@ -47,7 +49,7 @@ class _ImageCarouselWithDotsState extends State<ImageCarouselWithDots> {
               children: List.generate(
                 demoBigImages.length,
                 (index) => Padding(
-                  padding: EdgeInsets.only(left: defaultPadding / 4),
+                  padding: const EdgeInsets.only(left: defaultPadding / 4),
                   child: Container(
                     width: 8,
                     height: 4,

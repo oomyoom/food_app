@@ -1,4 +1,3 @@
-const { db } = require("../config/database");
 const databaseUtils = require("../utils/databaseUtils");
 
 async function retrieveMenu() {

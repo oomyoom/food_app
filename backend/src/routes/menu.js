@@ -2,11 +2,11 @@
 const express = require("express");
 const router = express.Router();
 const { menuData } = require("../models/menu");
-const menuOperations = require("../controllers/menuOperations");
+const menuCreation = require("../controllers/menuCreation");
 const menuRetrieval = require("../controllers/menuRetrieval");
 const databaseUtils = require("../utils/databaseUtils");
 
-router.post("/menu", (req, res) => {
+router.post("/create", (req, res) => {
   databaseUtils.getLastId("menu", "menu_id", (error, lastMenuId) => {
     if (error) {
       return res.status(500).send("เกิดข้อผิดพลาดในการดึงค่า MenuId ล่าสุด");
@@ -19,12 +19,12 @@ router.post("/menu", (req, res) => {
           .send("เกิดข้อผิดพลาดในการดึงค่า CategoryId ล่าสุด");
       }
 
-      menuOperations.insertMenu(menuData, lastMenuId, (error, lastMenuId) => {
+      menuCreation.insertMenu(menuData, lastMenuId, (error, lastMenuId) => {
         if (error) {
           return res.status(500).send("เกิดข้อผิดพลาดในการแทรกข้อมูลเมนู");
         }
 
-        menuOperations.insertCategory(
+        menuCreation.insertCategory(
           menuData.categories,
           lastMenuId,
           lastCateId,
@@ -35,7 +35,7 @@ router.post("/menu", (req, res) => {
                 .send("เกิดข้อผิดพลาดในการแทรกข้อมูลหมวดหมู่");
             }
 
-            menuOperations.insertOption(
+            menuCreation.insertOption(
               menuData.categories,
               lastCateId,
               (error) => {
@@ -55,7 +55,7 @@ router.post("/menu", (req, res) => {
   });
 });
 
-router.get("/menu", async (req, res) => {
+router.get("/get", async (req, res) => {
   try {
     const allMenu = await menuRetrieval.retrieveMenu();
     res.status(200).json(allMenu);

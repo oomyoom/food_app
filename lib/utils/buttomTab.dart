@@ -15,10 +15,10 @@ class ButtomTab extends StatefulWidget {
 class _ButtomTabState extends State<ButtomTab> {
   int _currentIndex = 0;
   final List<Widget> _tabs = [
-    HomeScreen(),
-    QueueScreen(),
-    OrderHistoryScreen(),
-    ProfilecreationScreen()
+    const HomeScreen(),
+    const QueueScreen(),
+    const OrderHistoryScreen(),
+    const ProfilecreationScreen()
   ];
   @override
   Widget build(BuildContext context) {

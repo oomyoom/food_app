@@ -3,10 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
-import 'package:food_app/screens/history/orderHistory_screen.dart';
 import 'package:food_app/screens/home/components/imageCarousel.dart';
 import 'package:food_app/screens/menu/food_details_screen.dart';
-import 'package:food_app/screens/queue/queue_screen.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/menu/menu_screen.dart';
