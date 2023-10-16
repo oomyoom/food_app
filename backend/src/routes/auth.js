@@ -3,45 +3,22 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const nodemailer = require("nodemailer");
-const randomstring = require("randomstring");
 const { db } = require("../config/database"); // นำเข้าฐานข้อมูล
 const { secretKey } = require("../config/config"); // นำเข้าคีย์ลับจากไฟล์ config
-
-// สร้างอีเมลเซสชัน
-const transporter = nodemailer.createTransport({
-  host: "smtp-mail.outlook.com", // ใช้ SMTP server ของ Hotmail (Outlook)
-  port: 587, // พอร์ตสำหรับ SMTP
-  secure: false, // เปิดใช้งานการเชื่อมต่อไม่ปลอดภัย
-  auth: {
-    user: "oomyoom_2545@hotmail.com", // ใส่อีเมล Hotmail (Outlook) ของคุณ
-    pass: "Herohon1", // ใส่รหัสผ่าน Hotmail (Outlook) ของคุณ
-  },
-});
-
-// เก็บรหัสยืนยันและอีเมลในออบเจ็กต์
-const verificationCodes = {};
+const {
+  sendVerificationEmail,
+  verifyEmail,
+} = require("../controllers/authOperations");
 
 router.post("/send-verification", (req, res) => {
   const { email } = req.body;
-  const verificationCode = randomstring.generate(6); // สร้างรหัสยืนยัน 6 ตัว
 
-  // ส่งอีเมลยืนยัน
-  const mailOptions = {
-    from: '"Unknow" <oomyoom_2545@hotmail.com>',
-    to: email,
-    subject: "ยืนยันอีเมล",
-    text: `รหัสยืนยันของคุณคือ: ${verificationCode}`,
-  };
-
-  transporter.sendMail(mailOptions, (error, info) => {
+  sendVerificationEmail(email, (error, message) => {
     if (error) {
       console.log(error);
       res.status(500).send("ข้อผิดพลาดในการส่งอีเมลยืนยัน");
     } else {
-      // เก็บรหัสยืนยันไว้ในออบเจ็กต์และส่งให้ผู้ใช้
-      verificationCodes[email] = verificationCode;
-      res.status(200).send("อีเมลยืนยันถูกส่ง");
+      res.status(200).send(message);
     }
   });
 });
@@ -49,17 +26,13 @@ router.post("/send-verification", (req, res) => {
 router.post("/verify-email", (req, res) => {
   const { email, verificationCode } = req.body;
 
-  if (
-    verificationCodes[email] &&
-    verificationCodes[email] === verificationCode
-  ) {
-    // ยืนยันอีเมลสำเร็จ
-    res.status(200).send("ยืนยันอีเมลสำเร็จ");
-    delete verificationCodes[email]; // ลบรหัสยืนยันหลังจากใช้งาน
-  } else {
-    // รหัสยืนยันไม่ถูกต้อง
-    res.status(400).send("รหัสยืนยันไม่ถูกต้อง");
-  }
+  verifyEmail(email, verificationCode, (error, message) => {
+    if (error) {
+      res.status(400).send(message); // รหัสยืนยันไม่ถูกต้อง
+    } else {
+      res.status(200).send(message); // ยืนยันอีเมลสำเร็จ
+    }
+  });
 });
 
 // โค้ดสำหรับลงทะเบียนผู้ใช้

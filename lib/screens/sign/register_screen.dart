@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
 import 'package:food_app/screens/sign/emailVerify_screen.dart';
 import 'package:food_app/utils/constants.dart';
-import 'package:food_app/screens/sign/profilecreation_screen.dart';
 import 'package:food_app/utils/tapButton.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -16,10 +15,9 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailtextController = TextEditingController();
-  final TextEditingController _passwordtextController = TextEditingController();
-  final TextEditingController _confirmpasswordtextController =
-      TextEditingController();
+  final _emailtextController = TextEditingController();
+  final _passwordtextController = TextEditingController();
+  final _confirmpasswordtextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -118,11 +116,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (_formKey.currentState!.validate()) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text('Input is valid')));
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          EmailVerifyScreen()));
+                                      builder: (context) => EmailVerifyScreen(
+                                            email: _emailtextController.text,
+                                          )));
                             }
                           },
                           title: 'Sign Up',
