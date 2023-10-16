@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:food_app/models/users.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
 import 'package:food_app/screens/sign/emailVerify_screen.dart';
 import 'package:food_app/utils/constants.dart';
@@ -41,25 +42,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             vertical:
                                 MediaQuery.of(context).size.height * 0.05),
                         child: SigntitleText(
-                            title: 'Create Your Account',
-                            subtitle: 'Please enter your information')),
+                            title: 'สร้างบัญชีของคุณ',
+                            subtitle: 'โปรดกรอกข้อมูลของคุณ')),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * 0.1,
                       ),
                       child: TextFormField(
                         decoration: InputDecoration(
-                            labelText: 'Email',
+                            labelText: 'อีเมล',
                             labelStyle: TextStyle(fontSize: 16)),
                         controller: _emailtextController,
                         validator: (value) {
                           final emailRegex = RegExp(
                               r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
                           if (!emailRegex.hasMatch(value ?? '')) {
-                            return 'Please enter a valid email address';
+                            return 'กรุณาใส่อีเมลที่ถูกต้อง';
                           }
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return 'โปรดกรอกอีเมลของคุณ';
                           }
                           return null;
                         },
@@ -71,16 +72,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         child: TextFormField(
                           decoration: InputDecoration(
-                              labelText: 'Password',
+                              labelText: 'รหัสผ่าน',
                               labelStyle: TextStyle(fontSize: 16)),
                           controller: _passwordtextController,
                           obscureText: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
+                              return 'โปรดสร้างรหัสผ่านของคุณ';
                             }
                             // if (value.length < 8) {
-                            //   return 'Password must be at least 8 characters long';
+                            //   return 'รหัสผ่านจำเป็นต้องมีความยาวอย่างน้อย 8 ตัวอักษร';
                             // }
                             return null;
                           },
@@ -91,18 +92,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         child: TextFormField(
                           decoration: InputDecoration(
-                              labelText: 'Confirm-Password',
+                              labelText: 'ยืนยันรหัสผ่าน',
                               labelStyle: TextStyle(fontSize: 16)),
                           controller: _confirmpasswordtextController,
                           obscureText: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your confirm-password';
+                              return 'โปรดกรอกยืนยันรหัสผ่าน';
                             }
                             if (_passwordtextController.text.compareTo(
                                     _confirmpasswordtextController.text) !=
                                 0) {
-                              return 'Password and Confirm-Password do not match';
+                              return 'รหัสผ่านไม่ตรงกัน';
                             }
                             return null;
                           },
@@ -114,17 +115,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: TapButton(
                           press: () {
                             if (_formKey.currentState!.validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Input is valid')));
+                              final _account = Account(
+                                  email: _emailtextController.text,
+                                  password: _passwordtextController.text);
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => EmailVerifyScreen(
-                                            email: _emailtextController.text,
+                                            account: _account,
                                           )));
                             }
                           },
-                          title: 'Sign Up',
+                          title: 'สมัครสมาชิก',
                           color: kMainColor,
                         )),
                   ],

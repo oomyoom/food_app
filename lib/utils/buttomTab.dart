@@ -18,7 +18,7 @@ class _ButtomTabState extends State<ButtomTab> {
     const HomeScreen(),
     const QueueScreen(),
     const OrderHistoryScreen(),
-    const ProfilecreationScreen()
+    const HomeScreen()
   ];
   @override
   Widget build(BuildContext context) {

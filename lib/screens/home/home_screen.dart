@@ -153,17 +153,6 @@ class HomeScreen extends StatelessWidget {
               );
             },
           ),
-          SpeedDialChild(
-            child: Icon(Icons.usb_rounded),
-            backgroundColor: Colors.redAccent,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ProfilecreationScreen()),
-              );
-            },
-          )
         ],
       ),
     );

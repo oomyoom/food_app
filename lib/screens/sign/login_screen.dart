@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:food_app/screens/home/home_screen.dart';
+import 'package:food_app/utils/buttomTab.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/screens/sign/register_screen.dart';
@@ -40,19 +40,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.symmetric(
                           vertical: MediaQuery.of(context).size.height * 0.05),
                       child: SigntitleText(
-                          title: "Hello Friends!", subtitle: 'Welcome Back')),
+                          title: "ยินดีต้อนรับ",
+                          subtitle:
+                              'เรามุ่งสู่อร่อยที่สุดและคุณคือส่วนสำคัญในนี้')),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.1,
                     ),
                     child: TextFormField(
                       decoration: InputDecoration(
-                          labelText: 'Email',
+                          labelText: 'อีเมล',
                           labelStyle: TextStyle(fontSize: 16)),
                       controller: _emailtextController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
+                          return 'โปรดระบุอีเมลของคุณ';
                         }
                         return null;
                       },
@@ -63,13 +65,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           horizontal: MediaQuery.of(context).size.width * 0.1),
                       child: TextFormField(
                         decoration: InputDecoration(
-                            labelText: 'Password',
+                            labelText: 'รหัสผ่าน',
                             labelStyle: TextStyle(fontSize: 16)),
                         controller: _passwordtextController,
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
+                            return 'โปรดระบุรหัสผ่านของคุณ';
                           }
                           return null;
                         },
@@ -81,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         press: () {
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Input is valid')),
+                              SnackBar(content: Text('เข้าสู่ระบบสำเร็จ')),
                             );
                             while (Navigator.canPop(context)) {
                               Navigator.pop(context);
@@ -89,17 +91,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const HomeScreen()));
+                                    builder: (context) => const ButtomTab()));
                           }
                         },
-                        title: 'Sign In',
+                        title: 'เข้าสู่ระบบ',
                         color: kMainColor,
                       )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Have a member ?',
+                        'มีสมาชิกหรือยัง?',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -117,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           },
                           child: Text(
-                            'Register now',
+                            'สมัครสมาชิก',
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold),

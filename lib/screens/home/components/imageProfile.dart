@@ -36,8 +36,6 @@ class ImageProfileHelper {
       );
 }
 
-File? image;
-
 class ImageProfile extends StatefulWidget {
   const ImageProfile({Key? key}) : super(key: key);
 
@@ -46,6 +44,7 @@ class ImageProfile extends StatefulWidget {
 }
 
 class _ImageProfileState extends State<ImageProfile> {
+  File? image;
   @override
   Widget build(BuildContext context) {
     return InkWell(

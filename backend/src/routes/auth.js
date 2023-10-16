@@ -9,6 +9,8 @@ const {
   sendVerificationEmail,
   verifyEmail,
 } = require("../controllers/authOperations");
+const fs = require("fs");
+const { DateTime } = require("luxon");
 
 router.post("/send-verification", (req, res) => {
   const { email } = req.body;
@@ -37,34 +39,63 @@ router.post("/verify-email", (req, res) => {
 
 // โค้ดสำหรับลงทะเบียนผู้ใช้
 router.post("/register", async (req, res) => {
-  const { email, password, name } = req.body;
+  const {
+    email,
+    password,
+    base64Image,
+    username,
+    firstname,
+    lastname,
+    birthday,
+  } = req.body;
 
-  try {
-    // ตรวจสอบความถูกต้องของข้อมูล
-    if (!email || !password || !name) {
-      return res.status(400).json({ error: "กรุณากรอกข้อมูลทั้งหมด" });
-    }
+  const imageBuffer = Buffer.from(base64Image, "base64");
+  const imagePathToSave = "./src/models/images/profile.jpg";
+  fs.writeFileSync(imagePathToSave, imageBuffer);
 
-    // เช็คว่า email ซ้ำหรือไม่
-    const checkEmailQuery = "SELECT * FROM users WHERE email = ?";
-    const [existingUsers] = await db.promise().query(checkEmailQuery, [email]);
+  const dateTime = DateTime.fromISO(birthday).toFormat("yyyy-MM-dd HH:mm:ss");
 
-    if (existingUsers.length > 0) {
-      return res.status(400).json({ error: "Email นี้มีอยู่ในระบบแล้ว" });
-    }
+  // เช็คว่า email ซ้ำหรือไม่
+  const checkEmailQuery = "SELECT * FROM users WHERE email = ?";
+  const [existingUsers] = await db.promise().query(checkEmailQuery, [email]);
 
-    // เข้ารหัสรหัสผ่าน
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const insertQuery =
-      "INSERT INTO users (email, password, name) VALUES (?, ?, ?)";
-    await db.promise().execute(insertQuery, [email, hashedPassword, name]);
-
-    res.json({ message: "ลงทะเบียนผู้ใช้สำเร็จ" });
-  } catch (err) {
-    console.error("เกิดข้อผิดพลาดในการลงทะเบียนผู้ใช้: " + err);
-    res.status(500).json({ error: "เกิดข้อผิดพลาดในการลงทะเบียนผู้ใช้" });
+  if (existingUsers.length > 0) {
+    return res.status(400).json({ error: "Email นี้มีอยู่ในระบบแล้ว" });
   }
+
+  // เข้ารหัสรหัสผ่าน
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const insertQuery =
+    "INSERT INTO users (email, password, image, username, firstname, lastname, birthday) VALUES (?, ?, ?, ?, ?, ?, ?)";
+  db.query(
+    insertQuery,
+    [
+      email,
+      hashedPassword,
+      imagePathToSave,
+      username,
+      firstname,
+      lastname,
+      dateTime,
+    ],
+    (err, result) => {
+      if (err) {
+        console.error("เกิดข้อผิดพลาดในการบันทึกข้อมูล: " + err);
+        res.status(500).json({ message: "สร้างบัญชีล้มเหลว" });
+      } else {
+        res.status(200).json({ message: "สร้างบัญชีสำเร็จ" });
+        // ลบไฟล์รูปภาพหลังจากบันทึกลงในฐานข้อมูลแล้ว
+        fs.unlink(imagePathToSave, (err) => {
+          if (err) {
+            console.error("เกิดข้อผิดพลาดในการลบไฟล์: " + err);
+          } else {
+            console.log("ลบไฟล์รูปภาพเรียบร้อย");
+          }
+        });
+      }
+    }
+  );
 });
 
 // โค้ดสำหรับเข้าสู่ระบบ
