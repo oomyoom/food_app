@@ -137,7 +137,7 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                             vertical:
                                 MediaQuery.of(context).size.height * 0.05),
                         child: const SigntitleText(
-                            title: 'การยืนยันอีเมล',
+                            title: 'ยืนยันอีเมล',
                             subtitle: 'โปรดกรอกรหัสยืนยัน')),
                     Padding(
                       padding: EdgeInsets.symmetric(

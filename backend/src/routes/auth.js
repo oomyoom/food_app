@@ -8,9 +8,9 @@ const { secretKey } = require("../config/config"); // นำเข้าคี�
 const {
   sendVerificationEmail,
   verifyEmail,
+  createUser,
+  login,
 } = require("../controllers/authOperations");
-const fs = require("fs");
-const { DateTime } = require("luxon");
 
 router.post("/send-verification", (req, res) => {
   const { email } = req.body;
@@ -49,13 +49,6 @@ router.post("/register", async (req, res) => {
     birthday,
   } = req.body;
 
-  const imageBuffer = Buffer.from(base64Image, "base64");
-  const imagePathToSave = "./src/models/images/profile.jpg";
-  fs.writeFileSync(imagePathToSave, imageBuffer);
-
-  const dateTime = DateTime.fromISO(birthday).toFormat("yyyy-MM-dd HH:mm:ss");
-
-  // เช็คว่า email ซ้ำหรือไม่
   const checkEmailQuery = "SELECT * FROM users WHERE email = ?";
   const [existingUsers] = await db.promise().query(checkEmailQuery, [email]);
 
@@ -63,37 +56,19 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ error: "Email นี้มีอยู่ในระบบแล้ว" });
   }
 
-  // เข้ารหัสรหัสผ่าน
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const insertQuery =
-    "INSERT INTO users (email, password, image, username, firstname, lastname, birthday) VALUES (?, ?, ?, ?, ?, ?, ?)";
-  db.query(
-    insertQuery,
-    [
-      email,
-      hashedPassword,
-      imagePathToSave,
-      username,
-      firstname,
-      lastname,
-      dateTime,
-    ],
-    (err, result) => {
-      if (err) {
-        console.error("เกิดข้อผิดพลาดในการบันทึกข้อมูล: " + err);
+  createUser(
+    email,
+    password,
+    base64Image,
+    username,
+    firstname,
+    lastname,
+    birthday,
+    (error) => {
+      if (error) {
         res.status(500).json({ message: "สร้างบัญชีล้มเหลว" });
-      } else {
-        res.status(200).json({ message: "สร้างบัญชีสำเร็จ" });
-        // ลบไฟล์รูปภาพหลังจากบันทึกลงในฐานข้อมูลแล้ว
-        fs.unlink(imagePathToSave, (err) => {
-          if (err) {
-            console.error("เกิดข้อผิดพลาดในการลบไฟล์: " + err);
-          } else {
-            console.log("ลบไฟล์รูปภาพเรียบร้อย");
-          }
-        });
       }
+      res.status(200).json({ message: "สร้างบัญชีสำเร็จ" });
     }
   );
 });
@@ -103,27 +78,12 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // ค้นหาผู้ใช้จากฐานข้อมูล
-    const query = "SELECT * FROM users WHERE email = ?";
-    const [results] = await db.promise().query(query, [email]);
-    console.log(results);
+    const result = await login(email, password);
 
-    if (results.length > 0) {
-      const user = results[0];
-      // ตรวจสอบรหัสผ่าน
-      const isMatch = await bcrypt.compare(password, user.password);
-
-      if (isMatch) {
-        // สร้าง JWT
-        const token = jwt.sign({ id: user.id }, secretKey, {
-          expiresIn: "1h",
-        });
-        res.json({ token });
-      } else {
-        res.status(401).json({ error: "รหัสผ่านไม่ถูกต้อง" });
-      }
+    if (result.token) {
+      res.status(200).json(result);
     } else {
-      res.status(401).json({ error: "ไม่พบผู้ใช้" });
+      res.status(401).json(result);
     }
   } catch (err) {
     console.error("เกิดข้อผิดพลาดในการเข้าสู่ระบบ: " + err);

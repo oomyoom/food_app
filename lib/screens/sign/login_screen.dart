@@ -5,7 +5,11 @@ import 'package:food_app/utils/buttomTab.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/screens/sign/register_screen.dart';
+import 'package:food_app/utils/decodeJWT.dart';
 import 'package:food_app/utils/tapButton.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -18,6 +22,48 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailtextController = TextEditingController();
   final TextEditingController _passwordtextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  Future<void> saveToken(String token) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('jwt_token', token);
+  }
+
+  Future<void> loginUser() async {
+    final response = await http.post(
+      Uri.parse('http://192.168.1.84:3333/auth/login'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'email': _emailtextController.text, // แทนด้วยอีเมลของผู้ใช้
+        'password': _passwordtextController.text, // แทนด้วยรหัสผ่านของผู้ใช้
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      final String token = data['token']; // รับโทเคน JWT จากการตอบกลับ
+
+      // บันทึก token ลงใน local storage
+      await saveToken(token);
+      decodedToken();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('เข้าสู่ระบบสำเร็จ'),
+          duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
+        ),
+      );
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => ButtomTab()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('เข้าสู่ระบบล้มเหลว'),
+          duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,16 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: TapButton(
                         press: () {
                           if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('เข้าสู่ระบบสำเร็จ')),
-                            );
-                            while (Navigator.canPop(context)) {
-                              Navigator.pop(context);
-                            }
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const ButtomTab()));
+                            loginUser();
                           }
                         },
                         title: 'เข้าสู่ระบบ',

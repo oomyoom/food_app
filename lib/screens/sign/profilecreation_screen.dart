@@ -66,7 +66,7 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
         },
         body: jsonEncode({
           'email': widget.account.email,
-          'password': widget.account.password,
+          'password': widget.account.password.trim(),
           'base64Image':
               _image != null ? base64Encode(_image!.readAsBytesSync()) : null,
           'username': _usernametextController.text,

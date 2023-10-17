@@ -115,14 +115,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: TapButton(
                           press: () {
                             if (_formKey.currentState!.validate()) {
-                              final _account = Account(
+                              final account = Account(
                                   email: _emailtextController.text,
                                   password: _passwordtextController.text);
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => EmailVerifyScreen(
-                                            account: _account,
+                                            account: account,
                                           )));
                             }
                           },

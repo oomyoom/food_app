@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:food_app/screens/history/orderHistory_screen.dart';
 import 'package:food_app/screens/home/home_screen.dart';
 import 'package:food_app/screens/queue/queue_screen.dart';
-import 'package:food_app/screens/sign/profilecreation_screen.dart';
 import 'package:food_app/utils/constants.dart';
 
 class ButtomTab extends StatefulWidget {

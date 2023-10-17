@@ -11,7 +11,6 @@ import 'package:food_app/screens/menu/menu_screen.dart';
 import 'package:food_app/screens/home/components/cardInfo.dart';
 import 'package:food_app/screens/home/components/sectionTitle.dart';
 import 'package:food_app/screens/sign/login_screen.dart';
-import 'package:food_app/screens/sign/profilecreation_screen.dart';
 import 'package:food_app/screens/sign/register_screen.dart';
 
 class HomeScreen extends StatelessWidget {
