@@ -54,7 +54,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => ButtomTab()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => ButtomTab(
+                    initialIndex: 0,
+                  )));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

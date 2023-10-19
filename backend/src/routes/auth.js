@@ -1,16 +1,17 @@
 // routers/auth.js
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 const { db } = require("../config/database"); // นำเข้าฐานข้อมูล
-const { secretKey } = require("../config/config"); // นำเข้าคีย์ลับจากไฟล์ config
 const {
   sendVerificationEmail,
   verifyEmail,
   createUser,
   login,
 } = require("../controllers/authOperations");
+const multer = require("multer");
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 router.post("/send-verification", (req, res) => {
   const { email } = req.body;
@@ -38,39 +39,31 @@ router.post("/verify-email", (req, res) => {
 });
 
 // โค้ดสำหรับลงทะเบียนผู้ใช้
-router.post("/register", async (req, res) => {
-  const {
-    email,
-    password,
-    base64Image,
-    username,
-    firstname,
-    lastname,
-    birthday,
-  } = req.body;
+router.post("/register", upload.single("image"), async (req, res) => {
+  try {
+    const checkEmailQuery = "SELECT * FROM users WHERE email = ?";
+    const [existingUsers] = await db.promise().query(checkEmailQuery, [email]);
 
-  const checkEmailQuery = "SELECT * FROM users WHERE email = ?";
-  const [existingUsers] = await db.promise().query(checkEmailQuery, [email]);
-
-  if (existingUsers.length > 0) {
-    return res.status(400).json({ error: "Email นี้มีอยู่ในระบบแล้ว" });
-  }
-
-  createUser(
-    email,
-    password,
-    base64Image,
-    username,
-    firstname,
-    lastname,
-    birthday,
-    (error) => {
-      if (error) {
-        res.status(500).json({ message: "สร้างบัญชีล้มเหลว" });
-      }
-      res.status(200).json({ message: "สร้างบัญชีสำเร็จ" });
+    if (existingUsers.length > 0) {
+      return res.status(400).json({ error: "Email นี้มีอยู่ในระบบแล้ว" });
     }
-  );
+
+    const { email, password, username, firstname, lastname, birthday } =
+      req.body; // Get other data
+    const image = req.file.buffer; // Get the image buffer
+
+    await db
+      .promise()
+      .query(
+        "INSERT INTO users (email, password, image, username, firstname, lastname, birthday) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [email, password, image, username, firstname, lastname, birthday]
+      );
+
+    res.status(200).send("Data and image uploaded successfully");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error uploading data and image");
+  }
 });
 
 // โค้ดสำหรับเข้าสู่ระบบ

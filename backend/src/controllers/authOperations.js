@@ -13,8 +13,8 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: "oomyoom_2545@hotmail.com",
-    pass: "Herohon1",
+    user: "oomy_2545@hotmail.com",
+    pass: "Oom741190",
   },
 });
 
@@ -25,7 +25,7 @@ function sendVerificationEmail(email, callback) {
   const verificationCode = randomstring.generate(6);
 
   const mailOptions = {
-    from: '"Unknow" <oomyoom_2545@hotmail.com>',
+    from: '"Unknow" <oomy_2545@hotmail.com>',
     to: email,
     subject: "ยืนยันอีเมล",
     text: `รหัสยืนยันของคุณคือ: ${verificationCode}`,
@@ -58,7 +58,7 @@ function verifyEmail(email, verificationCode, callback) {
 // แปลงรูป
 async function saveImage(base64Image) {
   const imageBuffer = Buffer.from(base64Image, "base64");
-  const imagePathToSave = "./src/models/images/profile.jpg";
+  const imagePathToSave = "./src/models/images/profile.png";
   fs.writeFileSync(imagePathToSave, imageBuffer);
   return imagePathToSave;
 }
@@ -106,13 +106,6 @@ async function createUser(
         console.log("Data inserted into user:", results);
         callback(null);
         // ลบไฟล์รูปภาพหลังจากบันทึกลงในฐานข้อมูลแล้ว
-        fs.unlink(imagePathToSave, (err) => {
-          if (err) {
-            console.error("เกิดข้อผิดพลาดในการลบไฟล์: " + err);
-          } else {
-            console.log("ลบไฟล์รูปภาพเรียบร้อย");
-          }
-        });
       }
     }
   );

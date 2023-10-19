@@ -12,7 +12,7 @@ String base64UrlDecode(String input) {
 Map<String, dynamic> decodeJwt(String token) {
   final parts = token.split('.');
   if (parts.length != 3) {
-    throw FormatException('Invalid token');
+    throw const FormatException('Invalid token');
   }
 
   final payload = parts[1];

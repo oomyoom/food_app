@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/screens/history/orderHistory_screen.dart';
 import 'package:food_app/screens/home/home_screen.dart';
+import 'package:food_app/screens/profile/profile_screen.dart';
 import 'package:food_app/screens/queue/queue_screen.dart';
 import 'package:food_app/utils/constants.dart';
 
 class ButtomTab extends StatefulWidget {
-  const ButtomTab({Key? key}) : super(key: key);
+  const ButtomTab({Key? key, required this.initialIndex}) : super(key: key);
+  final int initialIndex;
 
   @override
   _ButtomTabState createState() => _ButtomTabState();
@@ -17,8 +19,21 @@ class _ButtomTabState extends State<ButtomTab> {
     const HomeScreen(),
     const QueueScreen(),
     const OrderHistoryScreen(),
-    const HomeScreen()
+    const ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex; // กำหนดค่าเริ่มต้นใน initState
+  }
+
+  void setCurrentIndex(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

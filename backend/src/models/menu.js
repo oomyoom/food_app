@@ -1,5 +1,5 @@
 const menuData = {
-  menu_title: "Daylight Coffee",
+  menu_title: "Daylight Coffee2",
   menu_image: "./src/models/images/medium_1.png",
   menu_price: 3.0,
   categories: [

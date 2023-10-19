@@ -12,7 +12,7 @@ function verifyToken(req, res, next) {
     if (err) {
       return res.status(401).json({ error: "Token ไม่ถูกต้อง" });
     }
-    req.userId = decoded.id;
+    req.uid = decoded.uid;
     next();
   });
 }

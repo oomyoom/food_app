@@ -8,7 +8,6 @@ import 'package:food_app/utils/selectDate.dart';
 import 'package:food_app/utils/tapButton.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class ProfilecreationScreen extends StatefulWidget {
   const ProfilecreationScreen({Key? key, required this.account})
@@ -57,24 +56,33 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
     }
   }
 
-  Future<void> userCreation() async {
+  Future<void> userCreation(
+    File imageFile,
+    String email,
+    String password,
+    String username,
+    String firstname,
+    String lastname,
+    String birthday,
+  ) async {
     if (_hasImage && _formKey.currentState!.validate()) {
-      final response = await http.post(
-        Uri.parse('http://192.168.1.84:3333/auth/register'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode({
-          'email': widget.account.email,
-          'password': widget.account.password.trim(),
-          'base64Image':
-              _image != null ? base64Encode(_image!.readAsBytesSync()) : null,
-          'username': _usernametextController.text,
-          'firstname': _firstnametextController.text,
-          'lastname': _lastnametextController.text,
-          'birthday': _birthdaytextController.text,
-        }),
-      );
+      final url = Uri.parse('http://192.168.1.84:3333/auth/register');
+      final request = http.MultipartRequest('POST', url);
+      request.fields['email'] = email;
+      request.fields['password'] = password;
+      request.fields['username'] = username;
+      request.fields['firstname'] = firstname;
+      request.fields['lastname'] = lastname;
+      request.fields['birthday'] = birthday;
+
+      request.files.add(http.MultipartFile(
+        'image',
+        imageFile.readAsBytes().asStream(),
+        imageFile.lengthSync(),
+        filename: 'image.jpg',
+      ));
+
+      final response = await request.send();
 
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -230,7 +238,16 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
                           top: MediaQuery.of(context).size.height * 0.03,
                         ),
                         child: TapButton(
-                          press: userCreation,
+                          press: () {
+                            userCreation(
+                                _image!,
+                                widget.account.email,
+                                widget.account.password.trim(),
+                                _usernametextController.text,
+                                _firstnametextController.text,
+                                _lastnametextController.text,
+                                _birthdaytextController.text);
+                          },
                           title: 'เสร็จสิ้น',
                           color: kMainColor,
                         )),
