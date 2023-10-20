@@ -10,7 +10,7 @@ class DeliveryOption extends StatefulWidget {
 
 enum deliveryOption { dineIn, takeOut }
 
-String deliveryTextOption = 'Dine-In';
+String deliveryTextOption = 'ทานที่ร้าน';
 
 class _DeliveryOptionState extends State<DeliveryOption> {
   deliveryOption _selectedOption = deliveryOption.dineIn;
@@ -22,7 +22,7 @@ class _DeliveryOptionState extends State<DeliveryOption> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Selected-Option',
+              'ตัวเลือก',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
           ],
@@ -36,28 +36,28 @@ class _DeliveryOptionState extends State<DeliveryOption> {
             Expanded(
               child: RadioListTile(
                   activeColor: kActiveColor,
-                  title: const Text('Dine-In'),
+                  title: const Text('ทานที่ร้าน'),
                   value: deliveryOption.dineIn,
                   groupValue: _selectedOption,
                   controlAffinity: ListTileControlAffinity.leading,
                   onChanged: (deliveryOption? value) {
                     setState(() {
                       _selectedOption = value!;
-                      deliveryTextOption = 'Dine-In';
+                      deliveryTextOption = 'ทานที่ร้าน';
                     });
                   }),
             ),
             Expanded(
               child: RadioListTile(
                   activeColor: kActiveColor,
-                  title: const Text('Take-Away'),
+                  title: const Text('กลับบ้าน'),
                   value: deliveryOption.takeOut,
                   groupValue: _selectedOption,
                   controlAffinity: ListTileControlAffinity.leading,
                   onChanged: (value) {
                     setState(() {
                       _selectedOption = value!;
-                      deliveryTextOption = 'Take-Away';
+                      deliveryTextOption = 'กลับบ้าน';
                     });
                   }),
             )

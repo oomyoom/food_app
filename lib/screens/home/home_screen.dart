@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                 horizontal: defaultPadding, vertical: defaultPadding / 4),
             sliver: SliverToBoxAdapter(
               child: sectionTitle(
-                title: 'Featured Partners',
+                title: 'เมนูแนะนำ',
                 press: () {
                   Navigator.push(
                     context,
@@ -86,20 +86,20 @@ class HomeScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                   children: List.generate(
-                      demoMediumCardData.length,
+                      menu.length,
                       (index) => Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: defaultPadding / 2),
                             child: cardInfo(
-                              title: demoMediumCardData[index].title,
-                              price: demoMediumCardData[index].price,
-                              image: demoMediumCardData[index].image,
+                              title: menu[index].title,
+                              price: menu[index].price,
+                              image: menu[index].image,
                               press: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => FoodDetailsScreen(
-                                            food: demoMediumCardData[index])));
+                                            food: menu[index])));
                               },
                             ),
                           ))),

@@ -12,7 +12,7 @@ class OrderDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          'Order Details'.toUpperCase(),
+          'รายละเอียดออเดอร์'.toUpperCase(),
           style: Theme.of(context)
               .textTheme
               .bodyLarge!
@@ -32,7 +32,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Order Number',
+                        'หมายเลขออเดอร์',
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!
@@ -70,7 +70,7 @@ class OrderDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Bill Details',
+                          'รายละเอียด',
                           style: Theme.of(context).textTheme.titleLarge!,
                         ),
                       ],
@@ -127,7 +127,7 @@ class OrderDetailsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Order Total',
+                                'ราคา',
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Text(
@@ -162,7 +162,7 @@ class OrderDetailsScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Selected-Option',
+                                  'ตัวเลือก',
                                   style: Theme.of(context).textTheme.titleLarge,
                                 ),
                                 Text(

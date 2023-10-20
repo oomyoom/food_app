@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
@@ -11,7 +13,7 @@ class FoodContainer extends StatefulWidget {
     required this.onQuantityChanged,
   }) : super(key: key);
 
-  final Menu food;
+  final Menu2 food;
   final Function(int) onQuantityChanged;
   @override
   _FoodContainerState createState() => _FoodContainerState();
@@ -53,9 +55,24 @@ class _FoodContainerState extends State<FoodContainer> {
         child: Row(
           children: [
             SizedBox(
-                width: MediaQuery.of(context).size.width * 0.3,
-                height: MediaQuery.of(context).size.height * 0.12,
-                child: FoodImage(image: widget.food.image)),
+              width: MediaQuery.of(context).size.width * 0.3,
+              height: MediaQuery.of(context).size.height * 0.12,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black26,
+                      width: 1,
+                    ),
+                  ),
+                  child: Image.memory(
+                    Uint8List.fromList(widget.food.image),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width * .1,
             ),

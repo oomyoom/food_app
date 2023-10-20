@@ -11,14 +11,14 @@ class FoodDetailsScreen extends StatefulWidget {
     Key? key,
     required this.food,
   }) : super(key: key);
-  final Menu food;
+  final Menu2 food;
 
   @override
   _FoodDetailsScreenState createState() => _FoodDetailsScreenState();
 }
 
 String specifyText = '';
-double specifyperPrice = 0;
+int specifyperPrice = 0;
 
 class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
   final TextEditingController _textController = TextEditingController();
@@ -34,7 +34,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
         title: Column(
           children: [
             Text(
-              'Food Details'.toUpperCase(),
+              'รายละเอียดอาหาร'.toUpperCase(),
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
@@ -95,7 +95,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Note',
+                                'รายละเอียดเพิ่มเติม',
                                 style: Theme.of(context).textTheme.titleLarge!,
                               ),
                               Padding(
@@ -104,7 +104,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                                 ),
                                 child: TextFormField(
                                   decoration: const InputDecoration(
-                                      labelText: 'Note to restaurant'),
+                                      labelText: 'ระบุรายละเอียด'),
                                   controller: _textController,
                                   keyboardType: TextInputType.text,
                                 ),
@@ -124,7 +124,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
               child: TapButton(
                 press: () {
                   if (specifyText.isEmpty) {
-                    specifyText = 'Normal';
+                    specifyText = 'ธรรมดา';
                   }
                   if (_textController.text.isNotEmpty) {
                     specifyText = '$specifyText+${_textController.text}';
@@ -144,7 +144,7 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                     Navigator.pop(context);
                   }
                 },
-                title: 'Confirm',
+                title: 'ยืนยัน',
                 color: kMainColor,
               ),
             ),

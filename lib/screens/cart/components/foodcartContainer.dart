@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
@@ -56,7 +58,21 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.28,
                           height: MediaQuery.of(context).size.height * 0.12,
-                          child: FoodImage(image: value.foodItem.image),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black26,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Image.memory(
+                                Uint8List.fromList(value.foodItem.image),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.1,
@@ -171,7 +187,7 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'Bill Details',
+                    'รายละเอียด',
                     style: Theme.of(context).textTheme.titleLarge!,
                   ),
                 ],
@@ -227,7 +243,7 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Order Total',
+                          'ราคา',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Text(

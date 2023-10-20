@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:food_app/utils/constants.dart';
 
@@ -9,8 +11,9 @@ class cardInfo extends StatelessWidget {
       required this.press,
       required this.price})
       : super(key: key);
-  final String title, image;
-  final double price;
+  final String title;
+  final List<int> image;
+  final int price;
   final VoidCallback press;
 
   @override
@@ -24,7 +27,7 @@ class cardInfo extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 1.25,
-              child: Image.asset(image),
+              child: Image.memory(Uint8List.fromList(image)),
             ),
             const SizedBox(
               height: defaultPadding / 2,

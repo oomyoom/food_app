@@ -5,7 +5,7 @@ import 'package:food_app/utils/constants.dart';
 
 class FoodSpecify extends StatefulWidget {
   const FoodSpecify({Key? key, required this.food}) : super(key: key);
-  final Menu food;
+  final Menu2 food;
 
   @override
   _FoodSpecifyState createState() => _FoodSpecifyState();
@@ -17,8 +17,8 @@ class _FoodSpecifyState extends State<FoodSpecify> {
   @override
   void initState() {
     super.initState();
-    for (final category in widget.food.specifytitle) {
-      isCheckedList.add(List.filled(category.specifytitle.length, false));
+    for (final category in widget.food.categories) {
+      isCheckedList.add(List.filled(category.optiontitle.length, false));
     }
   }
 
@@ -29,7 +29,7 @@ class _FoodSpecifyState extends State<FoodSpecify> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
-            children: widget.food.specifytitle.asMap().entries.map((entry) {
+            children: widget.food.categories.asMap().entries.map((entry) {
               final categoryIndex = entry.key;
               final value = entry.value;
 
@@ -44,27 +44,28 @@ class _FoodSpecifyState extends State<FoodSpecify> {
                         Row(
                           children: [
                             Text(
-                              value.title,
+                              value.categorytitle,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: kActiveColor,
                               ),
                             ),
                             Text(
-                              ' specify',
+                              ' เลือก',
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.bodyMedium!,
                             ),
                           ],
                         ),
                         Column(
-                          children: value.specifytitle
+                          children: value.optiontitle
                               .asMap()
                               .entries
                               .map((specifyEntry) {
                             final specifyIndex = specifyEntry.key;
                             final specifyTitle = specifyEntry.value;
-                            final specifyPrice = value.price[specifyIndex];
+                            final specifyPrice =
+                                value.optionprice[specifyIndex];
 
                             return CheckboxListTile(
                               activeColor: Colors.green,

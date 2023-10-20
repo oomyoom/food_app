@@ -8,8 +8,8 @@ import 'package:food_app/utils/tapButton.dart';
 import 'package:food_app/utils/stripeService.dart';
 
 class CartItem {
-  final Menu foodItem;
-  double priceItem, specfiyPrice;
+  final Menu2 foodItem;
+  int priceItem, specfiyPrice;
   String specifyItem;
   int quantity;
 
@@ -22,7 +22,7 @@ class CartItem {
 }
 
 final List<CartItem> cartItems = [];
-double totalPrice = 0, serviceCharge = 0;
+int totalPrice = 0, serviceCharge = 0;
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key, required List<CartItem> cartItems})
@@ -42,7 +42,7 @@ class _CartScreenState extends State<CartScreen> {
           backgroundColor: kMainColor,
           elevation: 0,
           title: Text(
-            'My Cart'.toUpperCase(),
+            'ตะกร้าของฉัน'.toUpperCase(),
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
@@ -51,7 +51,7 @@ class _CartScreenState extends State<CartScreen> {
         ),
         body: Center(
           child: Text(
-            'Your cart is empty',
+            'ตะกร้าของคุณว่าง',
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
@@ -68,7 +68,7 @@ class _CartScreenState extends State<CartScreen> {
         title: Column(
           children: [
             Text(
-              'My Cart'.toUpperCase(),
+              'ตะกร้าของฉัน'.toUpperCase(),
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
@@ -132,7 +132,7 @@ class _CartScreenState extends State<CartScreen> {
                     print('Error: $e');
                   });
                 },
-                title: 'Checkout',
+                title: 'เช็คเอาท์',
                 color: kMainColor,
               ),
             ),

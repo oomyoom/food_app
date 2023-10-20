@@ -33,7 +33,7 @@ class QueueScreen extends StatelessWidget {
         backgroundColor: kMainColor,
         centerTitle: true,
         title: Text(
-          'Queue'.toUpperCase(),
+          'คิว'.toUpperCase(),
           style: Theme.of(context)
               .textTheme
               .bodyLarge!
@@ -54,7 +54,7 @@ class QueueScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'Number of queues',
+                            'จำนวนคิว',
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineMedium!
@@ -93,13 +93,13 @@ class QueueScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(defaultPadding),
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.5,
-                            color: Colors.black38,
+                            color: kMainColor,
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Column(
                                 children: [
                                   Text(
-                                    'Queue ID',
+                                    'หมายเลขคิว',
                                     style:
                                         Theme.of(context).textTheme.titleLarge!,
                                   ),

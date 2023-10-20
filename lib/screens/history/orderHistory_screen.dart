@@ -12,7 +12,7 @@ class OrderHistoryScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          'Order History'.toUpperCase(),
+          'ประวัติการสั่งอาหาร'.toUpperCase(),
           style: Theme.of(context)
               .textTheme
               .bodyLarge!
@@ -60,7 +60,7 @@ class OrderHistoryScreen extends StatelessWidget {
                                     .copyWith(color: Colors.white),
                               ),
                               Text(
-                                'Order-Number ${value.orderId}',
+                                'หมายเลขออเดอร์ ${value.orderId}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge!
@@ -87,7 +87,7 @@ class OrderHistoryScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Order Total',
+                                'ราคา',
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               Text(

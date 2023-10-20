@@ -8,7 +8,7 @@ class Order {
 
   final int orderId;
   final List<CartItem> orderItems;
-  final double totalPrice;
+  final int totalPrice;
   final DateTime creatDateTime;
   final String deliveryOption;
 

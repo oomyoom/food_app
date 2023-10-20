@@ -1,6 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:food_app/utils/constants.dart';
-import 'package:food_app/utils/foodImage.dart';
 
 class MenuInfo extends StatelessWidget {
   const MenuInfo({
@@ -10,8 +11,9 @@ class MenuInfo extends StatelessWidget {
     required this.press,
     required this.price,
   }) : super(key: key);
-  final String title, image;
-  final double price;
+  final String title;
+  final List<int> image;
+  final int price;
   final VoidCallback press;
 
   @override
@@ -25,7 +27,21 @@ class MenuInfo extends StatelessWidget {
                 padding: const EdgeInsets.all(defaultPadding / 2),
                 width: MediaQuery.of(context).size.width * 0.4,
                 height: MediaQuery.of(context).size.height * 0.15,
-                child: FoodImage(image: image)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black26,
+                        width: 1,
+                      ),
+                    ),
+                    child: Image.memory(
+                      Uint8List.fromList(image),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )),
             const SizedBox(width: 16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

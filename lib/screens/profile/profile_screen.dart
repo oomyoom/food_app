@@ -21,12 +21,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF73C088),
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: kMainColor,
         elevation: 0,
         title: Text(
-          'Profile'.toUpperCase(),
+          'โปรไฟล์'.toUpperCase(),
           style: Theme.of(context)
               .textTheme
               .bodyLarge!

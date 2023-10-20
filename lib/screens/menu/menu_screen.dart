@@ -49,22 +49,21 @@ class _MenuScreenState extends State<MenuScreen> {
                   children: [
                     Column(
                         children: List.generate(
-                            demoMediumCardData.length,
+                            menu.length,
                             (index) => Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: defaultPadding / 2),
                                   child: MenuInfo(
-                                    title: demoMediumCardData[index].title,
-                                    image: demoMediumCardData[index].image,
-                                    price: demoMediumCardData[index].price,
+                                    title: menu[index].title,
+                                    image: menu[index].image,
+                                    price: menu[index].price,
                                     press: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 FoodDetailsScreen(
-                                                  food:
-                                                      demoMediumCardData[index],
+                                                  food: menu[index],
                                                 )),
                                       );
                                     },
