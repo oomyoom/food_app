@@ -19,3 +19,18 @@ class Order {
       required this.creatDateTime,
       required this.deliveryOption});
 }
+
+List<dynamic> orderData = [];
+
+Future<void> convertOrder() async {
+  orderData = List.from(order).map((e) {
+    return {
+      'order_total': e.totalPrice,
+      'createDateTime': e.creatDateTime.toString().substring(0, 19),
+      'deliveryOption': e.deliveryOption,
+      'isCompleted': e.isCompleted,
+      'isRecieved': false,
+    };
+  }).toList();
+  print(orderData[0]);
+}

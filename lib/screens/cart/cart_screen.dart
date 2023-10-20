@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/models/cart.dart';
 import 'package:food_app/screens/cart/components/deliveryOption.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/components/foodcartContainer.dart';
 import 'package:food_app/models/order.dart';
+import 'package:food_app/utils/getToken.dart';
 import 'package:food_app/utils/tapButton.dart';
 import 'package:food_app/utils/stripeService.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class CartItem {
   final Menu2 foodItem;
@@ -33,6 +37,45 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  Future<void> sendOrder() async {
+    final token = await getToken();
+    await convertCartItems();
+    await convertOrder();
+
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.1.84:3333/order/create'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'cartData': cartData,
+          'orderData': orderData[0],
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('สร้างออเดอร์สำเร็จ'),
+            duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('สร้างออเดอร์ล้มเหลว'),
+            duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
+          ),
+        );
+      }
+    } catch (e) {
+      // เกิดข้อผิดพลาดในการส่งข้อมูล
+      print('เกิดข้อผิดพลาด: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (cartItems.isEmpty) {
@@ -110,7 +153,8 @@ class _CartScreenState extends State<CartScreen> {
               child: TapButton(
                 press: () async {
                   await StripeService.stripePaymentCheckout(
-                      cartItems, totalPrice, context, mounted, onSuccess: () {
+                      cartItems, totalPrice, context, mounted,
+                      onSuccess: () async {
                     orderId++;
 
                     final newOrder = Order(
@@ -122,8 +166,10 @@ class _CartScreenState extends State<CartScreen> {
                     );
 
                     order.add(newOrder);
+                    await sendOrder();
 
                     cartItems.clear();
+                    order.clear();
                     totalPrice = 0;
                     Navigator.pop(context);
                   }, onCancel: () {

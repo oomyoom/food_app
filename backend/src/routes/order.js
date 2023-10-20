@@ -1,30 +1,39 @@
 const express = require("express");
 const router = express.Router();
-const { cartData } = require("../models/cart");
-const { orderData } = require("../models/order");
+// const { cartData } = require("../models/cart");
+// const { orderData } = require("../models/order");
 const orderCreation = require("../controllers/orderCreation");
 const orderRetrieval = require("../controllers/orderRetrieval");
 const databaseUtils = require("../utils/databaseUtils");
+const { verifyToken } = require("../middlewares/authToken");
 
-router.post("/create", (req, res) => {
+router.post("/create", verifyToken, (req, res) => {
+  const orderData = req.body.orderData;
+  const cartData = req.body.cartData;
+  console.log(cartData);
   databaseUtils.getLastId("order", "order_id", (error, lastOrderId) => {
     if (error) {
       return res.status(500).send("เกิดข้อผิดพลาดในการดึงค่า OrderId ล่าสุด");
     }
 
-    orderCreation.insertOrder(orderData, lastOrderId, (error, lastOrderId) => {
-      if (error) {
-        return res.status(500).send("เกิดข้อผิดพลาดในการแทรกข้อมูลออเดอร์");
-      }
-
-      orderCreation.insertCart(cartData, lastOrderId, (error) => {
+    orderCreation.insertOrder(
+      orderData,
+      lastOrderId,
+      req.uid,
+      (error, lastOrderId) => {
         if (error) {
-          return res.status(500).send("เกิดข้อผิดพลาดในการแทรกข้อมูลตระกร้า");
+          return res.status(500).send("เกิดข้อผิดพลาดในการแทรกข้อมูลออเดอร์");
         }
 
-        res.status(200).send("ออเดอร์ถูกสร้างเรียบร้อยแล้ว");
-      });
-    });
+        orderCreation.insertCart(cartData, lastOrderId, (error) => {
+          if (error) {
+            return res.status(500).send("เกิดข้อผิดพลาดในการแทรกข้อมูลตระกร้า");
+          }
+
+          res.status(200).send("ออเดอร์ถูกสร้างเรียบร้อยแล้ว");
+        });
+      }
+    );
   });
 });
 

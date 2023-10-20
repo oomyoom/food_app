@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
             title: Column(
               children: [
                 Text(
-                  'PWO Restaurant'.toUpperCase(),
+                  'ร้านนุ่มนิ่ม'.toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!

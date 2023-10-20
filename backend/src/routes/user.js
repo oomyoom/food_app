@@ -9,7 +9,6 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.get("/get", verifyToken, async (req, res) => {
-  console.log(req.uid);
   try {
     const user = await userProfileRetrieval.retrieveUserProfile(req.uid);
     res.status(200).json(user);

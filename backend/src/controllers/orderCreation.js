@@ -1,15 +1,22 @@
 const { db } = require("../config/database");
+const { DateTime } = require("luxon");
 
-function insertOrder(orderData, lastOrderId, callback) {
+function insertOrder(orderData, lastOrderId, uid, callback) {
   const query =
-    "INSERT INTO `order` (order_total, createDateTime, deliveryOption, isCompleted, isRecieved) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO `order` (order_total, createDateTime, deliveryOption, isCompleted, isRecieved, uid) VALUES (?, ?, ?, ?, ?, ?)";
+
+  const createDateTime = DateTime.fromFormat(
+    orderData.createDateTime,
+    "yyyy-MM-dd HH:mm:ss"
+  );
 
   const values = [
     orderData.order_total,
-    orderData.createDateTime,
+    createDateTime.toISO(),
     orderData.deliveryOption,
     orderData.isCompleted,
     orderData.isRecieved,
+    uid,
   ];
 
   db.query(query, values, (error, results) => {
@@ -45,7 +52,7 @@ function insertCart(cartData, lastOrderId, callback) {
   const query =
     "INSERT INTO cart (option_item, option_total, cart_total, cart_qty,menu_id, order_id) VALUES ?";
   const promises = cartData.map((item) => {
-    const menuTitle = item.cart_item.menu_title;
+    const menuTitle = item.cart_item;
 
     return new Promise((resolve, reject) => {
       getMenuIdByTitle(menuTitle, (error, menuId) => {

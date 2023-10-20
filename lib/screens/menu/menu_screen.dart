@@ -28,7 +28,7 @@ class _MenuScreenState extends State<MenuScreen> {
             title: Column(
               children: [
                 Text(
-                  'Menu'.toUpperCase(),
+                  'เมนู'.toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
