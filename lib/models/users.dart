@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:food_app/utils/getToken.dart';
 import 'package:http/http.dart' as http;
 
 class Account {
@@ -27,8 +28,15 @@ class User {
 List<dynamic> profile = [];
 
 Future<List<dynamic>> getProfile() async {
-  final response =
-      await http.get(Uri.parse('http://192.168.1.84:3333/user/get'));
+  final token = await getToken();
+  final response = await http.get(
+    Uri.parse('http://192.168.1.84:3333/user/get'),
+    headers: {
+      'Authorization': 'Bearer $token',
+      'Content-Type':
+          'application/json', // อาจจะต้องปรับแต่งตามความต้องการของ API
+    },
+  );
 
   if (response.statusCode == 200) {
     List<dynamic> data = json.decode(response.body);

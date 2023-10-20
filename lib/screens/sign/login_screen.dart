@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:food_app/models/users.dart';
 import 'package:food_app/utils/buttomTab.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
 import 'package:food_app/utils/constants.dart';
@@ -53,6 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
           duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
         ),
       );
+      await convertProfile();
+      while (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

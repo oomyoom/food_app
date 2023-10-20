@@ -1,8 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class FoodImage extends StatelessWidget {
   const FoodImage({Key? key, required this.image}) : super(key: key);
-  final String image;
+  final List<int> image;
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +17,8 @@ class FoodImage extends StatelessWidget {
             width: 1,
           ),
         ),
-        child: Image.asset(
-          image,
+        child: Image.memory(
+          Uint8List.fromList(image),
           fit: BoxFit.cover,
         ),
       ),

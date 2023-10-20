@@ -55,60 +55,37 @@ function verifyEmail(email, verificationCode, callback) {
   }
 }
 
-// แปลงรูป
-async function saveImage(base64Image) {
-  const imageBuffer = Buffer.from(base64Image, "base64");
-  const imagePathToSave = "./src/models/images/profile.png";
-  fs.writeFileSync(imagePathToSave, imageBuffer);
-  return imagePathToSave;
-}
-
-// Format วันเกิด
-function formatBirthday(birthday) {
-  return DateTime.fromISO(birthday).toFormat("yyyy-MM-dd HH:mm:ss");
-}
-
 // สร้าง user
 async function createUser(
   email,
   password,
-  base64Image,
+  image,
   username,
   firstname,
   lastname,
   birthday,
   callback
 ) {
-  const imagePathToSave = await saveImage(base64Image);
-  const dateTime = formatBirthday(birthday);
-
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const insertQuery =
     "INSERT INTO users (email, password, image, username, firstname, lastname, birthday) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-  db.query(
-    insertQuery,
-    [
-      email,
-      hashedPassword,
-      imagePathToSave,
-      username,
-      firstname,
-      lastname,
-      dateTime,
-    ],
-    (error, results) => {
-      if (error) {
-        console.error("Error inserting data into user:" + error);
-        callback(error);
-      } else {
-        console.log("Data inserted into user:", results);
-        callback(null);
-        // ลบไฟล์รูปภาพหลังจากบันทึกลงในฐานข้อมูลแล้ว
+  await db
+    .promise()
+    .query(
+      insertQuery,
+      [email, hashedPassword, image, username, firstname, lastname, birthday],
+      (error, results) => {
+        if (error) {
+          console.error("Error inserting data into user:" + error);
+          callback(error);
+        } else {
+          console.log("Data inserted into user:", results);
+          callback(null);
+        }
       }
-    }
-  );
+    );
 }
 
 async function login(email, password) {

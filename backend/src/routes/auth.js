@@ -41,6 +41,10 @@ router.post("/verify-email", (req, res) => {
 // โค้ดสำหรับลงทะเบียนผู้ใช้
 router.post("/register", upload.single("image"), async (req, res) => {
   try {
+    const { email, password, username, firstname, lastname, birthday } =
+      req.body;
+    const image = req.file.buffer;
+
     const checkEmailQuery = "SELECT * FROM users WHERE email = ?";
     const [existingUsers] = await db.promise().query(checkEmailQuery, [email]);
 
@@ -48,16 +52,20 @@ router.post("/register", upload.single("image"), async (req, res) => {
       return res.status(400).json({ error: "Email นี้มีอยู่ในระบบแล้ว" });
     }
 
-    const { email, password, username, firstname, lastname, birthday } =
-      req.body; // Get other data
-    const image = req.file.buffer; // Get the image buffer
-
-    await db
-      .promise()
-      .query(
-        "INSERT INTO users (email, password, image, username, firstname, lastname, birthday) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        [email, password, image, username, firstname, lastname, birthday]
-      );
+    createUser(
+      email,
+      password,
+      image,
+      username,
+      firstname,
+      lastname,
+      birthday,
+      (error) => {
+        if (error) {
+          return res.status(500).send("Failed to create");
+        }
+      }
+    );
 
     res.status(200).send("Data and image uploaded successfully");
   } catch (error) {
