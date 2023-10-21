@@ -167,6 +167,7 @@ class _CartScreenState extends State<CartScreen> {
 
                     order.add(newOrder);
                     await sendOrder();
+                    await convertAllOrder();
 
                     cartItems.clear();
                     order.clear();

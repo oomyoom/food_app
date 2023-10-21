@@ -2,27 +2,62 @@ import 'package:flutter/material.dart';
 import 'package:food_app/screens/queue/components/statusContainer.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/order.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class QueueScreen extends StatelessWidget {
+class QueueScreen extends StatefulWidget {
   const QueueScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    int totalQueue = 0;
-    Color color = Colors.black;
-    for (var item in order) {
-      //print(item.creatDateTime.toString().substring(0, 16));
-      if (item.isCompleted == false) totalQueue++;
+  _QueueScreenState createState() => _QueueScreenState();
+}
+
+class _QueueScreenState extends State<QueueScreen> {
+  List queue = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    List<dynamic> queueData = await getAllOrder(); // รอให้ Future ทำงานเสร็จ
+
+    setState(() {
+      queue = queueData; // อัปเดตค่า queue หลังจาก Future ทำงานเสร็จ
+    });
+  }
+
+  Future<List<dynamic>> getAllOrder() async {
+    final response = await http.get(
+      Uri.parse('http://192.168.1.84:3333/order/queue'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> queue = json.decode(response.body);
+      return queue;
+    } else {
+      // กรณีเกิดข้อผิดพลาดในการรับข้อมูล
+      return [];
     }
-    switch (totalQueue) {
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Color color = Colors.black;
+    switch (queue.length) {
       case 0:
         color = Colors.black26;
         break;
       default:
-        if (totalQueue <= 10) {
+        if (queue.length <= 10) {
           color = Colors.green;
         }
-        if (totalQueue > 10) {
+        if (queue.length > 10) {
           color = Colors.red;
         }
     }
@@ -78,7 +113,7 @@ class QueueScreen extends StatelessWidget {
                                   width:
                                       MediaQuery.of(context).size.width * 0.05,
                                 ),
-                                Text('$totalQueue',
+                                Text('${queue.length}',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall!
@@ -109,30 +144,26 @@ class QueueScreen extends StatelessWidget {
                                   ),
                                   Column(
                                     children:
-                                        order.asMap().entries.map((entry) {
+                                        queue.asMap().entries.map((entry) {
                                       final value = entry.value;
-                                      if (value.isCompleted == false) {
-                                        return Column(
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.01),
-                                              child: Text(
-                                                'ORD ${value.orderId}',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge!,
-                                              ),
-                                            )
-                                          ],
-                                        );
-                                      } else {
-                                        return Container();
-                                      }
+
+                                      return Column(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.01),
+                                            child: Text(
+                                              '${value['order_id']}',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!,
+                                            ),
+                                          )
+                                        ],
+                                      );
                                     }).toList(),
                                   ),
                                 ],

@@ -25,7 +25,7 @@ class OrderHistoryScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Column(
-            children: order.asMap().entries.map((entry) {
+            children: orderHist.asMap().entries.map((entry) {
               final value = entry.value;
 
               return Column(

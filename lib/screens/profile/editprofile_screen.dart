@@ -90,13 +90,14 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
             duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
           ),
         );
+        await convertProfile();
         while (Navigator.canPop(context)) {
           Navigator.pop(context);
         }
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => ButtomTab(
+                builder: (context) => const ButtomTab(
                       initialIndex: 3,
                     )));
       } else {
@@ -114,7 +115,7 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFD1EAD8),
+      backgroundColor: const Color(0xFFD1EAD8),
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: kMainColor,
@@ -217,13 +218,13 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
                         if (_formKey.currentState!.validate()) {
                           Uint8List blobData = Uint8List.fromList(widget.image);
                           tempFile = await convertBlobToFile(blobData);
-                          profile[0]['image'] = _hasImage == true
-                              ? await convertFileToBytes(_image!)
-                              : widget.image;
-                          profile[0]['username'] = _usernametextController.text;
-                          profile[0]['firstname'] =
-                              _firstnametextController.text;
-                          profile[0]['lastname'] = _lastnametextController.text;
+                          // profile[0]['image'] = _hasImage == true
+                          //     ? await convertFileToBytes(_image!)
+                          //     : widget.image;
+                          // profile[0]['username'] = _usernametextController.text;
+                          // profile[0]['firstname'] =
+                          //     _firstnametextController.text;
+                          // profile[0]['lastname'] = _lastnametextController.text;
                           userUpdate(
                               _hasImage == true ? _image! : tempFile!,
                               _usernametextController.text,

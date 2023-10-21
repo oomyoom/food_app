@@ -4,7 +4,7 @@ import 'package:food_app/utils/constants.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   const OrderDetailsScreen({Key? key, required this.order}) : super(key: key);
-  final Order order;
+  final Order2 order;
 
   @override
   Widget build(BuildContext context) {

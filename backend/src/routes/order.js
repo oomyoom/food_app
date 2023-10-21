@@ -10,7 +10,6 @@ const { verifyToken } = require("../middlewares/authToken");
 router.post("/create", verifyToken, (req, res) => {
   const orderData = req.body.orderData;
   const cartData = req.body.cartData;
-  console.log(cartData);
   databaseUtils.getLastId("order", "order_id", (error, lastOrderId) => {
     if (error) {
       return res.status(500).send("เกิดข้อผิดพลาดในการดึงค่า OrderId ล่าสุด");
@@ -37,9 +36,9 @@ router.post("/create", verifyToken, (req, res) => {
   });
 });
 
-router.get("/get", async (req, res) => {
+router.get("/get", verifyToken, async (req, res) => {
   try {
-    const allOrder = await orderRetrieval.retrieveOrder(1);
+    const allOrder = await orderRetrieval.retrieveOrder(req.uid);
     res.status(200).json(allOrder);
   } catch (error) {
     console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
@@ -79,6 +78,18 @@ router.patch("/recieved", (req, res) => {
       }
     }
   );
+});
+
+router.get("/queue", async (req, res) => {
+  try {
+    const queue = await databaseUtils.getDataFromDB(
+      `SELECT order_id FROM \`order\` WHERE isCompleted = 0`
+    );
+    res.status(200).json(queue);
+  } catch (error) {
+    console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
+    res.status(500).json({ error: "เกิดข้อผิดพลาดในการดึงข้อมูล" });
+  }
 });
 
 module.exports = router;

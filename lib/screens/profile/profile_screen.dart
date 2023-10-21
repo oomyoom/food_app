@@ -36,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(defaultPadding),
@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: profile.asMap().entries.map((e) {
                 final value = e.value;
 
-                return Container(
+                return SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: Stack(
@@ -103,13 +103,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Positioned(
                           top: MediaQuery.of(context).size.width * 0.8,
                           child: ElevatedButton(
-                            child: Text(
-                              'แก้ไข',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(color: kMainColor),
-                            ),
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -127,6 +120,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     MediaQuery.of(context).size.width * 0.2,
                                     MediaQuery.of(context).size.height *
                                         0.01))),
+                            child: Text(
+                              'แก้ไข',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(color: kMainColor),
+                            ),
                           )),
                       Positioned(
                         top: MediaQuery.of(context).size.width * 1,
