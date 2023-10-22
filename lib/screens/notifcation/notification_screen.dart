@@ -1,22 +1,20 @@
+import 'package:flutter/material.dart';
+import 'package:food_app/utils/constants.dart';
 import 'dart:async';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:food_app/models/users.dart';
-import 'package:food_app/utils/constants.dart';
-import 'package:food_app/utils/displayImagebytes.dart';
 import 'package:food_app/utils/getToken.dart';
-import 'package:http/http.dart' as http;
 
-class Test extends StatefulWidget {
-  const Test({Key? key}) : super(key: key);
+class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({Key? key}) : super(key: key);
 
   @override
-  _TestState createState() => _TestState();
+  _NotificationScreenState createState() => _NotificationScreenState();
 }
 
-class _TestState extends State<Test> {
-  List test = [];
+class _NotificationScreenState extends State<NotificationScreen> {
+  List<dynamic> notification = [];
 
   @override
   void initState() {
@@ -28,12 +26,15 @@ class _TestState extends State<Test> {
   }
 
   Future<void> fetchData() async {
-    List<dynamic> testData =
+    List<dynamic> notificationData =
         await getAllNotification(); // รอให้ Future ทำงานเสร็จ
 
-    setState(() {
-      test = testData; // อัปเดตค่า queue หลังจาก Future ทำงานเสร็จ
-    });
+    if (mounted) {
+      // Check if the widget is still mounted before updating state
+      setState(() {
+        notification = notificationData;
+      });
+    }
   }
 
   Future<List<dynamic>> getAllNotification() async {
@@ -85,7 +86,7 @@ class _TestState extends State<Test> {
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          'test'.toUpperCase(),
+          'แจ้งเตือน'.toUpperCase(),
           style: Theme.of(context)
               .textTheme
               .bodyLarge!
@@ -98,7 +99,7 @@ class _TestState extends State<Test> {
         child: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Column(
-            children: test.asMap().entries.map((entry) {
+            children: notification.asMap().entries.map((entry) {
               final value = entry.value;
 
               return Column(

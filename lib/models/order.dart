@@ -1,4 +1,3 @@
-import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
 import 'package:food_app/utils/getToken.dart';
 import 'dart:convert';

@@ -27,17 +27,8 @@ function getLastId(tableName, columnName, callback) {
   });
 }
 
-function updateColumn(
-  tableName,
-  columnName,
-  columnQuery,
-  newValue,
-  idToUpdate,
-  callback
-) {
-  const query = `UPDATE \`${tableName}\` SET ${columnName} = ? WHERE ${columnQuery} = ?`;
-
-  db.query(query, [newValue, idToUpdate], (error, results) => {
+function updateColumn(query, newValue, callback) {
+  db.query(query, newValue, (error, results) => {
     if (error) {
       console.error("เกิดข้อผิดพลาดในการอัปเดตข้อมูล: " + error.message);
       callback(error);

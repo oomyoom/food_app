@@ -12,5 +12,4 @@ Future<void> convertCartItems() async {
       'cart_qty': e.quantity,
     };
   }).toList();
-  print(cartData[0]);
 }

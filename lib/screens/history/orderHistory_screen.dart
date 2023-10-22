@@ -46,7 +46,7 @@ class OrderHistoryScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.03),
-                          color: kActiveColor,
+                          color: kMainColor,
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.05,
                           child: Row(

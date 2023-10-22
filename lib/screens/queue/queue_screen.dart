@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:food_app/screens/queue/components/statusContainer.dart';
 import 'package:food_app/utils/constants.dart';
-import 'package:food_app/models/order.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -19,14 +20,19 @@ class _QueueScreenState extends State<QueueScreen> {
   void initState() {
     super.initState();
     fetchData();
+    Timer.periodic(Duration(seconds: 5), (timer) {
+      fetchData();
+    });
   }
 
   Future<void> fetchData() async {
     List<dynamic> queueData = await getAllOrder(); // รอให้ Future ทำงานเสร็จ
 
-    setState(() {
-      queue = queueData; // อัปเดตค่า queue หลังจาก Future ทำงานเสร็จ
-    });
+    if (mounted) {
+      setState(() {
+        queue = queueData; // อัปเดตค่า queue หลังจาก Future ทำงานเสร็จ
+      });
+    }
   }
 
   Future<List<dynamic>> getAllOrder() async {
