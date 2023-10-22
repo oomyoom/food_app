@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/utils/buttomTab.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/cart_screen.dart';
@@ -143,6 +144,11 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
                   while (Navigator.canPop(context)) {
                     Navigator.pop(context);
                   }
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const ButtomTab(initialIndex: 0)));
                 },
                 title: 'ยืนยัน',
                 color: kMainColor,

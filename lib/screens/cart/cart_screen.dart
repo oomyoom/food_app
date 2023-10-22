@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/models/cart.dart';
 import 'package:food_app/screens/cart/components/deliveryOption.dart';
+import 'package:food_app/utils/buttomTab.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
 import 'package:food_app/screens/cart/components/foodcartContainer.dart';
@@ -26,7 +27,7 @@ class CartItem {
 }
 
 final List<CartItem> cartItems = [];
-int totalPrice = 0, serviceCharge = 0;
+int totalPrice = 0;
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key, required List<CartItem> cartItems})
@@ -152,8 +153,25 @@ class _CartScreenState extends State<CartScreen> {
               color: kMainColor,
               child: TapButton(
                 press: () async {
+                  List<CartItem> tempcartItems = List.from(cartItems);
+                  tempcartItems.add(CartItem(
+                      foodItem: Menu2(
+                          id: 0,
+                          title: 'Service Charge',
+                          image: [1],
+                          price: 5,
+                          categories: [
+                            FoodCategory2(
+                                categorytitle: ' ',
+                                optiontitle: [' '],
+                                optionprice: [0])
+                          ]),
+                      quantity: 1,
+                      priceItem: 5,
+                      specifyItem: ' ',
+                      specfiyPrice: 0));
                   await StripeService.stripePaymentCheckout(
-                      cartItems, totalPrice, context, mounted,
+                      tempcartItems, totalPrice, context, mounted,
                       onSuccess: () async {
                     orderId++;
 
@@ -172,7 +190,14 @@ class _CartScreenState extends State<CartScreen> {
                     cartItems.clear();
                     order.clear();
                     totalPrice = 0;
-                    Navigator.pop(context);
+                    while (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const ButtomTab(initialIndex: 0)));
                   }, onCancel: () {
                     print('Cancel');
                   }, onError: (e) {

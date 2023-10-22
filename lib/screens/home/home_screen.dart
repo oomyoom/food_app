@@ -10,8 +10,23 @@ import 'package:food_app/screens/menu/menu_screen.dart';
 import 'package:food_app/screens/home/components/cardInfo.dart';
 import 'package:food_app/screens/home/components/sectionTitle.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int unreadNotificationCount = 0; // เริ่มต้นที่ 0
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      unreadNotificationCount = cartItems.length;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +39,37 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: defaultPadding / 2),
                 child: IconButton(
-                  icon: Icon(Icons.shopping_cart),
+                  icon: Stack(
+                    alignment: Alignment.topRight,
+                    children: <Widget>[
+                      Icon(
+                        Icons.shopping_cart,
+                      ),
+                      if (unreadNotificationCount > 0)
+                        Positioned(
+                          right: 0,
+                          child: Container(
+                            padding: EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                            constraints: BoxConstraints(
+                              minWidth: 16,
+                              minHeight: 16,
+                            ),
+                            child: Text(
+                              unreadNotificationCount.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,

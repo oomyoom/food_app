@@ -21,8 +21,7 @@ class StripeService {
     for (var value in productItems) {
       var productPrice =
           ((value.foodItem.price + value.specfiyPrice) * 100).round();
-      var tax = (productPrice * 0.1).toInt();
-      var totalPrice = productPrice + tax;
+      var totalPrice = productPrice;
       lineItems +=
           '&line_items[$index][price_data][product_data][name]=${value.foodItem.title}';
       lineItems +=
