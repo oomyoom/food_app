@@ -9,6 +9,7 @@ int orderId = 0;
 class Order {
   bool isCompleted;
   bool isRecieved;
+  bool isReaded;
 
   final int orderId;
   final List<CartItem> orderItems;
@@ -23,7 +24,8 @@ class Order {
       required this.creatDateTime,
       required this.deliveryOption,
       this.isCompleted = false,
-      this.isRecieved = false});
+      this.isRecieved = false,
+      this.isReaded = false});
 }
 
 List<dynamic> orderData = [];
@@ -37,6 +39,7 @@ Future<void> convertOrder() async {
       'deliveryOption': e.deliveryOption,
       'isCompleted': e.isCompleted,
       'isRecieved': false,
+      'isReaded': false,
     };
   }).toList();
 }

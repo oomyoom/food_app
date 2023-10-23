@@ -3,7 +3,7 @@ const { DateTime } = require("luxon");
 
 function insertOrder(orderData, lastOrderId, uid, callback) {
   const query =
-    "INSERT INTO `order` (order_total, createDateTime, deliveryOption, isCompleted, isRecieved, uid) VALUES (?, ?, ?, ?, ?, ?)";
+    "INSERT INTO `order` (order_total, createDateTime, deliveryOption, isCompleted, isRecieved, isReaded, uid) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
   const createDateTime = DateTime.fromFormat(
     orderData.createDateTime,
@@ -16,6 +16,7 @@ function insertOrder(orderData, lastOrderId, uid, callback) {
     orderData.deliveryOption,
     orderData.isCompleted,
     orderData.isRecieved,
+    orderData.isReaded,
     uid,
   ];
 

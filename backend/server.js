@@ -26,6 +26,9 @@ app.use("/order", order);
 const user = require("./src/routes/user");
 app.use("/user", user);
 
+const restaurant = require("./src/routes/restaurant");
+app.use("/restaurant", restaurant);
+
 app.listen(port, () => {
   console.log(`เซิร์ฟเวอร์ทำงานที่พอร์ต ${port}`);
 });

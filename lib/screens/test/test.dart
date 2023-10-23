@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:food_app/models/users.dart';
 import 'package:food_app/utils/constants.dart';
-import 'package:food_app/utils/displayImagebytes.dart';
 import 'package:food_app/utils/getToken.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,7 +20,7 @@ class _TestState extends State<Test> {
   void initState() {
     super.initState();
     fetchData();
-    Timer.periodic(Duration(seconds: 5), (timer) {
+    Timer.periodic(const Duration(seconds: 5), (timer) {
       fetchData();
     });
   }
@@ -56,7 +54,7 @@ class _TestState extends State<Test> {
     }
   }
 
-  Future<void> notificationReaded(int order_id) async {
+  Future<void> notificationReaded(int orderId) async {
     final token = await getToken();
 
     final response =
@@ -65,7 +63,7 @@ class _TestState extends State<Test> {
               'Authorization': 'Bearer $token',
               'Content-Type': 'application/json',
             },
-            body: jsonEncode({'order_id': order_id}));
+            body: jsonEncode({'order_id': orderId}));
 
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(

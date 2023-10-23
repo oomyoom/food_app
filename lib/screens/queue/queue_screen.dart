@@ -20,7 +20,7 @@ class _QueueScreenState extends State<QueueScreen> {
   void initState() {
     super.initState();
     fetchData();
-    Timer.periodic(Duration(seconds: 5), (timer) {
+    Timer.periodic(const Duration(seconds: 5), (timer) {
       fetchData();
     });
   }

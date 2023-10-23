@@ -7,7 +7,6 @@ import 'package:food_app/utils/buttomTab.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/screens/sign/register_screen.dart';
-import 'package:food_app/utils/decodeJWT.dart';
 import 'package:food_app/utils/tapButton.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -48,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // บันทึก token ลงใน local storage
       await saveToken(token);
-      decodedToken();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('เข้าสู่ระบบสำเร็จ'),
@@ -90,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.login_outlined,
+                    Icons.restaurant,
                     size: 100,
                   ),
                   Padding(

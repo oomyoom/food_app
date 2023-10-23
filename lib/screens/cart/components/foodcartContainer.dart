@@ -244,9 +244,9 @@ class _FoodcartContainerState extends State<FoodcartContainer> {
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyLarge!,
                     ),
-                    Text(
+                    const Text(
                       '฿ 5',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: kActiveColor,
                       ),

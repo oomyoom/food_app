@@ -63,21 +63,17 @@ router.patch("/completed", (req, res) => {
   );
 });
 
-router.patch("/recieved", (req, res) => {
-  databaseUtils.updateColumn(
-    "order",
-    "isRecieved",
-    "order_id",
-    true,
-    1,
-    (error) => {
-      if (error) {
-        return res.status(500).send("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
-      } else {
-        res.status(200).send("ข้อมูลถูกอัปเดตเรียบร้อยแล้ว");
-      }
+router.patch("/recieved", verifyToken, (req, res) => {
+  const order_id = req.body.order_id;
+  const query = `UPDATE \`order\` SET isRecieved = ? WHERE uid = ${req.uid} && isCompleted = 1 && order_id = ${order_id}`;
+
+  databaseUtils.updateColumn(query, true, (error) => {
+    if (error) {
+      return res.status(500).send("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
+    } else {
+      res.status(200).send("ข้อมูลถูกอัปเดตเรียบร้อยแล้ว");
     }
-  );
+  });
 });
 
 router.get("/queue", async (req, res) => {
@@ -95,7 +91,7 @@ router.get("/queue", async (req, res) => {
 router.get("/notification", verifyToken, async (req, res) => {
   try {
     const noti = await databaseUtils.getDataFromDB(
-      `SELECT order_id, isReaded, uid FROM \`order\` WHERE isCompleted = 1 && uid = ${req.uid} && isReaded != 1`
+      `SELECT order_id, isRecieved, isReaded, uid FROM \`order\` WHERE isCompleted = 1 && uid = ${req.uid} && isRecieved = 0`
     );
     res.status(200).json(noti);
   } catch (error) {

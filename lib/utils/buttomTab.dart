@@ -40,18 +40,18 @@ class _ButtomTabState extends State<ButtomTab> {
     notificationData.then((data) {
       setState(() {
         unreadNotificationCount =
-            data.where((item) => !(item['isReaded'] == 1)).length;
+            data.where((item) => !(item['isRecieved'] == 1)).length;
       });
     });
 
-    _notificationTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _notificationTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       final notificationData = getAllNotification();
       notificationData.then((data) {
         if (mounted) {
           // Check if the widget is still in the tree
           setState(() {
             unreadNotificationCount =
-                data.where((item) => !(item['isReaded'] == 1)).length;
+                data.where((item) => !(item['isRecieved'] == 1)).length;
           });
         }
       });
@@ -151,18 +151,18 @@ class _ButtomTabState extends State<ButtomTab> {
                   Positioned(
                     right: 0,
                     child: Container(
-                      padding: EdgeInsets.all(2),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.all(2),
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.red,
                       ),
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         minWidth: 16,
                         minHeight: 16,
                       ),
                       child: Text(
                         unreadNotificationCount.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         ),
