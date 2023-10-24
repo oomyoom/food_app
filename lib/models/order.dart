@@ -149,7 +149,7 @@ Future<void> convertAllOrder() async {
         orderId: e['order_id'],
         orderItems: cart,
         totalPrice: e['order_total'],
-        creatDateTime: DateTime.parse(e['createDateTime']),
+        creatDateTime: DateTime.parse(e['createDateTime']).toLocal(),
         deliveryOption: e['deliveryOption'],
         isCompleted: (e['isCompleted'] == 1),
         isRecieved: (e['isRecieved'] == 1));

@@ -14,4 +14,17 @@ router.get("/get", async (req, res) => {
   }
 });
 
+router.patch("/isClose", (req, res) => {
+  const available = req.body.available;
+  const query = `UPDATE \`restaurant\` SET available = ?`;
+
+  databaseUtils.updateColumn(query, available, (error) => {
+    if (error) {
+      return res.status(500).send("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
+    } else {
+      res.status(200).send("ข้อมูลถูกอัปเดตเรียบร้อยแล้ว");
+    }
+  });
+});
+
 module.exports = router;

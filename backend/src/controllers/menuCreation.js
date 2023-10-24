@@ -1,34 +1,18 @@
 const { db } = require("../config/database");
-const fs = require("fs");
 
-function insertMenu(menuData, lastMenuId, callback) {
-  const imageBuffer = fs.readFileSync(menuData.menu_image);
-  const checkMenuQuery = "SELECT * FROM menu WHERE menu_title = ?";
+function insertMenu(menuData, imageBuffer, lastMenuId, callback) {
+  const insertQuery =
+    "INSERT INTO menu (menu_title, menu_image, menu_price, available) VALUES (?, ?, ?, ?)";
+  const values = [menuData.menu_title, imageBuffer, menuData.menu_price, 1];
 
-  db.query(checkMenuQuery, [menuData.menu_title], (error, existingMenu) => {
+  db.query(insertQuery, values, (error, results) => {
     if (error) {
-      console.error("Error checking existing menu:", error);
+      console.error("Error inserting data into menu:", error);
       callback(error);
-      return;
+    } else {
+      console.log("Data inserted into menu:", results);
+      callback(null, lastMenuId);
     }
-
-    if (existingMenu.length > 0) {
-      return callback({ error: "Menu นี้มีอยู่ในระบบแล้ว" });
-    }
-
-    const insertQuery =
-      "INSERT INTO menu (menu_title, menu_image, menu_price) VALUES (?, ?, ?)";
-    const values = [menuData.menu_title, imageBuffer, menuData.menu_price];
-
-    db.query(insertQuery, values, (error, results) => {
-      if (error) {
-        console.error("Error inserting data into menu:", error);
-        callback(error);
-      } else {
-        console.log("Data inserted into menu:", results);
-        callback(null, lastMenuId);
-      }
-    });
   });
 }
 

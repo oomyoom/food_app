@@ -218,13 +218,6 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
                         if (_formKey.currentState!.validate()) {
                           Uint8List blobData = Uint8List.fromList(widget.image);
                           tempFile = await convertBlobToFile(blobData);
-                          // profile[0]['image'] = _hasImage == true
-                          //     ? await convertFileToBytes(_image!)
-                          //     : widget.image;
-                          // profile[0]['username'] = _usernametextController.text;
-                          // profile[0]['firstname'] =
-                          //     _firstnametextController.text;
-                          // profile[0]['lastname'] = _lastnametextController.text;
                           userUpdate(
                               _hasImage == true ? _image! : tempFile!,
                               _usernametextController.text,

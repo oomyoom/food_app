@@ -4,27 +4,58 @@ async function retrieveMenu() {
   const allMenu = [];
 
   try {
-    const maxIdQuery = "SELECT MAX(menu_id) AS maxId FROM menu";
-    const [maxIdResult] = await databaseUtils.getDataFromDB(maxIdQuery);
-    const lastId = maxIdResult.maxId;
+    const menuQuery = `SELECT * FROM menu`;
+    const menuResults = await databaseUtils.getDataFromDB(menuQuery);
 
-    for (let i = 0; i < lastId; i++) {
-      const menuQuery = `SELECT * FROM menu WHERE menu_id = ${i + 1}`;
-      const menuResults = await databaseUtils.getDataFromDB(menuQuery);
-
+    for (let i = 0; i < menuResults.length; i++) {
       if (menuResults.length > 0) {
-        const categoryIdQuery = `SELECT category_title FROM mcategory WHERE menu_id = ${
-          i + 1
-        }`;
+        const categoryIdQuery = `SELECT category_id, category_title FROM mcategory WHERE menu_id = ${menuResults[i].menu_id}`;
         const categoryResults = await databaseUtils.getDataFromDB(
           categoryIdQuery
         );
 
         if (categoryResults.length > 0) {
           for (let j = 0; j < categoryResults.length; j++) {
-            const optionQuery = `SELECT option_title, option_price FROM moption WHERE category_id = ${
-              j + 1
-            }`;
+            const optionQuery = `SELECT option_title, option_price FROM moption WHERE category_id = ${categoryResults[j].category_id}`;
+            const optionResults = await databaseUtils.getDataFromDB(
+              optionQuery
+            );
+
+            if (optionResults.length > 0) {
+              categoryResults[j].options = optionResults;
+            }
+          }
+
+          menuResults[i].categories = categoryResults;
+          allMenu.push(menuResults[i]);
+        }
+      }
+    }
+
+    return allMenu;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function retrieveMenuUser() {
+  const allMenu = [];
+
+  try {
+    const menuQuery = `SELECT * FROM menu WHERE available = 1`;
+    const menuResults = await databaseUtils.getDataFromDB(menuQuery);
+
+    for (let i = 0; i < menuResults.length; i++) {
+      if (menuResults.length > 0) {
+        const categoryIdQuery = `SELECT category_id, category_title FROM mcategory WHERE menu_id = ${menuResults[i].menu_id}`;
+        const categoryResults = await databaseUtils.getDataFromDB(
+          categoryIdQuery
+        );
+        console.log(categoryResults);
+
+        if (categoryResults.length > 0) {
+          for (let j = 0; j < categoryResults.length; j++) {
+            const optionQuery = `SELECT option_title, option_price FROM moption WHERE category_id = ${categoryResults[j].category_id}`;
             const optionResults = await databaseUtils.getDataFromDB(
               optionQuery
             );
@@ -35,6 +66,7 @@ async function retrieveMenu() {
           }
 
           menuResults[0].categories = categoryResults;
+          console.log(menuResults[0]);
           allMenu.push(menuResults[0]);
         }
       }
@@ -46,4 +78,4 @@ async function retrieveMenu() {
   }
 }
 
-module.exports = { retrieveMenu };
+module.exports = { retrieveMenu, retrieveMenuUser };

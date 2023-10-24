@@ -27,7 +27,13 @@ class cardInfo extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 1.25,
-              child: Image.memory(Uint8List.fromList(image)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(defaultPadding / 2),
+                child: Image.memory(
+                  Uint8List.fromList(image),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(
               height: defaultPadding / 2,

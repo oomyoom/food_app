@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<dynamic>> getAllMenu() async {
   final response =
-      await http.get(Uri.parse('http://192.168.1.84:3333/menu/get'));
+      await http.get(Uri.parse('http://192.168.1.84:3333/menu/get/user'));
 
   if (response.statusCode == 200) {
     List<dynamic> allMenu = json.decode(response.body);

@@ -92,25 +92,25 @@ class _NotificationScreenState extends State<NotificationScreen> {
   }
 
   Future<void> _showConfirmationDialog(
-      BuildContext context, int order_id) async {
+      BuildContext context, int orderId) async {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('ยืนยัน'),
-          content: Text('คุณได้แล้วรับออเดอร์แล้วใช่ไหม'),
+          title: const Text('ยืนยัน'),
+          content: const Text('คุณได้แล้วรับออเดอร์แล้วใช่ไหม'),
           actions: <Widget>[
             TextButton(
-              child: Text('ใช่'),
+              child: const Text('ใช่'),
               onPressed: () {
-                notificationReaded(order_id);
-                orderRecieved(order_id);
+                notificationReaded(orderId);
+                orderRecieved(orderId);
                 fetchData();
                 Navigator.of(context).pop(); // ปิด dialog
               },
             ),
             TextButton(
-              child: Text('ไม่'),
+              child: const Text('ไม่'),
               onPressed: () {
                 // ทำสิ่งที่คุณต้องการเมื่อผู้ใช้กด Yes ที่นี่
                 Navigator.of(context).pop(); // ปิด dialog
@@ -218,7 +218,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     _showConfirmationDialog(
                                         context, value['order_id']);
                                   },
-                                  icon: Icon(Icons.check_circle),
+                                  icon: const Icon(Icons.check_circle),
                                   color: kActiveColor,
                                 ),
                               ],
