@@ -51,7 +51,6 @@ async function retrieveMenuUser() {
         const categoryResults = await databaseUtils.getDataFromDB(
           categoryIdQuery
         );
-        console.log(categoryResults);
 
         if (categoryResults.length > 0) {
           for (let j = 0; j < categoryResults.length; j++) {
@@ -65,9 +64,9 @@ async function retrieveMenuUser() {
             }
           }
 
-          menuResults[0].categories = categoryResults;
-          console.log(menuResults[0]);
-          allMenu.push(menuResults[0]);
+          menuResults[i].categories = categoryResults;
+          console.log(menuResults[i]);
+          allMenu.push(menuResults[i]);
         }
       }
     }

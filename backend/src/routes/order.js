@@ -4,6 +4,7 @@ const orderCreation = require("../controllers/orderCreation");
 const orderRetrieval = require("../controllers/orderRetrieval");
 const databaseUtils = require("../utils/databaseUtils");
 const { verifyToken } = require("../middlewares/authToken");
+const { db } = require("../config/database");
 
 router.post("/create", verifyToken, (req, res) => {
   const orderData = req.body.orderData;
@@ -145,6 +146,35 @@ router.get("/transaction/day", async (req, res) => {
     console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
     res.status(500).json({ error: "เกิดข้อผิดพลาดในการดึงข้อมูล" });
   }
+});
+
+router.get("/transaction/month", async (req, res) => {
+  try {
+    const allOrder = await orderRetrieval.retrieveOrderRestaurantThisMonth();
+    res.status(200).json(allOrder);
+  } catch (error) {
+    console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
+    res.status(500).json({ error: "เกิดข้อผิดพลาดในการดึงข้อมูล" });
+  }
+});
+
+router.get("/transaction/month/test", async (req, res) => {
+  const query = `
+    SELECT DATE(createDateTime) AS date, SUM(order_total) AS totalOrder
+    FROM \`order\`
+    WHERE createDateTime >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+    AND createDateTime <= CURDATE()
+    GROUP BY date
+  `;
+
+  db.query(query, (err, result) => {
+    if (err) {
+      res.status(500).send("Error fetching data");
+      return;
+    }
+
+    res.json(result);
+  });
 });
 
 module.exports = router;
