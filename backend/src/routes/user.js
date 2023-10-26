@@ -18,7 +18,7 @@ router.get("/get", verifyToken, async (req, res) => {
   }
 });
 
-router.put("/update", upload.single("image"), async (req, res) => {
+router.put("/update", verifyToken, upload.single("image"), async (req, res) => {
   try {
     const { username, firstname, lastname } = req.body; // Get other data
     const image = req.file.buffer; // Get the image buffer
@@ -26,7 +26,7 @@ router.put("/update", upload.single("image"), async (req, res) => {
     await db
       .promise()
       .query(
-        "UPDATE users SET image = ?, username = ?, firstname = ?, lastname = ? WHERE uid = 1",
+        `UPDATE users SET image = ?, username = ?, firstname = ?, lastname = ? WHERE uid = ${req.uid}`,
         [image, username, firstname, lastname]
       );
 

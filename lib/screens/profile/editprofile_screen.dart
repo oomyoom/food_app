@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/models/users.dart';
-import 'package:food_app/screens/home/components/imageProfile.dart';
+import 'package:food_app/utils/imageHelper.dart';
 import 'package:food_app/utils/buttomTab.dart';
+import 'package:food_app/utils/getToken.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:path_provider/path_provider.dart';
@@ -79,6 +80,10 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
         imageFile.lengthSync(),
         filename: 'image.jpg',
       ));
+
+      final token = await getToken();
+
+      request.headers['Authorization'] = 'Bearer $token';
 
       final response = await request.send();
 

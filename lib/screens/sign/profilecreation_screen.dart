@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/models/users.dart';
 import 'dart:io';
-import 'package:food_app/screens/home/components/imageProfile.dart';
+import 'package:food_app/utils/imageHelper.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/utils/selectDate.dart';
