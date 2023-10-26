@@ -3,7 +3,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:food_app/models/users.dart';
 import 'package:food_app/screens/profile/editprofile_screen.dart';
+import 'package:food_app/screens/sign/login_screen.dart';
 import 'package:food_app/utils/constants.dart';
+import 'package:food_app/utils/tapButton.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -138,6 +140,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               .copyWith(color: Colors.white, fontSize: 18),
                         ),
                       ),
+                      Positioned(
+                          top: MediaQuery.of(context).size.width * 1.3,
+                          child: TapButton(
+                              press: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()));
+                              },
+                              title: 'ออกจากระบบ',
+                              color: kMainColor)),
                     ],
                   ),
                 );

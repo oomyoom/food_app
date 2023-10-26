@@ -65,56 +65,47 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
     String lastname,
     String birthday,
   ) async {
-    if (_hasImage && _formKey.currentState!.validate()) {
-      final url = Uri.parse('http://192.168.1.84:3333/auth/register');
-      final request = http.MultipartRequest('POST', url);
-      request.fields['email'] = email;
-      request.fields['password'] = password;
-      request.fields['username'] = username;
-      request.fields['firstname'] = firstname;
-      request.fields['lastname'] = lastname;
-      request.fields['birthday'] = birthday;
+    final url = Uri.parse('http://192.168.1.84:3333/auth/register');
+    final request = http.MultipartRequest('POST', url);
+    request.fields['email'] = email;
+    request.fields['password'] = password;
+    request.fields['username'] = username;
+    request.fields['firstname'] = firstname;
+    request.fields['lastname'] = lastname;
+    request.fields['birthday'] = birthday;
 
-      request.files.add(http.MultipartFile(
-        'image',
-        imageFile.readAsBytes().asStream(),
-        imageFile.lengthSync(),
-        filename: 'image.jpg',
-      ));
+    request.files.add(http.MultipartFile(
+      'image',
+      imageFile.readAsBytes().asStream(),
+      imageFile.lengthSync(),
+      filename: 'image.jpg',
+    ));
 
-      final response = await request.send();
+    final response = await request.send();
 
-      if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('สร้างบัญชีสำเร็จ'),
-            duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
-          ),
-        );
-        while (Navigator.canPop(context)) {
-          Navigator.pop(context);
-        }
-      } else if (response.statusCode == 400) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('บัญชีนี้มีอยู่ในระบบแล้ว'),
-            duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
-          ),
-        );
-      } else {
-        // เกิดข้อผิดพลาดในการสร้างโปรไฟล์
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('สร้างบัญชีล้มเหลว'),
-            duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
-          ),
-        );
-      }
-    } else if (!_hasImage && _formKey.currentState!.validate()) {
+    if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('โปรดเลือกรูปสำหรับใช้เป็นโปรไฟล์'),
-          duration: Duration(seconds: 3),
+          content: Text('สร้างบัญชีสำเร็จ'),
+          duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
+        ),
+      );
+      while (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
+    } else if (response.statusCode == 400) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('บัญชีนี้มีอยู่ในระบบแล้ว'),
+          duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
+        ),
+      );
+    } else {
+      // เกิดข้อผิดพลาดในการสร้างโปรไฟล์
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('สร้างบัญชีล้มเหลว'),
+          duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
         ),
       );
     }
@@ -239,14 +230,26 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
                         ),
                         child: TapButton(
                           press: () {
-                            userCreation(
-                                _image!,
-                                widget.account.email,
-                                widget.account.password.trim(),
-                                _usernametextController.text,
-                                _firstnametextController.text,
-                                _lastnametextController.text,
-                                _birthdaytextController.text);
+                            if (_hasImage &&
+                                _formKey.currentState!.validate()) {
+                              userCreation(
+                                  _image!,
+                                  widget.account.email,
+                                  widget.account.password.trim(),
+                                  _usernametextController.text,
+                                  _firstnametextController.text,
+                                  _lastnametextController.text,
+                                  _birthdaytextController.text);
+                            } else if (!_hasImage &&
+                                _formKey.currentState!.validate()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('โปรดเลือกรูปสำหรับใช้เป็นโปรไฟล์'),
+                                  duration: Duration(seconds: 3),
+                                ),
+                              );
+                            }
                           },
                           title: 'เสร็จสิ้น',
                           color: kMainColor,
