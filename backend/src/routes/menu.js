@@ -14,69 +14,65 @@ router.post("/create", upload.single("image"), async (req, res) => {
   const menuData = JSON.parse(req.body.menuData);
   const image = req.file.buffer;
 
-  databaseUtils.getLastId("menu", "menu_id", (error, lastMenuId) => {
+  databaseUtils.getLastId("menu", (error, lastMenuId) => {
     if (error) {
       return res.status(500).send("เกิดข้อผิดพลาดในการดึงค่า MenuId ล่าสุด");
     }
 
-    databaseUtils.getLastId(
-      "mcategory",
-      "category_id",
-      async (error, lastCateId) => {
-        if (error) {
-          return res
-            .status(500)
-            .send("เกิดข้อผิดพลาดในการดึงค่า CategoryId ล่าสุด");
-        }
-
-        const checkMenuQuery = "SELECT * FROM menu WHERE menu_title = ?";
-        const [existingMenu] = await db
-          .promise()
-          .query(checkMenuQuery, [menuData.menu_title]);
-
-        if (existingMenu.length > 0) {
-          return res.status(400).json({ error: "Menu นี้มีอยู่ในระบบแล้ว" });
-        }
-
-        menuCreation.insertMenu(
-          menuData,
-          image,
-          lastMenuId,
-          (error, lastMenuId) => {
-            if (error) {
-              return res.status(500).send("เกิดข้อผิดพลาดในการแทรกข้อมูลเมนู");
-            }
-
-            menuCreation.insertCategory(
-              menuData.categories,
-              lastMenuId,
-              lastCateId,
-              (error, lastCateId) => {
-                if (error) {
-                  return res
-                    .status(500)
-                    .send("เกิดข้อผิดพลาดในการแทรกข้อมูลหมวดหมู่");
-                }
-
-                menuCreation.insertOption(
-                  menuData.categories,
-                  lastCateId,
-                  (error) => {
-                    if (error) {
-                      return res
-                        .status(500)
-                        .send("เกิดข้อผิดพลาดในการแทรกข้อมูลตัวเลือก");
-                    }
-
-                    res.status(200).send("เมนูถูกสร้างเรียบร้อยแล้ว");
-                  }
-                );
-              }
-            );
-          }
-        );
+    databaseUtils.getLastId("mcategory", async (error, lastCateId) => {
+      if (error) {
+        return res
+          .status(500)
+          .send("เกิดข้อผิดพลาดในการดึงค่า CategoryId ล่าสุด");
       }
-    );
+
+      const checkMenuQuery = "SELECT * FROM menu WHERE menu_title = ?";
+      const [existingMenu] = await db
+        .promise()
+        .query(checkMenuQuery, [menuData.menu_title]);
+
+      if (existingMenu.length > 0) {
+        return res.status(400).json({ error: "Menu นี้มีอยู่ในระบบแล้ว" });
+      }
+
+      menuCreation.insertMenu(
+        menuData,
+        image,
+        lastMenuId,
+        (error, lastMenuId) => {
+          if (error) {
+            return res.status(500).send("เกิดข้อผิดพลาดในการแทรกข้อมูลเมนู");
+          }
+
+          menuCreation.insertCategory(
+            menuData.categories,
+            lastMenuId,
+            lastCateId,
+            (error, lastCateId) => {
+              if (error) {
+                return res
+                  .status(500)
+                  .send("เกิดข้อผิดพลาดในการแทรกข้อมูลหมวดหมู่");
+              }
+
+              menuCreation.insertOption(
+                menuData.categories,
+                lastCateId,
+                (error) => {
+                  if (error) {
+                    return res
+                      .status(500)
+                      .send("เกิดข้อผิดพลาดในการแทรกข้อมูลตัวเลือก");
+                  }
+
+                  res.status(200).send("เมนูถูกสร้างเรียบร้อยแล้ว");
+                }
+              );
+            }
+          );
+        }
+      );
+    });
   });
 });
 

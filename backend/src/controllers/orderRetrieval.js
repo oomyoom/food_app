@@ -66,7 +66,7 @@ async function retrieveOrderRestaurantThisWeek() {
   const allOrder = [];
 
   try {
-    const orderQuery = `SELECT * FROM \`order\` WHERE isCompleted = 1 && DAYOFWEEK(createDateTime) = DAYOFWEEK(NOW())`;
+    const orderQuery = `SELECT * FROM \`order\` WHERE isCompleted = 1 && WEEK(createDateTime) = WEEK(CURDATE())`;
     const orderResults = await databaseUtils.getDataFromDB(orderQuery);
 
     if (orderResults.length > 0) {

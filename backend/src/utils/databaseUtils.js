@@ -12,18 +12,22 @@ async function getDataFromDB(query) {
   });
 }
 
-function getLastId(tableName, columnName, callback) {
-  const query = `SELECT MAX(${columnName}) AS maxId FROM \`${tableName}\``;
+function getLastId(tableName, callback) {
+  const query = `SHOW TABLE STATUS LIKE \'${tableName}\'`;
 
   db.query(query, (error, results) => {
     if (error) {
-      console.error(`เกิดข้อผิดพลาดในการดึงค่า ${columnName} ล่าสุด: `, error);
+      console.error(`เกิดข้อผิดพลาดในการดึงค่าล่าสุด: `, error);
       callback(error, null);
       return;
     }
 
-    const lastId = results[0].maxId;
-    callback(null, lastId + 1 || 1);
+    if (results.length > 0) {
+      const nextAutoIncrement = results[0].Auto_increment;
+      callback(null, nextAutoIncrement);
+    } else {
+      callback("Table not found", null);
+    }
   });
 }
 

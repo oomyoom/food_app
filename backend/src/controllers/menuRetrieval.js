@@ -7,8 +7,8 @@ async function retrieveMenu() {
     const menuQuery = `SELECT * FROM menu`;
     const menuResults = await databaseUtils.getDataFromDB(menuQuery);
 
-    for (let i = 0; i < menuResults.length; i++) {
-      if (menuResults.length > 0) {
+    if (menuResults.length > 0) {
+      for (let i = 0; i < menuResults.length; i++) {
         const categoryIdQuery = `SELECT category_id, category_title FROM mcategory WHERE menu_id = ${menuResults[i].menu_id}`;
         const categoryResults = await databaseUtils.getDataFromDB(
           categoryIdQuery
@@ -45,8 +45,8 @@ async function retrieveMenuUser() {
     const menuQuery = `SELECT * FROM menu WHERE available = 1`;
     const menuResults = await databaseUtils.getDataFromDB(menuQuery);
 
-    for (let i = 0; i < menuResults.length; i++) {
-      if (menuResults.length > 0) {
+    if (menuResults.length > 0) {
+      for (let i = 0; i < menuResults.length; i++) {
         const categoryIdQuery = `SELECT category_id, category_title FROM mcategory WHERE menu_id = ${menuResults[i].menu_id}`;
         const categoryResults = await databaseUtils.getDataFromDB(
           categoryIdQuery
@@ -65,7 +65,6 @@ async function retrieveMenuUser() {
           }
 
           menuResults[i].categories = categoryResults;
-          console.log(menuResults[i]);
           allMenu.push(menuResults[i]);
         }
       }

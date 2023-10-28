@@ -9,7 +9,7 @@ const { db } = require("../config/database");
 router.post("/create", verifyToken, (req, res) => {
   const orderData = req.body.orderData;
   const cartData = req.body.cartData;
-  databaseUtils.getLastId("order", "order_id", (error, lastOrderId) => {
+  databaseUtils.getLastId("order", (error, lastOrderId) => {
     if (error) {
       return res.status(500).send("เกิดข้อผิดพลาดในการดึงค่า OrderId ล่าสุด");
     }
@@ -39,6 +39,20 @@ router.get("/get", verifyToken, async (req, res) => {
   try {
     const allOrder = await orderRetrieval.retrieveOrder(req.uid);
     res.status(200).json(allOrder);
+  } catch (error) {
+    console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
+    res.status(500).json({ error: "เกิดข้อผิดพลาดในการดึงข้อมูล" });
+  }
+});
+
+router.get("/getlastId", async (req, res) => {
+  try {
+    databaseUtils.getLastId("order", (error, lastOrderId) => {
+      if (error) {
+        return res.status(500).send("เกิดข้อผิดพลาดในการดึงค่า OrderId ล่าสุด");
+      }
+      res.status(200).json(lastOrderId - 1);
+    });
   } catch (error) {
     console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
     res.status(500).json({ error: "เกิดข้อผิดพลาดในการดึงข้อมูล" });
@@ -156,25 +170,6 @@ router.get("/transaction/month", async (req, res) => {
     console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
     res.status(500).json({ error: "เกิดข้อผิดพลาดในการดึงข้อมูล" });
   }
-});
-
-router.get("/transaction/month/test", async (req, res) => {
-  const query = `
-    SELECT DATE(createDateTime) AS date, SUM(order_total) AS totalOrder
-    FROM \`order\`
-    WHERE createDateTime >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-    AND createDateTime <= CURDATE()
-    GROUP BY date
-  `;
-
-  db.query(query, (err, result) => {
-    if (err) {
-      res.status(500).send("Error fetching data");
-      return;
-    }
-
-    res.json(result);
-  });
 });
 
 module.exports = router;

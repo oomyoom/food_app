@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/models/cart.dart';
 import 'package:food_app/screens/cart/components/deliveryOption.dart';
+import 'package:food_app/screens/receipt/receipt_screen.dart';
 import 'package:food_app/utils/buttomTab.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/models/foodData.dart';
@@ -63,6 +64,20 @@ class _CartScreenState extends State<CartScreen> {
             duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
           ),
         );
+        await convertAllOrder();
+
+        cartItems.clear();
+        order.clear();
+        totalPrice = 0;
+        while (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const ButtomTab(initialIndex: 0)));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ReceiptScreen()));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -185,19 +200,6 @@ class _CartScreenState extends State<CartScreen> {
 
                     order.add(newOrder);
                     await sendOrder();
-                    await convertAllOrder();
-
-                    cartItems.clear();
-                    order.clear();
-                    totalPrice = 0;
-                    while (Navigator.canPop(context)) {
-                      Navigator.pop(context);
-                    }
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const ButtomTab(initialIndex: 0)));
                   }, onCancel: () {
                     print('Cancel');
                   }, onError: (e) {

@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Column(
               children: [
                 Text(
-                  'NHOOMNIM'.toUpperCase(),
+                  'NOOMNIM'.toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!

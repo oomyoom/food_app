@@ -64,6 +64,23 @@ Future<List<dynamic>> getAllOrder() async {
   }
 }
 
+Future<int> getlastId() async {
+  final response = await http.get(
+    Uri.parse('http://192.168.1.84:3333/order/getlastId'),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    int lastorderId = json.decode(response.body);
+    return lastorderId;
+  } else {
+    // กรณีเกิดข้อผิดพลาดในการรับข้อมูล
+    throw Exception('ไม่สามารถรับข้อมูล OrderId ล่าสุดได้');
+  }
+}
+
 class Order2 {
   bool isCompleted;
   bool isRecieved;
