@@ -64,6 +64,13 @@ class _LoginScreenState extends State<LoginScreen> {
               builder: (context) => ButtomTab(
                     initialIndex: 0,
                   )));
+    } else if (response.statusCode == 401) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('อีเมลหรือรหัสผ่านไม่ถูกต้อง'),
+          duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

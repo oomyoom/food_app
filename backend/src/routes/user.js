@@ -20,14 +20,14 @@ router.get("/get", verifyToken, async (req, res) => {
 
 router.put("/update", verifyToken, upload.single("image"), async (req, res) => {
   try {
-    const { username, firstname, lastname } = req.body; // Get other data
+    const { username, firstname, lastname, phonenumber } = req.body; // Get other data
     const image = req.file.buffer; // Get the image buffer
 
     await db
       .promise()
       .query(
-        `UPDATE users SET image = ?, username = ?, firstname = ?, lastname = ? WHERE uid = ${req.uid}`,
-        [image, username, firstname, lastname]
+        `UPDATE users SET image = ?, username = ?, firstname = ?, lastname = ?, phonenumber = ? WHERE uid = ${req.uid}`,
+        [image, username, firstname, lastname, phonenumber]
       );
 
     res.status(200).send("Data and image uploaded successfully");

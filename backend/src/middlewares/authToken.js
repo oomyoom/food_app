@@ -13,6 +13,7 @@ function verifyToken(req, res, next) {
       return res.status(401).json({ error: "Token ไม่ถูกต้อง" });
     }
     req.uid = decoded.uid;
+    req.phonenumber = decoded.phonenumber;
     next();
   });
 }

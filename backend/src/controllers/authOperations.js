@@ -63,19 +63,29 @@ async function createUser(
   username,
   firstname,
   lastname,
+  phonenumber,
   birthday,
   callback
 ) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const insertQuery =
-    "INSERT INTO users (email, password, image, username, firstname, lastname, birthday) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO users (email, password, image, username, firstname, lastname, phonenumber, birthday) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
   await db
     .promise()
     .query(
       insertQuery,
-      [email, hashedPassword, image, username, firstname, lastname, birthday],
+      [
+        email,
+        hashedPassword,
+        image,
+        username,
+        firstname,
+        lastname,
+        phonenumber,
+        birthday,
+      ],
       (error, results) => {
         if (error) {
           console.error("Error inserting data into user:" + error);
@@ -97,9 +107,13 @@ async function login(email, password) {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch) {
-      const token = jwt.sign({ uid: user.uid }, secretKey, {
-        expiresIn: "365d",
-      });
+      const token = jwt.sign(
+        { uid: user.uid, phonenumber: user.phonenumber },
+        secretKey,
+        {
+          expiresIn: "365d",
+        }
+      );
       return { token };
     } else {
       return { error: "รหัสผ่านไม่ถูกต้อง" };

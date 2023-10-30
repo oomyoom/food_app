@@ -110,10 +110,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => EditprofileScreen(
-                                          image: value['image'],
-                                          firstname: value['firstname'],
-                                          lastname: value['lastname'],
-                                          username: value['username'])));
+                                            image: value['image'],
+                                            firstname: value['firstname'],
+                                            lastname: value['lastname'],
+                                            username: value['username'],
+                                            phonenumber: value['phonenumber'],
+                                          )));
                             },
                             style: ButtonStyle(
                                 backgroundColor:

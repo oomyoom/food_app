@@ -38,19 +38,31 @@ router.post("/verify-email", (req, res) => {
   });
 });
 
+router.post("/existingemail", async (req, res) => {
+  const { email } = req.body;
+  const checkEmailQuery = "SELECT * FROM users WHERE email = ?";
+  const [existingUsers] = await db.promise().query(checkEmailQuery, [email]);
+
+  if (existingUsers.length > 0) {
+    return res.status(400).json({ error: "Email นี้มีอยู่ในระบบแล้ว" });
+  } else {
+    res.status(200).json({ message: "ส่งสำเร็จ" });
+  }
+});
+
 // โค้ดสำหรับลงทะเบียนผู้ใช้
 router.post("/register", upload.single("image"), async (req, res) => {
   try {
-    const { email, password, username, firstname, lastname, birthday } =
-      req.body;
+    const {
+      email,
+      password,
+      username,
+      firstname,
+      lastname,
+      phonenumber,
+      birthday,
+    } = req.body;
     const image = req.file.buffer;
-
-    const checkEmailQuery = "SELECT * FROM users WHERE email = ?";
-    const [existingUsers] = await db.promise().query(checkEmailQuery, [email]);
-
-    if (existingUsers.length > 0) {
-      return res.status(400).json({ error: "Email นี้มีอยู่ในระบบแล้ว" });
-    }
 
     createUser(
       email,
@@ -59,6 +71,7 @@ router.post("/register", upload.single("image"), async (req, res) => {
       username,
       firstname,
       lastname,
+      phonenumber,
       birthday,
       (error) => {
         if (error) {

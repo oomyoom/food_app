@@ -27,6 +27,8 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
       TextEditingController();
   final TextEditingController _lastnametextController = TextEditingController();
   final TextEditingController _birthdaytextController = TextEditingController();
+  final TextEditingController _phonenumbertextController =
+      TextEditingController();
 
   Future<void> _onBackPressed() async {
     bool shouldNavigateBack = await showDialog(
@@ -63,6 +65,7 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
     String username,
     String firstname,
     String lastname,
+    String phonenumber,
     String birthday,
   ) async {
     final url = Uri.parse('http://192.168.1.84:3333/auth/register');
@@ -72,6 +75,7 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
     request.fields['username'] = username;
     request.fields['firstname'] = firstname;
     request.fields['lastname'] = lastname;
+    request.fields['phonenumber'] = phonenumber;
     request.fields['birthday'] = birthday;
 
     request.files.add(http.MultipartFile(
@@ -93,13 +97,6 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
       while (Navigator.canPop(context)) {
         Navigator.pop(context);
       }
-    } else if (response.statusCode == 400) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('บัญชีนี้มีอยู่ในระบบแล้ว'),
-          duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
-        ),
-      );
     } else {
       // เกิดข้อผิดพลาดในการสร้างโปรไฟล์
       ScaffoldMessenger.of(context).showSnackBar(
@@ -210,6 +207,27 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
                           },
                         )),
                     Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.1),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                              labelText: 'หมายเลขโทรศัพท์',
+                              labelStyle: TextStyle(fontSize: 16)),
+                          controller: _phonenumbertextController,
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            final phonenumberRegex = RegExp(r'^[0-9]{10}$');
+                            if (value == null || value.isEmpty) {
+                              return 'โปรดกรอกหมายเลขโทรศัพท์ของคุณ';
+                            }
+                            if (!phonenumberRegex.hasMatch(value)) {
+                              return 'กรุณาใส่หมายเลขโทรศัพท์ที่ถูกต้อง';
+                            }
+                            return null;
+                          },
+                        )),
+                    Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * 0.1,
                       ),
@@ -239,9 +257,12 @@ class _ProfilecreationScreenState extends State<ProfilecreationScreen> {
                                   _usernametextController.text,
                                   _firstnametextController.text,
                                   _lastnametextController.text,
+                                  _phonenumbertextController.text,
                                   _birthdaytextController.text);
                             } else if (!_hasImage &&
                                 _formKey.currentState!.validate()) {
+                              FocusScope.of(context).unfocus();
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:

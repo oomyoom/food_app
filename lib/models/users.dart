@@ -57,6 +57,7 @@ Future<void> convertProfile() async {
       'username': data['username'],
       'firstname': data['firstname'],
       'lastname': data['lastname'],
+      'phonenumber': data['phonenumber'],
       'birthday': data['birthday'],
     };
   }).toList();

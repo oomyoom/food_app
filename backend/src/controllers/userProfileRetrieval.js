@@ -4,7 +4,7 @@ async function retrieveUserProfile(uid) {
   const user = [];
 
   try {
-    const userQuery = `SELECT image, username, firstname, lastname, birthday FROM users WHERE uid = ${uid}`;
+    const userQuery = `SELECT image, username, firstname, lastname, phonenumber, birthday FROM users WHERE uid = ${uid}`;
     const userResult = await databaseUtils.getDataFromDB(userQuery);
 
     if (userResult.length > 0) {

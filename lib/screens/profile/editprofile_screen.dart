@@ -17,10 +17,11 @@ class EditprofileScreen extends StatefulWidget {
       required this.image,
       required this.firstname,
       required this.lastname,
-      required this.username})
+      required this.username,
+      required this.phonenumber})
       : super(key: key);
   final List<int> image;
-  final String firstname, lastname, username;
+  final String firstname, lastname, username, phonenumber;
 
   @override
   _EditprofileScreenState createState() => _EditprofileScreenState();
@@ -35,6 +36,8 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
   final TextEditingController _firstnametextController =
       TextEditingController();
   final TextEditingController _lastnametextController = TextEditingController();
+  final TextEditingController _phonenumbertextController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -43,6 +46,7 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
     _usernametextController.text = widget.username;
     _firstnametextController.text = widget.firstname;
     _lastnametextController.text = widget.lastname;
+    _phonenumbertextController.text = widget.phonenumber;
   }
 
   Future<File> convertBlobToFile(Uint8List blob) async {
@@ -66,6 +70,7 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
     String username,
     String firstname,
     String lastname,
+    String phonenumber,
   ) async {
     if (_formKey.currentState!.validate()) {
       final url = Uri.parse('http://192.168.1.84:3333/user/update');
@@ -73,6 +78,7 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
       request.fields['username'] = username;
       request.fields['firstname'] = firstname;
       request.fields['lastname'] = lastname;
+      request.fields['phonenumber'] = phonenumber;
 
       request.files.add(http.MultipartFile(
         'image',
@@ -216,6 +222,26 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
                       },
                     )),
                 Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.1),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                          labelText: 'หมายเลขโทรศัพท์',
+                          labelStyle: TextStyle(fontSize: 16)),
+                      controller: _phonenumbertextController,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        final phonenumberRegex = RegExp(r'^[0-9]{10}$');
+                        if (value == null || value.isEmpty) {
+                          return 'โปรดกรอกหมายเลขโทรศัพท์ของคุณ';
+                        }
+                        if (!phonenumberRegex.hasMatch(value)) {
+                          return 'กรุณาใส่หมายเลขโทรศัพท์ที่ถูกต้อง';
+                        }
+                        return null;
+                      },
+                    )),
+                Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height * 0.03),
                     child: TapButton(
@@ -227,7 +253,8 @@ class _EditprofileScreenState extends State<EditprofileScreen> {
                               _hasImage == true ? _image! : tempFile!,
                               _usernametextController.text,
                               _firstnametextController.text,
-                              _lastnametextController.text);
+                              _lastnametextController.text,
+                              _phonenumbertextController.text);
                         }
                       },
                       title: 'บันทึก',

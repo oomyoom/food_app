@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:food_app/models/users.dart';
 import 'package:food_app/screens/sign/components/signtitleText.dart';
 import 'package:food_app/screens/sign/emailVerify_screen.dart';
 import 'package:food_app/utils/constants.dart';
 import 'package:food_app/utils/tapButton.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -19,6 +22,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailtextController = TextEditingController();
   final _passwordtextController = TextEditingController();
   final _confirmpasswordtextController = TextEditingController();
+
+  Future<void> checkExistingEmail() async {
+    final email = _emailtextController.text;
+
+    final response = await http.post(
+      Uri.parse('http://192.168.1.84:3333/auth/existingemail'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({'email': email}),
+    );
+
+    if (response.statusCode == 200) {
+      // ส่งสำเร็จ
+      final account = Account(
+          email: _emailtextController.text,
+          password: _passwordtextController.text);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EmailVerifyScreen(
+                    account: account,
+                  )));
+    } else if (response.statusCode == 400) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('บัญชีนี้มีอยู่ในระบบแล้ว'),
+          duration: Duration(seconds: 3), // ระยะเวลาที่แจ้งเตือนแสดง
+        ),
+      );
+      FocusScope.of(context).unfocus();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +97,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validator: (value) {
                           final emailRegex = RegExp(
                               r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
-                          if (!emailRegex.hasMatch(value ?? '')) {
-                            return 'กรุณาใส่อีเมลที่ถูกต้อง';
-                          }
                           if (value == null || value.isEmpty) {
                             return 'โปรดกรอกอีเมลของคุณ';
+                          }
+                          if (!emailRegex.hasMatch(value)) {
+                            return 'กรุณาใส่อีเมลที่ถูกต้อง';
                           }
                           return null;
                         },
@@ -120,15 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: TapButton(
                           press: () {
                             if (_formKey.currentState!.validate()) {
-                              final account = Account(
-                                  email: _emailtextController.text,
-                                  password: _passwordtextController.text);
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => EmailVerifyScreen(
-                                            account: account,
-                                          )));
+                              checkExistingEmail();
                             }
                           },
                           title: 'สมัครสมาชิก',
