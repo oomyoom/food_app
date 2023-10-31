@@ -52,7 +52,12 @@ async function retrieveOrderRestaurant(isCompleted) {
             cartResults[j].menu = menuResults;
           }
         }
+        const phonenumberQuery = `SELECT phonenumber FROM users WHERE uid = ${orderResults[i].uid}`;
+        const phonenumberResults = await databaseUtils.getDataFromDB(
+          phonenumberQuery
+        );
         orderResults[i].cart = cartResults;
+        orderResults[i].phonenumber = phonenumberResults[0].phonenumber;
         allOrder.push(orderResults[i]);
       }
     }
@@ -83,7 +88,12 @@ async function retrieveOrderRestaurantThisWeek() {
             cartResults[j].menu = menuResults;
           }
         }
+        const phonenumberQuery = `SELECT phonenumber FROM users WHERE uid = ${orderResults[i].uid}`;
+        const phonenumberResults = await databaseUtils.getDataFromDB(
+          phonenumberQuery
+        );
         orderResults[i].cart = cartResults;
+        orderResults[i].phonenumber = phonenumberResults[0].phonenumber;
         allOrder.push(orderResults[i]);
       }
     }
@@ -114,7 +124,12 @@ async function retrieveOrderRestaurantThisDay() {
             cartResults[j].menu = menuResults;
           }
         }
+        const phonenumberQuery = `SELECT phonenumber FROM users WHERE uid = ${orderResults[i].uid}`;
+        const phonenumberResults = await databaseUtils.getDataFromDB(
+          phonenumberQuery
+        );
         orderResults[i].cart = cartResults;
+        orderResults[i].phonenumber = phonenumberResults[0].phonenumber;
         allOrder.push(orderResults[i]);
       }
     }
@@ -145,7 +160,12 @@ async function retrieveOrderRestaurantThisMonth() {
             cartResults[j].menu = menuResults;
           }
         }
+        const phonenumberQuery = `SELECT phonenumber FROM users WHERE uid = ${orderResults[i].uid}`;
+        const phonenumberResults = await databaseUtils.getDataFromDB(
+          phonenumberQuery
+        );
         orderResults[i].cart = cartResults;
+        orderResults[i].phonenumber = phonenumberResults[0].phonenumber;
         allOrder.push(orderResults[i]);
       }
     }

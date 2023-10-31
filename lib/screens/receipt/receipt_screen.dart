@@ -65,6 +65,21 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                           fontSize: 24,
                         ),
                       ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.04,
+                      ),
+                      Text(
+                        '*ถ้าออเดอร์มีปัญหาร้านจะติดต่อกลับด้วยเบอร์นี้',
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        '0811234567',
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
                     ],
                   ),
                 )),
