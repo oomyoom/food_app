@@ -121,9 +121,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (value == null || value.isEmpty) {
                               return 'โปรดสร้างรหัสผ่านของคุณ';
                             }
-                            // if (value.length < 8) {
-                            //   return 'รหัสผ่านจำเป็นต้องมีความยาวอย่างน้อย 8 ตัวอักษร';
-                            // }
+                            if (value.length < 8) {
+                              return 'รหัสผ่านจำเป็นต้องมีความยาวอย่างน้อย 8 ตัวอักษร';
+                            }
                             return null;
                           },
                         )),
